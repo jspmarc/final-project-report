@@ -43,8 +43,7 @@ sudo dnf install latexmk \
     'tex(chngcntr.sty)' \
     'tex(parskip.sty)' \
     'tex(tocbibind.sty)' \
-    'tex(relsize.sty)' \
-    ''
+    'tex(relsize.sty)'
 ```
 
 Untuk Windows, Anda dapat melakukan instalasi TeXLive pada [link berikut](https://mirror.ctan.org/systems/texlive/tlnet/install-tl-windows.exe). Manual Instalasi dapat dilihat pada [link berikut](https://www.tug.org/texlive/windows.html). Jangan lupa cek environment variable Anda dan pastikan terdapat PATH menuju `<texlive_installation_directory>\2021\bin\win32`
