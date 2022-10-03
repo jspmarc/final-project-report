@@ -30,6 +30,23 @@ sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends \
     texlive-bibtex-extra biber xzdec
 ```
 
+Program ini juga telah diuji pada sistem operasi Fedora Linux 36
+
+```
+sudo dnf install latexmk \
+    texlive-scheme-basic \
+    texlive-babel-indonesian \
+    texlive-biblatex-apa \
+    'tex(titling.sty)' \
+    'tex(blindtext.sty)' \
+    'tex(sectsty.sty)' \
+    'tex(chngcntr.sty)' \
+    'tex(parskip.sty)' \
+    'tex(tocbibind.sty)' \
+    'tex(relsize.sty)' \
+    ''
+```
+
 Untuk Windows, Anda dapat melakukan instalasi TeXLive pada [link berikut](https://mirror.ctan.org/systems/texlive/tlnet/install-tl-windows.exe). Manual Instalasi dapat dilihat pada [link berikut](https://www.tug.org/texlive/windows.html). Jangan lupa cek environment variable Anda dan pastikan terdapat PATH menuju `<texlive_installation_directory>\2021\bin\win32`
 
 Penggunaan

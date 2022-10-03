@@ -1,11 +1,19 @@
-all: clean install
+build_dir = build
+out_dir = output
+src_dir = src
+main_file = thesis.tex
+main_file_path = $(src_dir)/$(main_file)
+built_file = $(build_dir)/$(main_file:.tex=.pdf)
 
-install:
-	mkdir -p output
-	mkdir -p build
-	latexmk -pdf -bibtex -outdir=../build -cd src/thesis.tex
-	cp build/thesis.pdf output
+.PHONY: all build clean
+
+all: clean build
+
+build: $(main_file_path)
+	mkdir -p $(out_dir) $(build_dir)
+	latexmk -pdf -bibtex -outdir=../$(build_dir) -cd $^
+	cp $(built_file) $(out_dir)
 
 clean:
-	rm -f output/* build/*
+	rm -f $(out_dir)/* $(build_dir)/*
 	find . -iname "*~" -exec rm '{}' ';'
