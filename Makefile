@@ -12,8 +12,8 @@ all: clean build
 build: $(main_file_path)
 	mkdir -p $(out_dir) $(build_dir)
 	latexmk -pdf -bibtex -outdir=../$(build_dir) -cd $^
-	cp $(built_file) $(out_dir)
+	mv $(built_file) $(out_dir)
 
 clean:
-	rm -f $(out_dir)/* $(build_dir)/*
+	rm -rf $(out_dir)/* $(build_dir)/*
 	find . -iname "*~" -exec rm '{}' ';'

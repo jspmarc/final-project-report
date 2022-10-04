@@ -4,7 +4,7 @@
   "latex-workshop.latex.recipes": [
     {
       "name": "latex_itb_ta LINUX",
-      "tools": ["latex_itb_make", "latex_itb_move"]
+      "tools": ["latex_itb_make"]
     }
   ],
   "latex-workshop.latex.tools": [
@@ -19,14 +19,8 @@
         "-bibtex",
         "-outdir=../build",
         "-cd",
-        "src/thesis.tex"
+        "thesis.tex"
       ],
-      "env": {}
-    },
-    {
-      "name": "latex_itb_move",
-      "command": "cp",
-      "args": ["-f", "%OUTDIR%/thesis.pdf", "%DIR%/../output/thesis.pdf"],
       "env": {}
     }
   ],
