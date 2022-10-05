@@ -35,7 +35,7 @@ lini produk NVIDIA Drive PX. Nama pasar dari NVIDIA Pegasus adalah NVIDIA Drive
 PX Pegasus. Lini produk NVIDIA Drive sendiri merupakan platform komputer untuk
 memberikan fungsionalitas bantuan mengemudi pada kendaraan bermotor.
 
-Mengutip dari artikel \parencite{oh_2017}, NVIDIA Pegasus adalah komputer yang
+Mengutip dari \parencite{oh_2017}, NVIDIA Pegasus adalah komputer yang
 mendukung pengemudian \textit{autonomous} secara penuh. Artinya, NVIDIA Pegasus
 dapat digunakan untuk membuat sebuah kendaraan bermotor menjadi
 \textit{autonomous vehcile} jika sensor dan algoritma yang digunakan tepat.
@@ -45,8 +45,28 @@ Xavier. Kombinasi CPU dan GPU ini dapat menghasilkan 320 TOPS (\textit{trillion
 operations/second}) untuk komputasi intelegensi buatan. Untuk koneksi I/O,
 NVIDIA Pegasus mendukung sampai dengan 16 kamera (6 di antaranya adalah lidar).
 
-\section{Jalur Komunikasi pada Sistem Terdistribusi}
-\blindtext
+\section{Komunikasi pada Sistem Terdistribusi}
+
+Pada subbab ini akan dibahas beberapa cara komunikasi yang dapat digunakan
+untuk menghubungkan dua atau lebih komputer berbeda pada sebuah sistem
+terdistribusi. Cara-cara komunikasi tersebut adalah menggunakan Rosbridge, RPC,
+\textit{messaging system}, HTTP, dan Websocket.
+
+\subsection{Rosbridge}
+
+Rosbridge adalah protokol yang menambahkan antarmuka pada komputer
+dengan sistem operasi ROS. Antarmuka yang ditambahkan membuat komputer dapat
+\textit{publish} dan \textit{subscribe} ke topik ROS dalam format JSON. Selain
+itu, antarmuka tersebut memungkinkan memanggil \textit{service} ROS di antara
+hal-hal lainnya.
+
+Spesifikasi untuk ROS \textit{bridge} tertuang di proyek \parencite{ros_bridge}.
+Untuk lapisan transfer, ROS mendukung WebSocket dan TCP.
+
+\subsection{RPC}
+\subsection{\textit{messaging system}}
+\subsection{HTTP}
+\subsection{WebSocket}
 
 \section{Penelitian Terkait}
 \blindtext
