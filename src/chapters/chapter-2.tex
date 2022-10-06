@@ -54,14 +54,39 @@ terdistribusi. Cara-cara komunikasi tersebut adalah menggunakan Rosbridge, RPC,
 
 \subsection{Rosbridge}
 
-Rosbridge adalah protokol yang menambahkan antarmuka pada komputer
+Rosbridge adalah protokol komunikasi yang menambahkan antarmuka pada komputer
 dengan sistem operasi ROS. Antarmuka yang ditambahkan membuat komputer dapat
 \textit{publish} dan \textit{subscribe} ke topik ROS dalam format JSON. Selain
 itu, antarmuka tersebut memungkinkan memanggil \textit{service} ROS di antara
 hal-hal lainnya.
 
-Spesifikasi untuk ROS \textit{bridge} tertuang di proyek \parencite{ros_bridge}.
-Untuk lapisan transfer, ROS mendukung WebSocket dan TCP.
+% TODO: nanya cara ngutip yg bener wkwk
+Spesifikasi lengkap untuk rosbridge tertuang di proyek \parencite{ros_bridge}.
+Secara arsitektur, protokol rosbridge menggunakan protokol WebSocket untuk
+lapisan transpornya. Protokol WebSocket sendiri berjalan di atas protokol TCP
+yang artinya protokol rosbridge menjamin data akan sampai dengan urutan yang
+benar.
+
+Protokol rosbridge menggunakan format JSON untuk pesannya. Pesan yang valid
+harus mengandung \textit{field} \texttt{"op"}. \textit{Field} tersebut
+digunakan untuk menentukan jenis pesan. Pesan juga dapat mengandung
+\textit{field} \texttt{"id"} yang dapat digunakan sebagai penanda transaksi
+atau keterhubungan antara beberapa pesan. Selain kedua \textit{field} tersebut,
+pesan rosbridge juga dapat mengandung \textit{field} lainnya tergantung jenis
+\texttt{"op"}.
+
+\begin{lstlisting}[language=JSON, caption=contoh pesan valid pada lapisan transpor rosbridge]
+{
+    "op": "operation"
+}
+\end{lstlisting}
+
+Jenis pesan yang dapat dikirim dapat dibagi menjadi 3 kategori:
+\begin{enumerate}
+    \item pesan kompresi atau transformasi,
+    \item pesan status rosbridge, dan
+    \item pesan operasi.
+\end{enumerate}
 
 \subsection{RPC}
 \subsection{\textit{messaging system}}
