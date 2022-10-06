@@ -18,7 +18,7 @@ Pada bab ini, Penulis akan menguraikan hasil literatur dalam penyusunan tugas
 akhir ini. Subbab pertama membahas simulator CARLA, yaitu perangkat lunak yang
 digunakan sebagai alat simulasi. Subbab kedua menjelaskan NVIDIA Pegasus yang
 akan digunakan sebagai mesin untuk menjalankan algoritma \textit{decision
-making} di lingkungan simulasi dan \textit{production}. Lalu, pada subbab
+    making} di lingkungan simulasi dan \textit{production}. Lalu, pada subbab
 ketiga akan dibahas beberapa cara komunikasi yang dapat digunakan pada sistem
 terdistribusi. Terakhir, subbab keempat akan membahas penelitian-penelitian
 terkait simulasi \textit{autonomous vehicle} menggunakan CARLA.
@@ -27,6 +27,8 @@ terkait simulasi \textit{autonomous vehicle} menggunakan CARLA.
 
 \section{Simulator CARLA}
 \blindtext
+
+% TODO: Masukin hubungan dengan NVIDIA Pegasus
 
 \section{NVIDIA Pegasus}
 
@@ -42,10 +44,14 @@ dapat digunakan untuk membuat sebuah kendaraan bermotor menjadi
 
 NVIDIA Pegasus menggunakan 2 GPU dengan arsitektur post-Volta dan 2 SoC NVIDIA
 Xavier. Kombinasi CPU dan GPU ini dapat menghasilkan 320 TOPS (\textit{trillion
-operations/second}) untuk komputasi intelegensi buatan. Untuk koneksi I/O,
+    operations/second}) untuk komputasi intelegensi buatan. Untuk koneksi I/O,
 NVIDIA Pegasus mendukung sampai dengan 16 kamera (6 di antaranya adalah lidar).
 
-\section{Komunikasi pada Sistem Terdistribusi}
+% TODO: Jelasin/masukin hubungannya dengan CARLA dan jelasin juga kalo NVIDIA
+% Pegasus ini komputer biasa yang bisa menggunakan berbagai OS (buat transisi ke
+% rosbridge)
+
+\section{Komunikasi antara Simulator CARLA dan NVIDIA Pegasus}
 
 Pada subbab ini akan dibahas beberapa cara komunikasi yang dapat digunakan
 untuk menghubungkan dua atau lebih komputer berbeda pada sebuah sistem
@@ -60,7 +66,6 @@ dengan sistem operasi ROS. Antarmuka yang ditambahkan membuat komputer dapat
 itu, antarmuka tersebut memungkinkan memanggil \textit{service} ROS di antara
 hal-hal lainnya.
 
-% TODO: nanya cara ngutip yg bener wkwk
 Spesifikasi lengkap untuk rosbridge tertuang di proyek \parencite{ros_bridge}.
 Secara arsitektur, protokol rosbridge menggunakan protokol WebSocket untuk
 lapisan transpornya. Protokol WebSocket sendiri berjalan di atas protokol TCP
@@ -81,12 +86,37 @@ pesan rosbridge juga dapat mengandung \textit{field} lainnya tergantung jenis
 }
 \end{lstlisting}
 
-Jenis pesan yang dapat dikirim dapat dibagi menjadi 3 kategori:
+Jenis pesan yang dapat dikirim dapat dibagi menjadi 3 kategori.
 \begin{enumerate}
-    \item pesan kompresi atau transformasi,
-    \item pesan status rosbridge, dan
-    \item pesan operasi.
+    \item Pesan kompresi atau transformasi dengan kode \texttt{op}:
+          \begin{itemize}
+              \item \texttt{fragment} untuk pesan yang terpecah-pecah, atau
+              \item \texttt{png} untuk pesan yang berupa berkas PNG.
+          \end{itemize}
+    \item Pesan status rosbridge
+          \begin{itemize}
+              \item \texttt{set\_status\_level} untuk mengatur tingkat pelaporan
+                    rosbridge, atau
+              \item \texttt{status} untuk pesan status.
+          \end{itemize}
+    \item Pesan operasi.
+          \begin{itemize}
+              \item \texttt{advertise} untuk TODO,
+              \item \texttt{unadvertise} untuk TODO,
+              \item \texttt{publish} untuk TODO,
+              \item \texttt{subscribe} untuk TODO,
+              \item \texttt{unsubscribe} untuk TODO,
+              \item \texttt{call\_service} untuk TODO,
+              \item \texttt{advertise\_service} untuk TODO,
+              \item \texttt{unadvertise\_service} untuk TODO,
+              \item \texttt{service\_request} untuk TODO, atau
+              \item \texttt{service\_response} untuk TODO.
+          \end{itemize}
 \end{enumerate}
+
+Pesan yang dikirim melalui protokol rosbridge dapat di-\textit{encode} dengan 3 format.
+Format pertama adalah \textit{raw} JSON.
+Dalam format ini, pesan yang dikirim akan berupa \textit{string}.
 
 \subsection{RPC}
 \subsection{\textit{messaging system}}
