@@ -18,12 +18,13 @@ Pada bab ini, Penulis akan menguraikan hasil literatur dalam penyusunan tugas
 akhir ini. Subbab pertama membahas simulator CARLA, yaitu perangkat lunak yang
 digunakan sebagai alat simulasi. Subbab kedua menjelaskan NVIDIA Pegasus yang
 akan digunakan sebagai mesin untuk menjalankan algoritma \textit{decision
-    making} di lingkungan simulasi dan \textit{production}. Lalu, pada subbab
+      making} di lingkungan simulasi dan \textit{production}. Lalu, pada subbab
 ketiga akan dibahas beberapa cara komunikasi yang dapat digunakan pada sistem
 terdistribusi. Terakhir, subbab keempat akan membahas penelitian-penelitian
 terkait simulasi \textit{autonomous vehicle} menggunakan CARLA.
 
-% Sekarang mau ke bab berapa yaaaa.... hmm... ke bab \ref{sec:latarbelakang} ahhhhh. 
+% TODO: harusnya ada gambar yg gambarin arsitektur hubungan antara server
+% simulator dengan server pegasus
 
 \section{Simulator CARLA}
 \blindtext
@@ -44,7 +45,7 @@ dapat digunakan untuk membuat sebuah kendaraan bermotor menjadi
 
 NVIDIA Pegasus menggunakan 2 GPU dengan arsitektur post-Volta dan 2 SoC NVIDIA
 Xavier. Kombinasi CPU dan GPU ini dapat menghasilkan 320 TOPS (\textit{trillion
-    operations/second}) untuk komputasi intelegensi buatan. Untuk koneksi I/O,
+      operations/second}) untuk komputasi intelegensi buatan. Untuk koneksi I/O,
 NVIDIA Pegasus mendukung sampai dengan 16 kamera (6 di antaranya adalah lidar).
 
 % TODO: Jelasin/masukin hubungannya dengan CARLA dan jelasin juga kalo NVIDIA
@@ -67,6 +68,8 @@ itu, antarmuka tersebut memungkinkan memanggil \textit{service} ROS di antara
 hal-hal lainnya.
 
 Spesifikasi lengkap untuk rosbridge tertuang di proyek \parencite{ros_bridge}.
+Pada subbab ini, spesifikasi rosbridge akan dijelaskan secara singkat.
+
 Secara arsitektur, protokol rosbridge menggunakan protokol WebSocket untuk
 lapisan transpornya. Protokol WebSocket sendiri berjalan di atas protokol TCP
 yang artinya protokol rosbridge menjamin data akan sampai dengan urutan yang
@@ -87,41 +90,46 @@ pesan rosbridge juga dapat mengandung \textit{field} lainnya tergantung jenis
 \end{lstlisting}
 
 Jenis pesan yang dapat dikirim dapat dibagi menjadi 3 kategori.
+Kategori-kategori tersebut akan diuraikan sebagai berikut.
 \begin{enumerate}
-    \item Pesan kompresi atau transformasi dengan kode \texttt{op}:
-          \begin{itemize}
-              \item \texttt{fragment} untuk pesan yang terpecah-pecah, atau
-              \item \texttt{png} untuk pesan yang berupa berkas PNG.
-          \end{itemize}
-    \item Pesan status rosbridge
-          \begin{itemize}
-              \item \texttt{set\_status\_level} untuk mengatur tingkat pelaporan
-                    rosbridge, atau
-              \item \texttt{status} untuk pesan status.
-          \end{itemize}
-    \item Pesan operasi.
-          \begin{itemize}
-              \item \texttt{advertise} untuk TODO,
-              \item \texttt{unadvertise} untuk TODO,
-              \item \texttt{publish} untuk TODO,
-              \item \texttt{subscribe} untuk TODO,
-              \item \texttt{unsubscribe} untuk TODO,
-              \item \texttt{call\_service} untuk TODO,
-              \item \texttt{advertise\_service} untuk TODO,
-              \item \texttt{unadvertise\_service} untuk TODO,
-              \item \texttt{service\_request} untuk TODO, atau
-              \item \texttt{service\_response} untuk TODO.
-          \end{itemize}
+      \item Pesan kompresi atau transformasi dengan kode \texttt{op}:
+            \begin{itemize}
+                  \item \texttt{fragment} untuk pesan yang terpecah-pecah, atau
+                  \item \texttt{png} untuk pesan yang berupa berkas PNG.
+            \end{itemize}
+      \item Pesan status rosbridge:
+            \begin{itemize}
+                  \item \texttt{set\_status\_level} untuk mengatur tingkat pelaporan
+                        rosbridge, atau
+                  \item \texttt{status} untuk pesan status.
+            \end{itemize}
+      \item Pesan operasi:
+            \begin{itemize}
+                  \item \texttt{advertise} untuk menandakan pengirim sedang
+                        mempublikasikan suatu topik,
+                  \item \texttt{unadvertise} untuk menandakan pengirim berhenti
+                        mempublikasikan suatu topik,
+                  \item \texttt{publish} untuk pesan ROS yang dipublikasikan ke
+                        suatu topik,
+                  \item \texttt{subscribe} untuk meminta ``berlangganan'' ke suatu
+                        topik,
+                  \item \texttt{unsubscribe} untuk meminta berhenti ``berlangganan'',
+                  \item \texttt{call\_service} untuk memanggil suatu layanan,
+                  \item \texttt{advertise\_service} untuk menandakan pengirim sedang
+                        mempublikasikan suatu layanan, \item \texttt{unadvertise\_service}
+                        untuk menandakan pengirim berhenti mempublikasikan suatu layanan,
+                  \item \texttt{service\_request} untuk \textit{request}/permintaan
+                        ke suatu layanan, atau \item \texttt{service\_response} untuk
+                        hasil/balasan permintaan ke suatu layanan.
+            \end{itemize}
 \end{enumerate}
 
 Pesan yang dikirim melalui protokol rosbridge dapat di-\textit{encode} dengan 3 format.
 Format pertama adalah \textit{raw} JSON.
-Dalam format ini, pesan yang dikirim akan berupa \textit{string}.
+Dalam format ini, pesan yang dikirim akan berupa \textit{string} biasa.
 
-\subsection{RPC}
-\subsection{\textit{messaging system}}
-\subsection{HTTP}
-\subsection{WebSocket}
+\subsection{RPC --- Apache Thrift}
+\subsection{\textit{Messaging System} --- ZeroMQ}
 
 \section{Penelitian Terkait}
 \blindtext
