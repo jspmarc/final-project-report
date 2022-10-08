@@ -76,16 +76,15 @@ yang artinya protokol rosbridge menjamin data akan sampai dengan urutan yang
 benar.
 
 Protokol rosbridge menggunakan format JSON untuk pesannya. Pesan yang valid
-harus mengandung \textit{field} \texttt{"op"}. \textit{Field} tersebut
-digunakan untuk menentukan jenis pesan. Pesan juga dapat mengandung
-\textit{field} \texttt{"id"} yang dapat digunakan sebagai penanda transaksi
-atau keterhubungan antara beberapa pesan. Selain kedua \textit{field} tersebut,
-pesan rosbridge juga dapat mengandung \textit{field} lainnya tergantung jenis
-\texttt{"op"}.
+harus mengandung \textit{field} \texttt{"op"}. \textit{Field} tersebut digunakan
+untuk menentukan jenis pesan. Pesan juga dapat mengandung \textit{field}
+\texttt{"id"} yang digunakan sebagai penanda transaksi atau keterhubungan antara
+beberapa pesan. Selain kedua \textit{field} tersebut, pesan rosbridge juga dapat
+mengandung \textit{field} lainnya tergantung jenis \texttt{"op"}.
 
 \begin{lstlisting}[language=JSON, caption=contoh pesan valid pada lapisan transpor rosbridge]
 {
-    "op": "operation"
+    "op": "fragment"
 }
 \end{lstlisting}
 
