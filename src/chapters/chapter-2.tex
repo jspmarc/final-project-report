@@ -52,7 +52,7 @@ NVIDIA Pegasus mendukung sampai dengan 16 kamera (6 di antaranya adalah lidar).
 % Pegasus ini komputer biasa yang bisa menggunakan berbagai OS (buat transisi ke
 % rosbridge)
 
-\section{Komunikasi antara Simulator CARLA dan NVIDIA Pegasus}
+\section{Metode Komunikasi antara Simulator CARLA dan NVIDIA Pegasus}
 
 Pada subbab ini akan dibahas beberapa cara komunikasi yang dapat digunakan
 untuk menghubungkan dua atau lebih komputer berbeda pada sebuah sistem
@@ -124,13 +124,25 @@ Kategori-kategori tersebut akan diuraikan sebagai berikut.
             \end{itemize}
 \end{enumerate}
 
-Pesan yang dikirim melalui protokol rosbridge dapat di-\textit{encode} dengan 3 format.
-Format pertama adalah \textit{raw} JSON.
-Dalam format ini, pesan yang dikirim akan berupa \textit{string} biasa.
+Pesan yang dikirim melalui protokol rosbridge dapat di-\textit{encode} dengan 3
+format. Format pertama adalah \textit{raw} JSON. Dalam format ini, pesan yang
+dikirim akan berupa \textit{string} biasa. Selain itu, pesan yang dikirim juga
+dapat dikompresi dengan format CBOR (\textit{concise binary object
+      representation}) atau CBOR-\textit{raw}. Pesan dalam format CBOR akan berbentuk
+pesan \textit{binary}. Sehingga pesan harus didekompresi oleh penerima untuk
+mendapatkan pesan aslinya.
+
+Perbedaan antara CBOR dengan CBOR-\textit{raw} adalah format pesannya. Pada
+CBOR-\textit{raw}, pesan dikirim dalam format serialisasi ROS. Format
+serialisasi ROS digunakan untuk mengirimkan data antar-ROS \textit{node} dan
+pada berkas \texttt{bag}\footnote{Format berkas yang digunakan untuk menyimpan
+      data pada mesin ROS.}. Keuntungan menggunakan CBOR-\textit{raw} adalah
+meningkatkan kinerja jika ingin \textit{parsing} hanya sebagian pesan, aplikasi
+dapat membaca berkas \texttt{bag}, atau \textit{parsing} pesan ingin dilakukan
+setelat mungkin atau secara paralel.
 
 \subsection{RPC --- Apache Thrift}
 \subsection{\textit{Messaging System} --- ZeroMQ}
 
 \section{Penelitian Terkait}
 \blindtext
-
