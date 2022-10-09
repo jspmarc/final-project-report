@@ -1,19 +1,5 @@
 \chapter{Studi Literatur}
 
-% Bab Studi Literatur digunakan untuk mendeskripsikan kajian literatur yang
-% terkait dengan persoalan tugas akhir. Tujuan studi literatur adalah:
-
-% \begin{enumerate}
-%     \item menunjukkan kepada pembaca adanya gap seperti pada rumusan masalah
-%         yang memang belum terselesaikan,
-%     \item memberikan pemahaman yang secukupnya kepada pembaca tentang teori
-%         atau pekerjaan terkait yang terkait langsung dengan penyelesaian
-%         persoalan, serta
-%     \item menyampaikan informasi apa saja yang sudah ditulis/dilaporkan oleh
-%         pihak lain (peneliti/Tugas Akhir/Tesis) tentang hasil
-%         penelitian/pekerjaan mereka yang sama atau mirip kaitannya dengan
-%         persoalan tugas akhir.
-% \end{enumerate}
 Pada bab ini, Penulis akan menguraikan hasil literatur dalam penyusunan tugas
 akhir ini. Subbab pertama membahas simulator CARLA, yaitu perangkat lunak yang
 digunakan sebagai alat simulasi. Subbab kedua menjelaskan NVIDIA Pegasus yang
@@ -22,9 +8,6 @@ akan digunakan sebagai mesin untuk menjalankan algoritma \textit{decision
 ketiga akan dibahas beberapa cara komunikasi yang dapat digunakan pada sistem
 terdistribusi. Terakhir, subbab keempat akan membahas penelitian-penelitian
 terkait simulasi \textit{autonomous vehicle} menggunakan CARLA.
-
-% TODO: harusnya ada gambar yg gambarin arsitektur hubungan antara server
-% simulator dengan server pegasus
 
 \section{Simulator CARLA}
 \blindtext
@@ -37,6 +20,13 @@ NVIDIA Pegasus adalah salah satu produk cetusan NVIDIA Corporation di bawah
 lini produk NVIDIA Drive PX. Nama pasar dari NVIDIA Pegasus adalah NVIDIA Drive
 PX Pegasus. Lini produk NVIDIA Drive sendiri merupakan platform komputer untuk
 memberikan fungsionalitas bantuan mengemudi pada kendaraan bermotor.
+
+\begin{figure}
+      \begin{center}
+            \includegraphics[height=0.5\textheight]{resources/chapter-2/pegasus.png}
+            \caption{NVIDIA Pegasus \parencite{trilaksono_laporanRispro}}
+      \end{center}
+\end{figure}
 
 Mengutip dari \parencite{oh_2017}, NVIDIA Pegasus adalah komputer yang
 mendukung pengemudian \textit{autonomous} secara penuh. Artinya, NVIDIA Pegasus
@@ -54,10 +44,29 @@ NVIDIA Pegasus mendukung sampai dengan 16 kamera (6 di antaranya adalah lidar).
 
 \section{Metode Komunikasi antara Simulator CARLA dan NVIDIA Pegasus}
 
-Pada subbab ini akan dibahas beberapa cara komunikasi yang dapat digunakan
-untuk menghubungkan dua atau lebih komputer berbeda pada sebuah sistem
-terdistribusi. Cara-cara komunikasi tersebut adalah menggunakan Rosbridge, RPC,
-\textit{messaging system}, HTTP, dan Websocket.
+Pada keadaan yang ada, komunikasi antara simulator CARLA dengan NVIDIA Pegasus
+perantara menggunakan \textit{web service} yang berbasis HTTP. Penggunaan HTTP
+pada \textit{web service} menjadi \textit{bottleneck}/penghambat kinerja
+terbesar sistem simulasi. Ketika dilakukan secara SILS (\textit{software in the
+      loop simulation} tanpa NVIDIA Pegasus) didapatkan kinerja 4000 transaksi per
+detik, sedangkan ketika NVIDIA Pegasus ditambahkan ke sistem (menjadi HILS,
+\textit{hardware in the loop simulation}) didapatkan 100--110 transaksi per
+detik \parencite{trilaksono_laporanRispro}. Oleh karena itu, dibutuhkan protokol
+atau metode komunikasi lain yang dapat meningkatkan kinerja jalur komunikasi.
+Selain itu, jalur komunikasi yang digunakan harus dapat mengirimkan pesan berupa
+teks \textit{string}, larik angka, atau data \textit{binary} (misalnya gambar).
+
+\begin{figure}
+      \begin{center}
+            \includegraphics[width=1.0\textwidth]{resources/chapter-2/komunikasi
+                  data pada simulasi.png}
+            \caption{Arsitektur komunikasi data pada HILS \parencite{trilaksono_laporanRispro}}
+      \end{center}
+\end{figure}
+
+Beberapa alternatif metode/protokol jalur komunikasi dapat digunakan untuk menghubungkan
+sistem ini akan dibahas pada subbab ini. Protokol atau metode tersebut adalah rosbridge,
+RPC, dan \textit{messaging system}.
 
 \subsection{Rosbridge}
 
