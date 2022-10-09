@@ -320,9 +320,44 @@ Secara bawaan, Apache Thrift mendukung beberapa transpor, protokol, dan server
           \end{itemize}
 \end{itemize}
 
-\subsection{\textit{Messaging System}}
+\subsection{Komunikasi Berorientasi Pesan}
+
+Komunikasi berorientasi pesan adalah salah satu metode komunikasi pada sistem
+terdistribusi. Metode ini utamanya bersifat
+\textit{asynchronous}\footnote{Beberapa implementasi bisa \textit{synchronous}
+    juga.}, artinya konsumen/klien tidak perlu \textit{blocking} ketika membuat
+\textit{request}. Sifat \textit{asynchronous} ini merupakan alternatif untuk
+serta cara berkomunikasi \textit{request/response} lainnya dan berguna ketika
+konsumen tidak membutuhkan hasil pemrosesan pesan.
+
+Metode untuk komunikasi berorientasi pesan yang akan dibahas adalah pustaka
+ZeroMQ. Kedua protokol juga akan digunakan untuk membuat jalur komunikasi antara
+server NVIDIA Pegasus dengan server simulator CARLA.
 
 \subsubsection{ZeroMQ}
+
+ZeroMQ (\textit{zero message queue}) adalah sebuah pustaka yang merupakan
+pe\-ning\-ka\-tan di atas \textit{socket} tradisional. ZeroMQ memberikan
+fungsionalitas tambahan terhadap \textit{socket} dan mengabstraksi pembuatan
+koneksi TCP dengan harapan memudahkan pengembangan aplikasi terdistribusi.
+Fungsionalitas yang ditambahkan oleh ZeroMQ didasarkan pada pola-pola komunikasi
+yang sering terjadi ketika menggunakan protokol TCP.
+
+ZeroMQ memungkinkan komunikasi \textit{one-to-one} (seperti \textit{socket}
+biasa), \textit{many-to-one} (\textit{socket} mendengarkan ke beberapa
+\textit{port}), dan \textit{one-to-many}. Pola komunikasi yang didukung oleh
+ZeroMQ adalah \textit{request-reply}, \textit{publish-subscribe}, dan
+\textit{pipeline}. ZeroMQ juga memiliki sebuah antrian pesan (\textit{message
+    queue}) sehingga pesan yang dikirimkan ke konsumen akan disimpan
+sampai konsumen siap menerima pesan.
+
+ZeroMQ berjalan di atas lapisan transpor ZMTP (ZeroMQ \textit{message transport
+    protocol}). Semantik ZMTP memastikan pesan tidak akan diterima lebih dari 1 kali
+oleh konsumen dan semua pesan akan diterima oleh konsumen dengan urutan yang
+benar. Selain itu, \textit{frame} pesan yang diterima konsumen akan
+di-\textit{queue} di memori penerima sampai semua \textit{frame} diterima.
+Semantik ZMTP juga memastikan \textit{socket} dapat membuat dan menerima koneksi
+serta \textit{socket} akan menyambungkan kembali jika koneksi terputus.
 
 \section{Penelitian Terkait}
 \blindtext
