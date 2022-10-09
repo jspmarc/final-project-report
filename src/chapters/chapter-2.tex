@@ -85,20 +85,7 @@ pemanggilan fungsi tersebut akan menghasilkan suatu nilai baru dan akan membuat
 program \textit{blocking} (menunggu) sampai nilai baru tersebut
 didapatkan\footnote{terdapat variasi RPC, \textit{asynchronous} RPC, yang
     memungkinkan pemanggilan fungsi \textit{remote} tanpa menghasilkan
-    \textit{return} sehingga tidak perlu ditunggu \parencite{tanenbaum_distSys}.}.
-
-Abstraksi RPC ``diberikan'' oleh 2 komponen utama pada RPC. Komponen pertama
-adalah protokol yang mengurusi pengiriman pesan antara \textit{server/producer}
-dan \textit{client/consumer}. Kedua, bahasa pemrograman dan \textit{compiler}
-yang dapat membungkus pemanggilan fungsi \textit{remote} menjadi pesan
-\textit{request} dan mentranslasikan pesan \textit{request} menjadi pemanggilan
-ke fungsi lokal (begitu juga untuk \textit{return} dari pemanggilan fungsi
-\textit{remote}).
-
-Secara arsitektur, RPC bisa dibangun di atas protokol TCP sehingga pembuat
-implementasi RPC tidak perlu memikirkan keandalan (\textit{reliability})
-pengiriman pesan pada implementasinya. Akan tetapi, RPC juga bisa dibangun di
-atas protokol UDP atau IP lalu ditambahkan/dibuat lapisan keandalannya sendiri.
+    \textit{return} sehingga tidak perlu ditunggu.}.
 
 Implementasi RPC yang akan dibahas pada subbab ini adalah Apache Thrift.
 Apa\-che Thrift juga merupakan implementasi RPC yang akan digunakan untuk
@@ -117,125 +104,30 @@ Thrift adalah sebuah jembatan antar-bahasa pemrograman yang memiliki kinerja
 tinggi \parencite{agarwal_thrift} sehingga Apache Thrift dapat digunakan lintas
 bahasa pemrograman.
 
-Apache Thrift memiliki beberapa abstraksi yang memudahkan pengembang untuk
-menggunakan RPC. Abstraksi-abstraksi tersebut adalah sistem tipe, protokol,
-transpor, pemberian versi, dan prosesor.
+Apache Thrift memiliki beberapa abstraksi dan kakas yang memudahkan pengembang
+untuk menggunakan RPC. Abstraksi-abstraksi tersebut adalah sistem tipe, protokol
+(untuk \textit{encoding} pesan), transpor, pemberian versi, dan prosesor.
 
-Sistem tipe pada Apache Thrift bertindak sebagai \textit{common language}
-antar-bahasa pemrograman. Dengan adanya sistem tipe ini, sebuah definisi untuk
-Apache Thrift dapat digunakan untuk banyak bahasa tanpa mengharuskan pemrogram
-menulis tipe data buatan atau kode serialisasi sendiri. Tipe-tipe yang ada pada
-sistem tipe Apache Thrift adalah \parencite{agarwal_thrift}
-\begin{itemize}
-    \item tipe dasar: \texttt{bool}, \texttt{byte}, \texttt{i16},
-          \texttt{i32}, \texttt{i64}, \texttt{double}, dan \texttt{string},
-    \item tipe struktur data (``\textit{struct}''): tipe komposit yang setara
-          dengan kelas data pada pemrograman berorientasi objek atau \texttt{struct}
-          pada C,
-    \item \textit{container}: kumpulan data dan terdiri atas
-          \begin{itemize}
-              \item \texttt{list<type>}: daftar terurut dari beberapa elemen
-                    dengan tipe \texttt{type},
-              \item \texttt{set<type>}: himpunan elemen dengan tipe
-                    \texttt{type} yang tidak terurut, dan
-              \item \texttt{map<type1, type2>}: \textit{map} dengan \textit{key}
-                    unik bertipe \texttt{type1} yang di\-pe\-ta\-kan tepat ke 1
-                    \textit{value} bertipe \texttt{type2},
-          \end{itemize}
-    \item \textit{exception}: galat dan pendefinisiannya sama dengan
-          \textit{struct}, dan
-    \item layanan (``\textit{service}''): akan menciptakan \textit{interface}
-          (atau padanannya) di bahasa target.
-\end{itemize}
+Abstraksi yang diberikan oleh Apache Thrift memudahkan penggunanya dalam
+me\-la\-ku\-kan pengembangan sebuah layanan menggunakan RPC. Pengguna Apache
+Thrift tidak perlu memikirkan cara melakukan RPC, melainkan hanya perlu
+men\-de\-fi\-ni\-si\-kan layanan-layanan yang diberikan serta struktur data
+tambahan pada sebuah berkas Thrift IDL (\textit{interface definition language}).
+Dari definisi pada IDL tersebut, pembangkit kode Thrift (Thrift \textit{code
+    generator}) akan membuat \textit{interface} untuk server dan klien. Pengguna
+Thrift hanya perlu mengimplementasikan layanan-layanan tersebut pada sisi
+server, sedangkan urusan protokol, transpor, dan menangani pemanggilan RPC dapat
+menggunakan kakas dari pustaka Apache Thrift.
 
-Data-data yang ingin digunakan pada sistem dan sesuai dengan sistem tipe Thrift
-dapat dituliskan pada Thrift IDL (\textit{interface definition language}).
-Thrift IDL memungkinkan pendefinisian struktur-struktur data tanpa harus
-menuliskan informasi cara mentransportasikan data dengan aman. Struktur data
-yang dapat didefinisikan pada Thrift IDL adalah \textit{struct}, \textit{enum},
-konstanta (``\textit{const}''), alias tipe (\texttt{typedef} di C), \textit{union}
-(\texttt{union} di C), dan \textit{exception}. IDL akan digunakan pembangkit
-kode Thrift untuk membangkitkan kode pada bahasa target sehingga dapat
-menggunakan layanan dan struktur data pada IDL.
-
-Abstraksi transpor pada Apache Thrift membangkitkan kode yang dapat
-di\-gu\-na\-kan untuk transpor data. Dengan adanya abstraksi ini, antarmuka
-aliran data dapat dengan mudah diubah-ubah. Kode yang dibangkitkan Thrift juga
-tidak peduli dengan sumber data sehingga dengan adanya abstraksi ini pengguna
-Thrift dapat memilih media transpor data dengan bebas dan mudah.
-\textit{Interface} untuk abstraksi transpor adalah \texttt{TTransport}.
-
-Abstraksi protokol memisahkan struktur data dari representasi yang digunakan
-untuk transpor. Dengan adanya abstraksi protokol, pengguna Thrift tidak perlu
-me\-mi\-kir\-kan cara \textit{encoding} dan \textit{decoding} data yang ingin dikirim
-melalui abstraksi transpor. \textit{Interface} untuk abstraksi protokol adalah
-\texttt{TProtocol}.
-
-Abstraksi \textit{versioning} bertujuan memudahkan pembaharuan layanan dan
-struktur data. Abstraksi ini dicapai dengan penambahan sebuah nomor
-\textit{identifier} sebelum \textit{field} pada \textit{struct} dan
-\textit{exception} serta pada argumen untuk metode-metode layanan.
-
-Abstraksi prosesor adalah abstraksi yang untuk memproses data dan melakukan RPC.
-Abstraksi prosesor menggunakan \textit{interface} \texttt{TProcessor} dan
-memiliki sebuah metode \texttt{process} untuk menangani pemanggilan RPC.
-
-Thrift juga menyediakan sebuah \textit{interface} \texttt{TServer}.
-\texttt{TServer} bertanggung jawab atas pengurusan koneksi, \textit{threading},
-dll. sedangkan \texttt{TProcessor} bertanggung jawab atas penanganan pemanggilan
-RPC. Salah satu pekerjaan \texttt{TServer} adalah memanggil metode
-\texttt{process} pada \texttt{TProcessor}.
-
-\textit{Interface} \texttt{TServer} dan \texttt{TProcessor} akan dibangkitkan
-pada server/produsen. Se\-dang\-kan pada klien/konsumen akan dibangkitkan
-implementasi untuk \textit{interface}/la\-ya\-nan pada IDL, disebut
-\textit{client}. Implementasi pada klien memanfaatkan 2 buah \texttt{TProtocol}
-untuk melakukan proses I/O.
-
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=0.25\textheight]{resources/chapter-2/thrift-arch.png}
-        \caption{arsitektur Apache Thrift \parencite{prunicki_thrift}}
-    \end{center}
-\end{figure}
-
-Secara bawaan, Apache Thrift mendukung beberapa transpor, protokol, dan server
-\parencite{prunicki_thrift}. Dukungan-dukungan tersebut adalah
-\begin{itemize}
-    \item transpor (implementasi \texttt{TTransport}):
-          \begin{itemize}
-              \item \texttt{TSim\-ple\-FileTrans\-port}: menggunakan berkas,
-              \item \texttt{TMe\-mo\-ry\-Trans\-port}: menggunakan memori,
-              \item \texttt{T\-Sock\-et}: \textit{socket blocking},
-              \item \texttt{TFramed\-Trans\-port}: pada server
-                    \textit{nonblocking}, dan
-              \item \texttt{T\-Z\-lib\-Trans\-port}: Melakukan kompresi dengan
-                    zlib dan harus digunakan dengan trans\-por lain,
-          \end{itemize}
-    \item protokol (implementasi \texttt{TProtocol}):
-          \begin{itemize}
-              \item \texttt{TBinaryProtocol}: pesan dikirim dalam format
-                    \textit{binary},
-              \item \texttt{TCompactProtocol}: \texttt{TBinaryProtocol} yang
-                    lebih \textit{compact},
-              \item \texttt{TDenseProtocol}: \texttt{TCompactProtocol} yang
-                    di\-hi\-lang\-kan \textit{me\-ta\-da\-ta}-nya, lalu ditambahkan
-                    lagi oleh penerima,
-              \item \texttt{TJsonProtocol}: pesan dikirim dalam format JSON,
-              \item \texttt{TSimpleJsonProtocol}: \texttt{TJsonProtocol} tanpa
-                    \textit{metadata}, cocok untuk bahasa \textit{scripting}, dan
-              \item \texttt{TDebugProtocol}: format paling mudah dibaca manusia,
-          \end{itemize}
-    \item server (implementasi \texttt{TServer}):
-          \begin{itemize}
-              \item \texttt{TSimpleServer}: server \textit{single-threaded},
-              \item \texttt{TThreadPoolServer}: server \textit{multi-threaded}
-                    dengan \textit{blocking} I/O, dan
-              \item \texttt{TNonBlockingServer}: server \textit{multi-threaded}
-                    dengan \textit{non-blocking} I/O dan harus menggunakan
-                    \texttt{TFramedTransport}.
-          \end{itemize}
-\end{itemize}
+Dengan menggunakan kakas bawaan dari pustaka Thrift, pesan \textit{request} yang
+di\-ki\-rim\-kan melalui lapisan transpor Thrift dapat berupa \textit{binary},
+JSON, dan bentuk yang mudah dibaca manusia. Lalu, transpor yang didukung pustaka
+bawaan Thrift adalah transpor menggunakan memori, berkas, HTTP, dan
+\textit{socket} (TCP). Pustaka Thrift juga menyediakan transpor yang melakukan
+kompresi dan transpor yang membagi pesan menjadi beberapa \textit{frame}. Jenis
+server yang disediakan oleh pustaka bawaan Thrift pun beragam. Server bisa
+menggunakan 1 \textit{thread} ataupun banyak \textit{thread} dengan I/O
+\textit{blocking} maupun non-\textit{blocking}.
 
 \subsection{Komunikasi Berorientasi Pesan}
 
