@@ -163,14 +163,12 @@ memiliki perilaku yang sama. Pemanggilan fungsi \textit{remote} artinya
 implementasi fungsi berada di komputer lain di dalam jaringan.
 
 Ketika menggunakan RPC, pengembang tidak perlu tahu pemanggilan sebuah fung\-si
-dilakukan secara lokal atau \textit{remote}; pengembang hanya tahu pemanggilan
-fungsi tersebut akan menghasilkan suatu nilai baru dan dapat (tidak
-selalu\footnote{Beberapa implementasi RPC mendukung pemanggilan
-    \textit{asynchronous} yang tidak harus memberikan sebuah \textit{return}
-    (misalnya Apache Thrift dengan kata kunci \texttt{async}/\texttt{oneway}
-    \parencite{agarwal_thrift}).})
-membuat program \textit{blocking} (menunggu) sampai nilai baru tersebut
-didapatkan.
+dilakukan secara lokal atau \textit{remote}; pengembang hanya perlu tahu
+pemanggilan fungsi tersebut akan menghasilkan suatu nilai baru dan akan membuat
+program \textit{blocking} (menunggu) sampai nilai baru tersebut
+didapatkan\footnote{terdapat variasi RPC, \textit{asynchronous} RPC, yang
+    memungkinkan pemanggilan fungsi \textit{remote} tanpa menghasilkan
+    \textit{return} sehingga tidak perlu ditunggu \parencite{tanenbaum_distSys}.}.
 
 Abstraksi RPC ``diberikan'' oleh 2 komponen utama pada RPC. Komponen pertama
 adalah protokol yang mengurusi pengiriman pesan antara \textit{server/producer}
