@@ -38,9 +38,10 @@ Xavier. Kombinasi CPU dan GPU ini dapat menghasilkan 320 TOPS (\textit{trillion
     operations/second}) untuk komputasi intelegensi buatan. Untuk koneksi I/O,
 NVIDIA Pegasus mendukung sampai dengan 16 kamera (6 di antaranya adalah lidar).
 
-% TODO: Jelasin/masukin hubungannya dengan CARLA dan jelasin juga kalo NVIDIA
-% Pegasus ini komputer biasa yang bisa menggunakan berbagai OS (buat transisi ke
-% rosbridge)
+Pada sistem yang dibuat, NVDIA Pegasus akan menjadi server yang bertanggung
+jawab atas komputasi serta \textit{decision making}. NVIDIA Pegasus yang
+digunakan memiliki kumpulan kakas dan pustaka untuk membangun aplikasi robot
+yang disebut ROS (\textit{robot operating system}).
 
 \section{Metode Komunikasi antara Simulator CARLA dan NVI\-DI\-A Pegasus}
 
@@ -65,9 +66,9 @@ teks \textit{string}, larik angka, atau data \textit{binary} (misalnya gambar).
     \end{center}
 \end{figure}
 
-Beberapa alternatif metode/protokol jalur komunikasi dapat digunakan untuk
-meng\-hu\-bung\-kan sistem ini akan dibahas pada subbab ini. Protokol atau
-metode tersebut adalah rosbridge, RPC, dan \textit{messaging system}.
+Beberapa alternatif metode jalur komunikasi dapat digunakan untuk
+meng\-hu\-bung\-kan kedua server akan dibahas pada subbab ini. metode tersebut
+adalah komunikasi berorientasi pesan dan RPC.
 
 \subsection{RPC}
 
@@ -146,11 +147,11 @@ CARLA.
 
 \subsubsection{Rosbridge}
 
-Rosbridge adalah protokol komunikasi yang menambahkan antarmuka pada komputer
-dengan sistem operasi ROS. Antarmuka yang ditambahkan memungkinkan komunikasi
-dengan pola \textit{publish/subscribe} dengan suatu topik ROS dalam format JSON.
-Selain itu, antarmuka juga memungkinkan memanggil \textit{service} ROS
-(komunikasi pola \textit{request/reply}).
+Rosbridge adalah protokol komunikasi yang menambahkan suatu antarmuka ke ROS.
+Antarmuka yang ditambahkan memungkinkan komunikasi dengan \textit{node} ROS
+lainnya. Komunikasi dapat dilakukan dengan pola \textit{publish/subscribe} ke
+suatu topik ROS. Selain itu, komunikasi dapat dilakukan juga dengan pola
+\textit{request/reply} dengan memanggil \textit{service} ROS.
 
 Protokol rosbridge menggunakan format JSON untuk pesannya. Pesan yang valid
 harus mengandung \textit{field} \texttt{"op"}. \textit{Field} tersebut digunakan
