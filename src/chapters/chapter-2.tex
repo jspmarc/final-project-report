@@ -69,89 +69,6 @@ Beberapa alternatif metode/protokol jalur komunikasi dapat digunakan untuk
 meng\-hu\-bung\-kan sistem ini akan dibahas pada subbab ini. Protokol atau
 metode tersebut adalah rosbridge, RPC, dan \textit{messaging system}.
 
-\subsection{Rosbridge}
-
-Rosbridge adalah protokol komunikasi yang menambahkan antarmuka pada komputer
-dengan sistem operasi ROS. Antarmuka yang ditambahkan membuat komputer dapat
-\textit{publish} dan \textit{subscribe} ke topik ROS dalam format JSON. Selain
-itu, antarmuka tersebut memungkinkan memanggil \textit{service} ROS di antara
-hal-hal lainnya.
-
-Spesifikasi lengkap untuk rosbridge tertuang di proyek \parencite{ros_bridge}.
-Pada subbab ini, spesifikasi rosbridge akan dijelaskan secara singkat.
-
-Secara arsitektur, protokol rosbridge menggunakan protokol WebSocket untuk
-la\-pi\-san transpornya. Protokol WebSocket sendiri berjalan di atas protokol TCP
-yang artinya protokol rosbridge menjamin data akan sampai dengan urutan yang
-benar.
-
-Protokol rosbridge menggunakan format JSON untuk pesannya. Pesan yang valid
-harus mengandung \textit{field} \texttt{"op"}. \textit{Field} tersebut digunakan
-untuk menentukan jenis pesan. Pesan juga dapat mengandung \textit{field}
-\texttt{"id"} yang digunakan sebagai penanda transaksi atau keterhubungan antara
-beberapa pesan. Selain kedua \textit{field} tersebut, pesan rosbridge juga dapat
-mengandung \textit{field} lainnya tergantung jenis \texttt{"op"}.
-
-\begin{lstlisting}[language=JSON, caption=contoh pesan valid pada lapisan
-transpor rosbridge]
-{
-    "op": "fragment"
-}
-\end{lstlisting}
-
-Jenis pesan yang dapat dikirim dapat dibagi menjadi 3 kategori.
-Kategori-kategori tersebut akan diuraikan sebagai berikut.
-\begin{enumerate}
-    \item Pesan kompresi atau transformasi dengan kode \texttt{op}:
-          \begin{itemize}
-              \item \texttt{fragment} untuk pesan yang terpecah-pecah, atau
-              \item \texttt{png} untuk pesan yang berupa berkas PNG.
-          \end{itemize}
-    \item Pesan status rosbridge:
-          \begin{itemize}
-              \item \texttt{set\_status\_level} untuk mengatur tingkat pelaporan
-                    rosbridge, atau
-              \item \texttt{status} untuk pesan status.
-          \end{itemize}
-    \item Pesan operasi:
-          \begin{itemize}
-              \item \texttt{advertise} untuk menandakan pengirim sedang
-                    mempublikasikan suatu topik,
-              \item \texttt{unadvertise} untuk menandakan pengirim berhenti
-                    mempublikasikan suatu topik,
-              \item \texttt{publish} untuk pesan ROS yang dipublikasikan ke
-                    suatu topik,
-              \item \texttt{subscribe} untuk meminta ``berlangganan'' ke suatu
-                    topik,
-              \item \texttt{unsubscribe} untuk meminta berhenti ``berlangganan'',
-              \item \texttt{call\_service} untuk memanggil suatu layanan,
-              \item \texttt{advertise\_service} untuk menandakan pengirim
-                    sedang mem\-pu\-bli\-ka\-si\-kan suatu layanan, \item
-                    \texttt{unadvertise\_service} untuk menandakan pengirim
-                    berhenti mempublikasikan suatu layanan,
-              \item \texttt{service\_request} untuk \textit{request}/permintaan
-                    ke suatu layanan, atau \item \texttt{service\_response} untuk
-                    hasil/balasan permintaan ke suatu layanan.
-          \end{itemize}
-\end{enumerate}
-
-Pesan yang dikirim melalui protokol rosbridge dapat di-\textit{encode} dengan 3
-format. Format pertama adalah \textit{raw} JSON. Dalam format ini, pesan yang
-dikirim akan berupa \textit{string} biasa. Selain itu, pesan yang dikirim juga
-dapat dikompresi dengan format CBOR (\textit{concise binary object
-    representation}) atau CBOR-\textit{raw}. Pesan dalam format CBOR akan
-berbentuk pesan \textit{binary}. Sehingga pesan harus didekompresi oleh
-penerima untuk mendapatkan pesan aslinya.
-
-Perbedaan antara CBOR dengan CBOR-\textit{raw} adalah format pesannya. Pada
-CBOR-\textit{raw}, pesan dikirim dalam format serialisasi ROS. Format
-serialisasi ROS digunakan untuk mengirimkan data antar-ROS \textit{node} dan
-pada berkas \texttt{bag}\footnote{Format berkas yang digunakan untuk menyimpan
-    data pada mesin ROS.}. Keuntungan menggunakan CBOR-\textit{raw} adalah
-peningkatan kinerja jika \textit{parsing} hanya sebagian pesan, aplikasi dapat
-membaca berkas \texttt{bag}, atau \textit{parsing} pesan ingin dilakukan
-seterlambat mungkin atau secara paralel.
-
 \subsection{RPC}
 
 RPC, atau \textit{remote procedure call}, secara teknis bukanlah protokol,
@@ -330,9 +247,40 @@ terdistribusi. Metode ini utamanya bersifat
 serta cara berkomunikasi \textit{request/response} lainnya dan berguna ketika
 konsumen tidak membutuhkan hasil pemrosesan pesan.
 
-Metode untuk komunikasi berorientasi pesan yang akan dibahas adalah pustaka
-ZeroMQ. Kedua protokol juga akan digunakan untuk membuat jalur komunikasi antara
-server NVIDIA Pegasus dengan server simulator CARLA.
+Implementasi untuk komunikasi berorientasi pesan yang akan dibahas adalah
+protokol rosbridge dan pustaka ZeroMQ. Kedua protokol juga akan digunakan untuk
+membuat jalur komunikasi antara server NVIDIA Pegasus dengan server simulator
+CARLA.
+
+\subsubsection{Rosbridge}
+
+Rosbridge adalah protokol komunikasi yang menambahkan antarmuka pada komputer
+dengan sistem operasi ROS. Antarmuka yang ditambahkan memungkinkan komunikasi
+dengan pola \textit{publish/subscribe} dengan suatu topik ROS dalam format JSON.
+Selain itu, antarmuka juga memungkinkan memanggil \textit{service} ROS
+(komunikasi pola \textit{request/reply}).
+
+Protokol rosbridge menggunakan format JSON untuk pesannya. Pesan yang valid
+harus mengandung \textit{field} \texttt{"op"}. \textit{Field} tersebut digunakan
+untuk menentukan jenis pesan. Pesan juga dapat mengandung \textit{field}
+\texttt{"id"} yang digunakan sebagai penanda transaksi atau keterhubungan antara
+beberapa pesan. Selain kedua \textit{field} tersebut, pesan rosbridge juga dapat
+mengandung \textit{field} lainnya tergantung jenis \texttt{op}.
+
+Secara arsitektur, rosbridge menggunakan WebSocket sebagai layanan
+trans\-por\-nya. Artinya, pesan pada rosbridge pasti akan sampai dengan urutan
+yang benar. Selain itu, pesan yang dikirim dapat berupa \textit{string} maupun
+\textit{binary}. Pesan yang berupa \textit{string} adalah pesan dalam format
+\textit{raw} JSON. Sedangkan dalam rupa \textit{binary}, rosbridge mendukung
+kompresi dan \textit{encoding} dengan CBOR (\textit{concise binary object
+    representation}) dan CBOR-\textit{raw}. Pesan CBOR harus didekompresi oleh
+penerima menjadi \textit{raw} JSON.
+
+Perbedaan antara CBOR dengan CBOR-\textit{raw} adalah format pesannya. Pada
+CBOR-\textit{raw}, pesan dikirim dalam format serialisasi ROS. Keuntungan
+menggunakan C\-B\-O\-R-\textit{raw} adalah peningkatan kinerja jika \textit{parsing}
+hanya sebagian pesan, aplikasi dapat membaca berkas \texttt{bag}, atau
+\textit{parsing} pesan ingin dilakukan seterlambat mungkin atau secara paralel.
 
 \subsubsection{ZeroMQ}
 
