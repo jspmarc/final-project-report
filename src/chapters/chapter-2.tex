@@ -60,7 +60,8 @@ teks \textit{string}, larik angka, atau data \textit{binary} (misalnya gambar).
     \begin{center}
         \includegraphics[width=1.0\textwidth]{resources/chapter-2/komunikasi
             data pada simulasi.png}
-        \caption{arsitektur komunikasi data pada HILS \parencite{trilaksono_laporanRispro}}
+        \caption{arsitektur komunikasi data pada HILS
+            \parencite{trilaksono_laporanRispro}}
     \end{center}
 \end{figure}
 
@@ -91,7 +92,8 @@ untuk menentukan jenis pesan. Pesan juga dapat mengandung \textit{field}
 beberapa pesan. Selain kedua \textit{field} tersebut, pesan rosbridge juga dapat
 mengandung \textit{field} lainnya tergantung jenis \texttt{"op"}.
 
-\begin{lstlisting}[language=JSON, caption=contoh pesan valid pada lapisan transpor rosbridge]
+\begin{lstlisting}[language=JSON, caption=contoh pesan valid pada lapisan
+transpor rosbridge]
 {
     "op": "fragment"
 }
@@ -137,9 +139,9 @@ Pesan yang dikirim melalui protokol rosbridge dapat di-\textit{encode} dengan 3
 format. Format pertama adalah \textit{raw} JSON. Dalam format ini, pesan yang
 dikirim akan berupa \textit{string} biasa. Selain itu, pesan yang dikirim juga
 dapat dikompresi dengan format CBOR (\textit{concise binary object
-    representation}) atau CBOR-\textit{raw}. Pesan dalam format CBOR akan berbentuk
-pesan \textit{binary}. Sehingga pesan harus didekompresi oleh penerima untuk
-mendapatkan pesan aslinya.
+    representation}) atau CBOR-\textit{raw}. Pesan dalam format CBOR akan
+berbentuk pesan \textit{binary}. Sehingga pesan harus didekompresi oleh
+penerima untuk mendapatkan pesan aslinya.
 
 Perbedaan antara CBOR dengan CBOR-\textit{raw} adalah format pesannya. Pada
 CBOR-\textit{raw}, pesan dikirim dalam format serialisasi ROS. Format
@@ -250,7 +252,7 @@ Thrift dapat memilih media transpor data dengan bebas dan mudah.
 
 Abstraksi protokol memisahkan struktur data dari representasi yang digunakan
 untuk transpor. Dengan adanya abstraksi protokol, pengguna Thrift tidak perlu
-memikirkan cara \textit{encoding} dan \textit{decoding} data yang ingin dikirim
+me\-mi\-kir\-kan cara \textit{encoding} dan \textit{decoding} data yang ingin dikirim
 melalui abstraksi transpor. \textit{Interface} untuk abstraksi protokol adalah
 \texttt{TProtocol}.
 
@@ -290,7 +292,8 @@ Secara bawaan, Apache Thrift mendukung beberapa transpor, protokol, dan server
               \item \texttt{TSim\-ple\-FileTrans\-port}: menggunakan berkas,
               \item \texttt{TMe\-mo\-ry\-Trans\-port}: menggunakan memori,
               \item \texttt{T\-Sock\-et}: \textit{socket blocking},
-              \item \texttt{TFramed\-Trans\-port}: pada server \textit{nonblocking}, dan
+              \item \texttt{TFramed\-Trans\-port}: pada server
+                    \textit{nonblocking}, dan
               \item \texttt{T\-Z\-lib\-Trans\-port}: Melakukan kompresi dengan
                     zlib dan harus digunakan dengan trans\-por lain,
           \end{itemize}
@@ -301,8 +304,8 @@ Secara bawaan, Apache Thrift mendukung beberapa transpor, protokol, dan server
               \item \texttt{TCompactProtocol}: \texttt{TBinaryProtocol} yang
                     lebih \textit{compact},
               \item \texttt{TDenseProtocol}: \texttt{TCompactProtocol} yang
-                    dihilangkan \textit{me\-ta\-da\-ta}\--nya, lalu ditambahkan lagi oleh
-                    penerima,
+                    di\-hi\-lang\-kan \textit{me\-ta\-da\-ta}-nya, lalu ditambahkan
+                    lagi oleh penerima,
               \item \texttt{TJsonProtocol}: pesan dikirim dalam format JSON,
               \item \texttt{TSimpleJsonProtocol}: \texttt{TJsonProtocol} tanpa
                     \textit{metadata}, cocok untuk bahasa \textit{scripting}, dan
