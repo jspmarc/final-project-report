@@ -16,7 +16,7 @@ terkait simulasi \textit{autonomous vehicle} menggunakan CARLA.
 
 \section{NVIDIA Pegasus}
 
-NVIDIA Pegasus adalah salah satu produk cetusan NVIDIA Corporation di bawah
+NVIDIA Pegasus adalah salah satu produk cetusan NVIDIA Corporation di ba-wah
 lini produk NVIDIA Drive PX. Nama pasar dari NVIDIA Pegasus adalah NVIDIA Drive
 PX Pegasus. Lini produk NVIDIA Drive sendiri merupakan platform komputer untuk
 memberikan fungsionalitas bantuan mengemudi pada kendaraan bermotor.
@@ -60,13 +60,13 @@ teks \textit{string}, larik angka, atau data \textit{binary} (misalnya gambar).
       \begin{center}
             \includegraphics[width=1.0\textwidth]{resources/chapter-2/komunikasi
                   data pada simulasi.png}
-            \caption{Arsitektur komunikasi data pada HILS \parencite{trilaksono_laporanRispro}}
+            \caption{arsitektur komunikasi data pada HILS \parencite{trilaksono_laporanRispro}}
       \end{center}
 \end{figure}
 
-Beberapa alternatif metode/protokol jalur komunikasi dapat digunakan untuk menghubungkan
-sistem ini akan dibahas pada subbab ini. Protokol atau metode tersebut adalah rosbridge,
-RPC, dan \textit{messaging system}.
+Beberapa alternatif metode/protokol jalur komunikasi dapat digunakan untuk
+meng\-hu\-bung\-kan sistem ini akan dibahas pada subbab ini. Protokol atau
+metode tersebut adalah rosbridge, RPC, dan \textit{messaging system}.
 
 \subsection{Rosbridge}
 
@@ -80,7 +80,7 @@ Spesifikasi lengkap untuk rosbridge tertuang di proyek \parencite{ros_bridge}.
 Pada subbab ini, spesifikasi rosbridge akan dijelaskan secara singkat.
 
 Secara arsitektur, protokol rosbridge menggunakan protokol WebSocket untuk
-lapisan transpornya. Protokol WebSocket sendiri berjalan di atas protokol TCP
+la\-pi\-san transpornya. Protokol WebSocket sendiri berjalan di atas protokol TCP
 yang artinya protokol rosbridge menjamin data akan sampai dengan urutan yang
 benar.
 
@@ -123,9 +123,10 @@ Kategori-kategori tersebut akan diuraikan sebagai berikut.
                         topik,
                   \item \texttt{unsubscribe} untuk meminta berhenti ``berlangganan'',
                   \item \texttt{call\_service} untuk memanggil suatu layanan,
-                  \item \texttt{advertise\_service} untuk menandakan pengirim sedang
-                        mempublikasikan suatu layanan, \item \texttt{unadvertise\_service}
-                        untuk menandakan pengirim berhenti mempublikasikan suatu layanan,
+                  \item \texttt{advertise\_service} untuk menandakan pengirim
+                        sedang mem\-pu\-bli\-ka\-si\-kan suatu layanan, \item
+                        \texttt{unadvertise\_service} untuk menandakan pengirim
+                        berhenti mempublikasikan suatu layanan,
                   \item \texttt{service\_request} untuk \textit{request}/permintaan
                         ke suatu layanan, atau \item \texttt{service\_response} untuk
                         hasil/balasan permintaan ke suatu layanan.
