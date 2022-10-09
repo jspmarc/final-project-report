@@ -17,3 +17,5 @@ texmf
 thesis.pdf
 .directory
 build/*
+
+**/.DS_Store
