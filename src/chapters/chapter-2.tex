@@ -145,12 +145,61 @@ CBOR-\textit{raw}, pesan dikirim dalam format serialisasi ROS. Format
 serialisasi ROS digunakan untuk mengirimkan data antar-ROS \textit{node} dan
 pada berkas \texttt{bag}\footnote{Format berkas yang digunakan untuk menyimpan
       data pada mesin ROS.}. Keuntungan menggunakan CBOR-\textit{raw} adalah
-meningkatkan kinerja jika ingin \textit{parsing} hanya sebagian pesan, aplikasi
-dapat membaca berkas \texttt{bag}, atau \textit{parsing} pesan ingin dilakukan
-setelat mungkin atau secara paralel.
+peningkatan kinerja jika \textit{parsing} hanya sebagian pesan, aplikasi dapat
+membaca berkas \texttt{bag}, atau \textit{parsing} pesan ingin dilakukan
+seterlambat mungkin atau secara paralel.
 
-\subsection{RPC --- Apache Thrift}
-\subsection{\textit{Messaging System} --- ZeroMQ}
+\subsection{RPC}
+
+RPC, atau \textit{remote procedure call}, secara teknis bukan protokol,
+melainkan sebuah mekanisme untuk menyusun sistem terdistribusi yang
+berkomunikasi dengan pola \textit{request/reply}
+\parencite{larry_computerNetwork}. RPC memberikan abstraksi kepada pengembang
+berupa pemanggilan fungsi secara lokal maupun \textit{remote}, di permukaannya,
+memiliki perilaku yang sama. Pemanggilan fungsi \textit{remote} artinya
+implementasi fungsi berada di komputer lain di dalam jaringan.
+
+Ketika menggunakan RPC, pengembang tidak perlu tahu pemanggilan sebuah fungsi
+dilakukan secara lokal atau \textit{remote}; pengembang hanya tahu pemanggilan
+fungsi tersebut akan menghasilkan suatu nilai baru dan dapat (tidak
+selalu\footnote{beberapa implementasi RPC mendukung pemanggilan
+      \textit{asynchronous} yang tidak harus memberikan sebuah \textit{return}.})
+membuat program \textit{blocking} (menunggu) sampai nilai baru tersebut
+didapatkan.
+
+Abstraksi RPC didapatkan karena 2 komponen utama pada RPC. Komponen pertama
+adalah protokol yang mengurusi pengiriman pesan antara \textit{server/producer}
+dan \textit{client/consumer}. Kedua, bahasa pemrograman dan \textit{compiler}
+yang dapat membungkus pemanggilan fungsi \textit{remote} menjadi pesan
+\textit{request} dan mentranslasikan pesan \textit{request} menjadi pemanggilan
+ke fungsi lokal (begitu juga untuk \textit{return} dari pemanggilan fungsi
+\textit{remote}).
+
+Secara arsitektur, RPC bisa dibangun di atas protokol TCP sehingga pembuat
+implementasi RPC tidak perlu memikirkan keandalan (\textit{reliability})
+pengiriman pesan pada implementasinya. Akan tetapi, RPC juga bisa dibangun di
+atas protokol UDP atau IP lalu ditambahkan/dibuat lapisan keandalannya sendiri.
+
+Implementasi RPC yang akan dibahas pada subbab ini adalah Apache Thrift. Apache
+Thrift juga merupakan implementasi RPC yang akan digunakan untuk membangun jalur
+komunikasi antara server NVIDIA Pegasus dengan server simulator CARLA. Apache
+Thrift dipilih karena kemampuannya mengirimkan pesan dalam format
+\textit{binary}. Selain itu, karena kinerja Apache Thrift lebih baik
+dibandingkan dengan HTTP dan implementasi RPC oleh Google, gRPC
+\parencite{abernethy_buildingHighPerformanceMSThrift}.
+
+\subsubsection{Apache Thrift}
+
+Apache Thrift adalah sebuah implementasi RPC dalam bentuk \textit{framework}
+yang diciptakan oleh Facebook, Inc. (sekarang Meta Platforms, Inc.) lalu
+disumbangkan ke Apache Software Foundation. Tujuan utama dari pembuatan Apache
+Thrift adalah sebuah jembatan antar-bahasa pemrograman yang memiliki kinerja
+tinggi \parencite{agarwal_thrift} sehingga Apache Thrift dapat digunakan lintas
+bahasa pemrograman.
+
+\subsection{\textit{Messaging System}}
+
+\subsubsection{ZeroMQ}
 
 \section{Penelitian Terkait}
 \blindtext
