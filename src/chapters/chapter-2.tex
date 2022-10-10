@@ -39,10 +39,11 @@ Xavier. Kombinasi CPU dan GPU ini dapat menghasilkan 320 TOPS (\textit{trillion
     operations/second}) untuk komputasi intelegensi buatan. Untuk koneksi I/O,
 NVIDIA Pegasus mendukung sampai dengan 16 kamera (6 di antaranya adalah lidar).
 
-Pada sistem yang dibuat, NVDIA Pegasus akan menjadi server yang bertanggung
-jawab atas komputasi serta \textit{decision making}. NVIDIA Pegasus yang
-digunakan memiliki kumpulan kakas dan pustaka untuk membangun aplikasi robot
-yang disebut ROS (\textit{robot operating system}).
+Pada sistem simulasi yang dibuat, NVDIA Pegasus akan menjadi server yang
+bertanggung jawab atas komputasi serta \textit{decision making}. NVIDIA Pegasus
+yang digunakan memiliki kumpulan kakas dan pustaka untuk membangun aplikasi
+robot yang disebut ROS (\textit{robot operating system}) sehingga dapat menjadi
+\textit{node} ROS.
 
 \section{Metode Komunikasi antara Simulator CARLA dan NVI\-DI\-A Pegasus}
 
@@ -148,10 +149,12 @@ CARLA.
 
 \subsubsection{Rosbridge}
 
-Rosbridge adalah protokol komunikasi yang menambahkan suatu antarmuka ke ROS.
-Antarmuka yang ditambahkan memungkinkan komunikasi dengan \textit{node} ROS
-lainnya. Komunikasi dapat dilakukan dengan pola \textit{publish/subscribe} ke
-suatu topik ROS. Selain itu, komunikasi dapat dilakukan juga dengan pola
+Rosbridge adalah protokol komunikasi yang menambahkan antarmuka ke aplikasi
+non-ROS agar dapat berkomunikasi dengan \textit{node} ROS. Komunikasi dapat
+dilakukan dengan pola \textit{publish/subscribe} ke suatu topik ROS. Dengan pola
+\textit{publish/subscribe}, ROS dapat melakukan komunikasi \textit{one-to-one},
+\textit{one-to-many}, \textit{many-to-one}, \textit{many-to-one}, dan
+\textit{many-to-many}. Selain itu, komunikasi dapat dilakukan juga dengan pola
 \textit{request/reply} dengan memanggil \textit{service} ROS.
 
 Protokol rosbridge menggunakan format JSON untuk pesannya. Pesan yang valid
@@ -202,4 +205,35 @@ Semantik ZMTP juga memastikan \textit{socket} dapat membuat dan menerima koneksi
 serta \textit{socket} akan menyambungkan kembali jika koneksi terputus.
 
 \section{Penelitian Terkait}
-\blindtext
+
+Terdapat sebuah penelitian yang memiliki lingkup serta lingkungan sama dengan
+tugas akhir ini. Penelitian tersebut juga menggunakan CARLA untuk HILS.
+
+\subsection{\textit{Hardware-in-the-Loop Autonomous Driving Simulation Without
+        Real-Time Constraints}}
+
+Pada penelitian ini \parencite{brogle_CarlaHILS}, dilakukan HILS menggunakan
+NVIDIA Jetson TX1 sebagai perangkat keras untuk komputasi dan simulasi
+menggunakan simulator CARLA. Salah satu hasil dari penelitian ini adalah
+integrasi antara simulator CARLA dengan kakas ROS.
+
+Arsitektur untuk menggunakan ROS dalam simulasi HIL dapat dilihat pada gambar
+\ref{chapter-2-carla-jetson-arch}. Terdapat sebuah \textit{node}  yang
+bertugas mendapatkan data kamera dan LiDAR dari CARLA. Kemudian, data tersebut
+dipublikasikan ke topik yang didengarkan oleh pemroses data LiDAR dan vidio.
+\textit{Node} yang terhubung dengan CARLA akan dikirimkan data terkait kendali
+kendaraan oleh \textit{node} yang disebut \textit{path planning node}.
+
+\begin{figure}
+    \begin{center}
+        \includegraphics[width=1.0\textwidth]{resources/chapter-2/carla-jetson-arch.png}
+        \caption{Arsitektur sistem simulasi \parencite{brogle_CarlaHILS}}
+        \label{chapter-2-carla-jetson-arch}
+    \end{center}
+\end{figure}
+
+Hasil eksperimen pada penelitian ini adalah hasil simulasi menggunakan HILS dan
+CARLA tidak berbeda jauh dengan keadaan dunia nyata. Selain itu, didapatkan juga
+waktu respons pada sistem simulasi lebih cepat dari dunia nyata. Sehingga, dapat
+disimpulkan bahwa simulasi HILS dapat dilakukan dan implementasi dengan
+menggunakan ROS (tanpa rosbridge) sudah memberikan hasil yang baik.
