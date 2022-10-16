@@ -11,9 +11,66 @@ penelitian-penelitian terkait simulasi \textit{autonomous vehicle} menggunakan
 CARLA.
 
 \section{Simulator CARLA}
-\blindtext
 
-% TODO: Masukin hubungan dengan NVIDIA Pegasus
+CARLA (\textit{Car Learning to Act}) adalah perangkat lunak sumber terbuka
+(\textit{open source}) yang memiliki tujuan utama menyimulasikan kendaraan
+autonomous. CARLA dibangun dari nol untuk mampu melakukan pelatihan, pembuatan
+prototipe, and validasi model kemudi otonom, termasuk persepsi dan kontrol dari
+model tersebut \parencite{dos_carla}.
+
+\begin{center}
+    \begin{figure}
+        %% TODO: Ubah ke gambar yang di-SS sendiri
+        \includegraphics[width=1.0\textwidth]{resources/chapter-2/CARLA.jpg}
+        \caption{Antarmuka simulator CARLA \parencite{loze_carlaDemocratizes}}
+    \end{figure}
+\end{center}
+
+CARLA sendiri dibangun di atas mesin gim (\textit{game engine}) Unreal Engine 4
+(UE4).  UE4 dipilih karena memiliki simulasi fisika dan kualitas grafis terbaik,
+setidaknya pada saat CARLA dibuat. Selain itu, UE4 juga memiliki ekosistem untuk
+pengaya (\textit{plugin}) dan sistem untuk menambahkan logika dasar untuk
+(\textit{non-playable character}\footnote{Istilah untuk karakter yang tidak
+    dapat dimainkan pada gim.}). UE4 dan sifat sumber terbuka CARLA memungkinkan
+komunitas untuk menambahkan berbagai hal sesuai dengan kebutuhan mereka atau
+bahkan memperbaiki CARLA.
+
+Agar simulasi yang dilakukan CARLA serealistis mungkin, CARLA menyediakan
+berbagai macam model 3D: kendaraan, pejalan kaki, gedung, dan rambu lalu lintas.
+Model-model 3D yang disediakan dibuat dengan menggunakan teknik yang
+menghasilkan bentuk dan tekstur senyata mungkin, akan tetapi tetap cepat untuk
+di-\textit{render}. Model kendaraan dan pejalan kaki yang dibuat bisa memiliki
+banyak variasi, misalnya kendaraan Yamaha YZF dengan warna yang berbeda atau
+pejalan kaki dengan aksesoris dan pakaian yang berbeda. Model-model 3D
+digunakan untuk membangun lingkungan simulasi yang realistis.
+
+Selain dari model 3D, lingkungan simulasi yang realistis didapatkan juga dari
+cuaca dan waktu hari. Cuaca dan waktu hari pada CARLA dapat dikustomisasi
+sedemikian rupa untuk memungkinkan berbagai macam skenario simulasi. Selain itu,
+NPC yang ada di CARLA akan menggunakan sebuah model dari kendaraan ataupun
+pejalan kaki. NPC bergerak berdasarkan suatu aturan yang sudah ditentukan,
+misalnya mengikuti suatu pemilihan keputusan ketika di lampu lalu lintas.
+
+Selain model, CARLA juga menyediakan berbagai sensor untuk menyimulasikan
+pengambilan data. Sensor-sensor tersebut dapat ``ditempelkan'' ke kendaraan
+simulasi. Contoh sensor yang tersedia adalah kamera dan LIDAR (\textit{Light
+    Detection and Ranging}), dan lain-lain. Selain data dari sensor, bisa didapatkan
+juga data seperti kecepatan dan percepatan (mirip dengan data dari GPS) dari
+kendaraan.
+
+CARLA bekerja dengan arsitektur server-klien. Arsitektur ini memungkinkan dunia
+yang dinamis dan antarmuka yang sederhana antara dunia dan agen yang
+berinteraksi dengannya. Server pada CARLA berfungsi untuk menjalankan simulasi
+dan me-\textit{render scene}-nya. Lalu, klien bertugas untuk mengirimkan
+perintah dan ``perintah meta'' ke server dan menerima data sensor. Perintah yang
+dapat dikirimkan klien digunakan untuk mengendalikan kendaraan yang
+disimulasikan.  Sedangkan ``perintah meta'' digunakan untuk mengatur lingkungan
+simulasi, misalnya cuaca, sensor yang digunakan, dan jumlah kendaraan/pejalan
+kaki NPC.
+
+Pada sistem simulasi TA ini, komponen klien dan server CARLA akan dijalankan
+pada sebuah server simulasi. Data yang didapatkan dair CARLA akan dikirim ke
+sebuah server komputasi yang menggunakan NVIDIA Pegasus.
 
 \section{NVIDIA Pegasus}
 
@@ -63,7 +120,7 @@ teks \textit{string}, larik angka, atau data \textit{binary} (misalnya gambar).
     \begin{center}
         \includegraphics[width=1.0\textwidth]{resources/chapter-2/komunikasi
             data pada simulasi.png}
-        \caption{arsitektur komunikasi data pada HILS
+        \caption{Arsitektur komunikasi pada HILS
             \parencite{trilaksono_laporanRispro}}
     \end{center}
 \end{figure}
