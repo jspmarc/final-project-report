@@ -1,59 +1,90 @@
 \chapter{Pendahuluan}
 
-% Bab Pendahuluan secara umum yang dijadikan landasan kerja dan arah kerja
-% penulis tugas akhir, berfungsi mengantar pembaca untuk membaca laporan tugas
-% akhir secara keseluruhan.
+\section{Latar Belakang}
 
-% \section{Latar Belakang} \label{sec:latarbelakang}
+Pada tahun 2015, Perserikatan Bangsa-bangsa (PBB) mengeluarkan 17 SDG
+(\textit{sustainable development goal}). Salah target yang ingin dicapai SGD
+nomor 11 adalah menyediakan sistem transportasi yang aman, murah, mudah diakses,
+dan berkelanjutan (\textit{sustainable}) untuk khalayak ramai. Untuk mendukung
+tujuan tersebut, dikembangkan trem untuk digunakan sebagai transportasi publik
+di Indonesia. Trem dipilih karena murah dan menggunakan listrik untuk bahan
+bakarnya sehingga dapat menggunakan energi yang ramah lingkungan.
 
-% Latar Belakang berisi dasar pemikiran, kebutuhan atau alasan yang menjadi ide
-% dari topik tugas akhir. Tujuan utamanya adalah untuk memberikan informasi
-% secukupnya kepada pembaca agar memahami topik yang akan dibahas.  Saat
-% menuliskan bagian ini, posisikan anda sebagai pembaca – apakah anda tertarik
-% untuk terus membaca?
+Trem diharapkan dapat menjadi alternatif bagi transportasi pribadi. Transportasi
+pribadi semakin lama semakin tidak cocok untuk pembangunan berkelanjutan. Selain
+alternatif, trem yang dikembangkan diharapkan juga dapat mengurangi masalah yang
+ditimbulkan oleh kendaraan pribadi. Masalah-masalah tersebut termasuk, tapi
+tidak terbatas pada, kemacetan dan emisi karbon dioksida.
 
-% \section{Rumusan Masalah}
+Trem akan memanfaatkan teknologi inteligensi buatan dan pembelajaran mesin yang
+memungkinkan kendaraan untuk beroperasi tanpa masinis secara otonom
+(\textit{autopilot}). Dengan menggunakan teknologi ini, diharapkan trem otonom
+dapat meminimalisasi kecelakaan karena galat yang disebabkan manusia sehingga
+bisa menjadi pilihan transportasi yang aman.
 
-% Rumusan Masalah berisi masalah utama yang dibahas dalam tugas akhir. Rumusan
-% masalah yang baik memiliki struktur sebagai berikut:
+Untuk mengembangkan teknologi pembelajaran mesin dan algoritma kendali otonom
+yang digunakan, perlu dikumpulkan data. Pengumpulan data ini akan sangat mahal,
+butuh waktu yang lama, dan berbahaya bila dilakukan langsung di lapangan. Oleh
+karena itu, data yang dikumpulkan akan dilakukan melalui simulasi. Tugas akhir
+ini akan membahas pengembangan simulasi yang digunakan untuk pengembangan trem
+otonom. Algoritma dan pembelajaran mesin juga akan diujikan pada simulasi yang
+dibuat.
 
-% \begin{enumerate} \item Penjelasan ringkas tentang kondisi/situasi yang ada
-%         sekarang terkait dengan topik utama yang dibahas Tugas Akhir. \item
-%             Pokok persoalan dari kondisi/situasi yang ada, dapat dilihat dari
-%             kelemahan atau kekurangannya. \textbf{Bagian ini merupakan inti
-%             dari rumusan masalah}. \item Elaborasi lebih lanjut yang menekankan
-% pentingnya untuk menyelesaikan pokok persoalan tersebut. \item Usulan singkat
-% terkait dengan solusi yang ditawarkan untuk menyelesaikan persoalan.
-% \end{enumerate}
+Sistem simulasi yang dibuat akan membutuhkan dua komputer:
+\begin{enumerate}
+	\item komputer untuk menjalankan simulasi (disebut server CARLA), dan
+	\item komputer yang akan digunakan pada trem dan mengandung algoritma
+	      kendali serta pembelajaran mesin (disebut server NVIDIA Pegasus).
+\end{enumerate}
+Sistem simulasi yang dibuat, selain harus dapat mereplikasi keadaan dunia nyata,
+harus cukup cepat dalam memproses dan mengirimkan data antar-komputer. Hal
+metode pengiriman data antara kedua komputer tersebut akan dibahas pada tugas
+akhir ini.
 
-% Penting untuk diperhatikan bahwa persoalan yang dideskripsikan pada subbab ini
-% akan dipertanggungjawabkan di bab Evaluasi apakah terselesaikan atau tidak.
+\section{Rumusan Masalah}
 
-% \section{Tujuan}
+Rumusan Masalah berisi masalah utama yang dibahas dalam tugas akhir. Rumusan
+masalah yang baik memiliki struktur sebagai berikut:
 
-% Tuliskan tujuan utama dan/atau tujuan detil yang akan dicapai dalam pelaksanaan
-% tugas akhir. Fokuskan pada hasil akhir yang ingin diperoleh setelah tugas akhir
-% diselesaikan, terkait dengan penyelesaian persoalan pada rumusan masalah.
-% Penting untuk diperhatikan bahwa tujuan yang dideskripsikan pada subbab ini
-% akan dipertanggungjawabkan di akhir pelaksanaan tugas akhir apakah tercapai
-% atau tidak.
+\begin{enumerate}
+	\item Penjelasan ringkas tentang kondisi/situasi yang ada sekarang terkait
+	      dengan topik utama yang dibahas Tugas Akhir.
+	\item Pokok persoalan dari kondisi/situasi yang ada, dapat dilihat dari
+	      kelemahan atau kekurangannya. \textbf{Bagian ini merupakan inti dari rumusan
+		      masalah}.
+	\item Elaborasi lebih lanjut yang menekankan pentingnya untuk menyelesaikan
+	      pokok persoalan tersebut.
+	\item Usulan singkat terkait dengan solusi yang ditawarkan untuk
+	      menyelesaikan persoalan.
+\end{enumerate}
 
-% \section{Batasan Masalah}
+\section{Tujuan}
 
-% Tuliskan batasan-batasan yang diambil dalam pelaksanaan tugas akhir. Batasan
-% ini dapat dihindari (tidak perlu ada) jika topik/judul tugas akhir dibuat cukup
-% spesifik.
+\begin{itemize}
+	\item Berisi tujuan utama yang dihasilkan
+	\item Dapat ditambah dengan tujuan detil yang akan dicapai dalam pelaksanaan
+	      tugas akhir.
+	\item Fokuskan pada hasil akhir yang ingin diperoleh setelah tugas akhir
+	      diselesaikan, terkait dengan penyelesaian persoalan yang telah disampaikan
+	      pada rumusan masalah.
+\end{itemize}
 
-% \section{Metodologi}
+\section{Batasan Masalah}
 
-% Tuliskan semua tahapan yang akan dilalui selama pelaksanaan tugas akhir.
-% Tahapan ini spesifik untuk menyelesaikan persoalan tugas akhir. Tahapan studi
-% literatur tidak perlu dituliskan karena ini adalah pekerjaan yang harus Anda
-% lakukan selama proses pelaksanaan tugas akhir.
+Tuliskan batasan-batasan yang diambil dalam pelaksanaan tugas akhir (batasan
+kajian, bkn batasan implementasi). Batasan ini dapat dihindari (tidak perlu ada)
+jika topik/judul tugas akhir dibuat cukup spesifik.
 
-% \section{Jadwal Pelaksanaan Tugas Akhir}
+\section{Metodologi}
 
-% Tuliskan rencana kegiatan dan jadwal (dirinci sampai per minggu) mulai dari
-% awal pelaksanaan Tugas Akhir I s.d. sidang tugas akhir berikut milestones dan
-% deliverables yang harus diberikan. Jadwal ini dapat dibantu dengan membuat
-% sebuah tabel timeline.
+Tuliskan semua tahapan yang akan dilalui selama pelaksanaan tugas akhir.
+Tahapan ini spesifik untuk menyelesaikan persoalan tugas akhir. Tahapan studi
+literatur tidak perlu dituliskan karena ini adalah pekerjaan yang harus Anda
+lakukan selama proses pelaksanaan tugas akhir.
+
+\section{Jadwal Pelaksanaan Tugas Akhir}
+
+Tuliskan rencana kegiatan dan jadwal (dirinci sampai per minggu) mulai dari
+awal pelaksanaan Tugas Akhir I s.d. sidang tugas akhir berikut milestones dan
+deliverables yang harus diberikan. Jadwal ini dapat dibantu dengan membuat
+sebuah tabel timeline atau gantt chart.
