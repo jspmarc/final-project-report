@@ -99,14 +99,106 @@ Tahapan pelaksanaan tugas akhir ini adalah sebagai berikut.
 	\item Mempelajari sistem saat ini.
 	\item Eksplorasi kakas dan protokol yang akan digunakan.
 	\item Perancangan kerangka kerja pengujian.
-	\item Implementasi kerangka kerja penugjian.
+	\item Implementasi kerangka kerja pengujian.
 	\item Eksperimen dan pengujian.
 	\item Analisis hasil pengujian.
 \end{enumerate}
 
 \section{Jadwal Pelaksanaan Tugas Akhir}
 
-Tuliskan rencana kegiatan dan jadwal (dirinci sampai per minggu) mulai dari
-awal pelaksanaan Tugas Akhir I s.d. sidang tugas akhir berikut milestones dan
-deliverables yang harus diberikan. Jadwal ini dapat dibantu dengan membuat
-sebuah tabel timeline atau gantt chart.
+% Tuliskan rencana kegiatan dan jadwal (dirinci sampai per minggu) mulai dari
+% awal pelaksanaan Tugas Akhir I s.d. sidang tugas akhir berikut milestones dan
+% deliverables yang harus diberikan. Jadwal ini dapat dibantu dengan membuat
+% sebuah tabel timeline atau gantt chart.
+
+Berikut adalah jadwal pelaksanaan Tugas Akhir I dan II yang dirinci per minggunya.
+
+\begin{figure}[h]
+	\linespread{0.8}
+	\resizebox{\textwidth}{!}{
+		\begin{ganttchart}[
+				y unit title=0.5cm,
+				y unit chart=1.3cm,
+				bar height=0.7,
+				vgrid,
+				title height=1,
+				bar label font=\tiny,
+				bar label node/.style={
+						text width=4cm,
+						align=right,
+						anchor=east,
+						font=\raggedleft
+					},
+			]{1}{20}
+			%labels
+			\gantttitle{September}{4}
+			\gantttitle{Oktober}{4}
+			\gantttitle{November}{4}
+			\gantttitle{Desember}{4}
+			\gantttitle{Januari}{4} \\
+			\gantttitlelist{1,...,4}{1}
+			\gantttitlelist{1,...,4}{1}
+			\gantttitlelist{1,...,4}{1}
+			\gantttitlelist{1,...,4}{1}
+			\gantttitlelist{1,...,4}{1} \\
+
+			% tasks
+			\ganttbar{Menentukan to\-pik \& calon pembimbing}{1}{1} \\
+			\ganttbar{Alokasi topik \& pem\-bim\-bing TA oleh tim TA}{2}{2} \\
+			\ganttbar{Menyusun Bab II}{3}{6} \\
+			\ganttbar{Mempelajari CARLA}{4}{4} \\
+			\ganttbar{Mempelajari sistem saat ini}{5}{5} \\
+			\ganttbar{Eksplorasi ROS}{6}{7} \\
+			\ganttbar{Menyusun Bab I}{7}{10} \\
+			\ganttbar{Implementasi jalur komunikasi menggunakan ROS}{8}{11} \\
+			\ganttbar{Menyusun Bab III}{11}{13} \\
+			\ganttbar{Eksplorasi protokol komunikasi lain}{14}{20} \\
+			\ganttbar{Seminar TA I}{17}{18}
+		\end{ganttchart}
+	}
+	\caption{Jadwal Pelaksanaan Tugas Akhir (bagian 1)}
+\end{figure}
+
+\begin{figure}[h]
+	\begin{center}
+		\linespread{0.8}
+		\resizebox{\textwidth}{!}{
+			\begin{ganttchart}[
+					y unit title=0.5cm,
+					y unit chart=1.3cm,
+					bar height=0.7,
+					vgrid,
+					title height=1,
+					bar label font=\tiny,
+					bar label node/.style={
+							text width=4cm,
+							align=right,
+							anchor=east,
+							font=\raggedleft
+						},
+				]{1}{24}
+				%labels
+				\gantttitle{Februari}{4}
+				\gantttitle{Maret}{4}
+				\gantttitle{April}{4}
+				\gantttitle{Mei}{4}
+				\gantttitle{Juni}{4}
+				\gantttitle{Juli}{4} \\
+				\gantttitlelist{1,...,4}{1}
+				\gantttitlelist{1,...,4}{1}
+				\gantttitlelist{1,...,4}{1}
+				\gantttitlelist{1,...,4}{1}
+				\gantttitlelist{1,...,4}{1}
+				\gantttitlelist{1,...,4}{1} \\
+
+				% tasks
+				\ganttbar{Menyusun Bab IV}{1}{16} \\
+				\ganttbar{Perancangan kerangka kerja pengujian}{1}{8} \\
+				\ganttbar{Implementasi kerangka kerja pengujian}{9}{16} \\
+				\ganttbar{Menyusun Bab V}{17}{18} \\
+				\ganttbar{Sidang TA 2}{21}{22}
+			\end{ganttchart}
+		}
+	\end{center}
+	\caption{Jadwal Pelaksanaan Tugas Akhir (bagian 2)}
+\end{figure}
