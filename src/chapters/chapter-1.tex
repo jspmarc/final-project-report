@@ -51,29 +51,26 @@ Pada keadaan saat ini, server CARLA dan server NVIDIA Pegasus dihubungkan
 menggunakan layanan web (\textit{web service}). Layanan web yang ada menggunakan
 protokol HTTP untuk komunikasinya. Penggunaan HTTP untuk komunikasi pada layanan
 web menyebabkan latensi yang besar ketika melakukan pertukuran data
-antarserver.
+antarserver. Karena adanya latensi besar ini, sistem simulasi menjadi tidak reliabel.
 
-Karena adanyayy latensi besar ini, sistem simulasi menjadi tidak reliabel.
-Selain itu, proses pengembangan algoritma dan inteligensi buatan juga terhambat
-karena sistem simulasi menjadi lebih lambat dari seharusnya. Perlu ditemukan
-metode lain yang dapat menghilangkan \textit{bottleneck} pada jalur
-komunikasi sehingga sistem simulasi dapat digunakan.
-
-Untuk memecahkan masalah latensi tersebut, ada beberapa solusi yang akan dibahas
-pada tugas akhir ini. Alternatif-alternatif tersebut adalah ROS, ZeroMQ, dan
-Apache Thrift. komunikasi pada suatu sistem terdistribusi yang lebih cepat
-daripada HTTP. ROS dipilih karena kerap kali dipilih pada sistem simulasi HILS.
+Berdasarkan latar belakang serta keadaan saat ini, definisi rumusan masalah
+untuk tugas akhir ini adalah sebagai berikut.
+\begin{enumerate}
+	\item Bagaimana cara mengimplementasikan jalur komunikasi yang reliabel
+	      untuk kebutuhan simulasi kendaraan otonom?
+	\item Protokol atau kakas komunikasi apa yang paling tepat digunakan untuk
+	      sistem simulasi kendaraan otonom?
+\end{enumerate}
 
 \section{Tujuan}
 
-\begin{itemize}
-	\item Berisi tujuan utama yang dihasilkan
-	\item Dapat ditambah dengan tujuan detil yang akan dicapai dalam pelaksanaan
-	      tugas akhir.
-	\item Fokuskan pada hasil akhir yang ingin diperoleh setelah tugas akhir
-	      diselesaikan, terkait dengan penyelesaian persoalan yang telah disampaikan
-	      pada rumusan masalah.
-\end{itemize}
+Tugas akhir ini memiliki 2 tujuan utama, yaitu
+\begin{enumerate}
+	\item mengimplementasikan jalur komunikasi yang reliabel untuk sistem
+	      simulasi kendaraan otonom, dan
+	\item menentukan protokol atau kakas komunikasi yang paling tepat untuk
+	      sistem simulasi kendaraan otonom.
+\end{enumerate}
 
 \section{Batasan Masalah}
 
