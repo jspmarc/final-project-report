@@ -22,13 +22,13 @@ memungkinkan kendaraan untuk beroperasi tanpa masinis secara otonom
 dapat meminimalisasi kecelakaan karena galat yang disebabkan manusia sehingga
 bisa menjadi pilihan transportasi yang aman.
 
-Untuk mengembangkan teknologi pembelajaran mesin dan algoritma kendali otonom
-yang digunakan, perlu dikumpulkan data. Pengumpulan data ini akan sangat mahal,
-butuh waktu yang lama, dan berbahaya bila dilakukan langsung di lapangan. Oleh
-karena itu, data yang dikumpulkan akan dilakukan melalui simulasi. Tugas akhir
-ini akan membahas pengembangan simulasi yang digunakan untuk pengembangan trem
-otonom. Algoritma dan pembelajaran mesin juga akan diujikan pada simulasi yang
-dibuat.
+Untuk mengembangkan teknologi pembelajaran mesin dan algoritma kendali
+o\-to\-nom yang digunakan, perlu dikumpulkan data. Pengumpulan data ini akan
+sangat mahal, butuh waktu yang lama, dan berbahaya bila dilakukan langsung di
+lapangan. Oleh karena itu, data yang dikumpulkan akan dilakukan melalui
+simulasi. Tugas akhir ini akan membahas pengembangan simulasi yang digunakan
+untuk pengembangan trem otonom. Algoritma dan pembelajaran mesin juga akan
+diujikan pada simulasi yang dibuat.
 
 Sistem simulasi yang dibuat akan membutuhkan dua komputer:
 \begin{enumerate}
@@ -37,26 +37,32 @@ Sistem simulasi yang dibuat akan membutuhkan dua komputer:
 	      kendali serta pembelajaran mesin (disebut server NVIDIA Pegasus).
 \end{enumerate}
 Sistem simulasi yang dibuat, selain harus dapat mereplikasi keadaan dunia nyata,
-harus cukup cepat dalam memproses dan mengirimkan data antar-komputer. Hal
-metode pengiriman data antara kedua komputer tersebut akan dibahas pada tugas
-akhir ini.
+harus cukup cepat dalam memproses dan mengirimkan data antarkomputer. Hal metode
+pengiriman data antara kedua komputer tersebut akan dibahas pada tugas akhir
+ini.
+
+Server NVIDIA Pegasus yang digunakan pada sistem simulasi ini juga akan
+digunakan pada produk akhir trem otonom. Artinya, simulasi yang dilakukan
+berbentuk HILS (\textit{hardware-in-the-loop simulation}).
 
 \section{Rumusan Masalah}
 
-Rumusan Masalah berisi masalah utama yang dibahas dalam tugas akhir. Rumusan
-masalah yang baik memiliki struktur sebagai berikut:
+Pada keadaan saat ini, server CARLA dan server NVIDIA Pegasus dihubungkan
+menggunakan layanan web (\textit{web service}). Layanan web yang ada menggunakan
+protokol HTTP untuk komunikasinya. Penggunaan HTTP untuk komunikasi pada layanan
+web menyebabkan latensi yang besar ketika melakukan pertukuran data
+antarserver.
 
-\begin{enumerate}
-	\item Penjelasan ringkas tentang kondisi/situasi yang ada sekarang terkait
-	      dengan topik utama yang dibahas Tugas Akhir.
-	\item Pokok persoalan dari kondisi/situasi yang ada, dapat dilihat dari
-	      kelemahan atau kekurangannya. \textbf{Bagian ini merupakan inti dari rumusan
-		      masalah}.
-	\item Elaborasi lebih lanjut yang menekankan pentingnya untuk menyelesaikan
-	      pokok persoalan tersebut.
-	\item Usulan singkat terkait dengan solusi yang ditawarkan untuk
-	      menyelesaikan persoalan.
-\end{enumerate}
+Karena adanyayy latensi besar ini, sistem simulasi menjadi tidak reliabel.
+Selain itu, proses pengembangan algoritma dan inteligensi buatan juga terhambat
+karena sistem simulasi menjadi lebih lambat dari seharusnya. Perlu ditemukan
+metode lain yang dapat menghilangkan \textit{bottleneck} pada jalur
+komunikasi sehingga sistem simulasi dapat digunakan.
+
+Untuk memecahkan masalah latensi tersebut, ada beberapa solusi yang akan dibahas
+pada tugas akhir ini. Alternatif-alternatif tersebut adalah ROS, ZeroMQ, dan
+Apache Thrift. komunikasi pada suatu sistem terdistribusi yang lebih cepat
+daripada HTTP. ROS dipilih karena kerap kali dipilih pada sistem simulasi HILS.
 
 \section{Tujuan}
 
