@@ -2,34 +2,18 @@
 
 \section{Latar Belakang}
 
-Pada tahun 2015, Perserikatan Bangsa-bangsa (PBB) mengeluarkan 17 SDG
-(\textit{sustainable development goal}). Salah satu target yang ingin dicapai
-SGD nomor 11 adalah menyediakan sistem transportasi yang aman, murah, mudah
-diakses, dan berkelanjutan (\textit{sustainable}) untuk khalayak ramai. Untuk
-mendukung tujuan tersebut, dikembangkan trem untuk digunakan sebagai
-transportasi publik di Indonesia. Trem dipilih karena murah dan menggunakan
-listrik untuk bahan bakarnya sehingga dapat menggunakan energi yang ramah
-lingkungan.
+Dalam pengembangan kota-kota di Indonesia, dibutuhkan kendaraan umum yang aman,
+murah, mudah diakses, dan berkelanjutan (\textit{sustainable}). Salah satu moda
+transportasi umum yang dapat memenuhi keempat hal tersebut adalah trem listrik.
+Agar bisa lebih aman, trem listrik akan memanfaatkan inteligensi buatan dan
+pembelajaran mesin sehingga trem tidak membutuhkan masinis dan bisa beroperasi
+secara otonom.
 
-Trem diharapkan dapat menjadi alternatif bagi transportasi pribadi. Transportasi
-pribadi semakin lama semakin tidak cocok untuk pembangunan berkelanjutan. Selain
-alternatif, trem yang dikembangkan diharapkan juga dapat mengurangi masalah yang
-ditimbulkan oleh kendaraan pribadi. Masalah-masalah tersebut termasuk, tapi
-tidak terbatas pada, kemacetan dan emisi karbon dioksida.
-
-Trem akan memanfaatkan teknologi inteligensi buatan dan pembelajaran mesin yang
-memungkinkan kendaraan untuk beroperasi tanpa masinis secara otonom
-(\textit{autopilot}). Dengan menggunakan teknologi ini, diharapkan trem otonom
-dapat meminimalisasi kecelakaan karena galat yang disebabkan manusia sehingga
-bisa menjadi pilihan transportasi yang aman.
-
-Untuk mengembangkan teknologi pembelajaran mesin dan algoritma kendali
-o\-to\-nom yang digunakan, perlu dikumpulkan data. Pengumpulan data ini akan
-sangat mahal, butuh waktu yang lama, dan berbahaya bila dilakukan langsung di
-lapangan. Oleh karena itu, data yang dikumpulkan akan dilakukan melalui
-simulasi. Tugas akhir ini akan membahas pengembangan simulasi yang digunakan
-untuk pengembangan trem otonom. Algoritma dan pembelajaran mesin juga akan
-diujikan pada simulasi yang dibuat.
+Pengembangan teknologi pembelajaran mesin dan algoritma kendali otonom yang
+digunakan memerlukan banyak data dan pengujian. Proses pengumpulan data dan
+pengujian ini akan mahal dan membutuhkan waktu yang lama. Selain itu, akan
+berbahaya apabila algoritma belum matang. Oleh karena itu, pembelajaran dan
+pengujian akan menggunakan simulasi.
 
 Sistem simulasi yang dibuat akan membutuhkan dua komputer:
 \begin{enumerate}
@@ -37,22 +21,31 @@ Sistem simulasi yang dibuat akan membutuhkan dua komputer:
 	\item komputer yang akan digunakan pada trem dan mengandung algoritma
 	      kendali serta pembelajaran mesin (disebut server NVIDIA Pegasus).
 \end{enumerate}
-Sistem simulasi yang dibuat, selain harus dapat mereplikasi keadaan dunia nyata,
-harus cukup cepat dalam memproses dan mengirimkan data antarkomputer. Hal metode
-pengiriman data antara kedua komputer tersebut akan dibahas pada tugas akhir
-ini.
+Kedua komputer (server) akan terhubung melalui sebuah jaringan menggunakan
+sebuah protokol komunikasi. Sistem simulasi yang dibuat harus cukup cepat dalam
+mengirimkan data antarkomputer, selain harus dapat mereplikasi keadaan dunia
+nyata. Tugas akhir ini akan membahas pemilihan protokol komunikasi dan
+pengembangan sistem simulasi tersebut.
 
-Server NVIDIA Pegasus yang digunakan pada sistem simulasi ini juga akan
-digunakan pada produk akhir trem otonom. Artinya, simulasi yang dilakukan
-berbentuk HILS (\textit{hardware-in-the-loop simulation}).
+Protokol komunikasi yang dipilih harus dapat mengirimkan data \textit{binary}.
+Hal ini karena ada beberapa sensor yang disimulasikan dan data dari sensor
+akan dikirim ke algoritma kendali dalam format tersebut. Selain \textit{binary},
+protokol juga harus dapat mengirimkan data dalam format \textit{string} dan
+\textit{integer}. Kedua data tersebut digunakan sebagai respon dari algoritma
+kendali untuk mengendalikan trem.
+
+Sistem simulasi yang dibuat bersifat HILS (\textit{hardware-in-the-loop
+	simulation}).  Artinya, perangkat keras yang digunakan pada simulasi juga akan
+digunakan pada produk akhir trem otonom.  Perangkat keras yang digunakan kembali
+adalah server NVIDIA Pegasus.
 
 \section{Rumusan Masalah}
 
 Pada keadaan saat ini, server CARLA dan server NVIDIA Pegasus dihubungkan
 menggunakan layanan web (\textit{web service}). Layanan web yang ada menggunakan
 protokol HTTP untuk komunikasinya. Penggunaan HTTP untuk komunikasi pada layanan
-web menyebabkan latensi yang besar ketika melakukan pertukuran data
-antarserver. Karena adanya latensi besar ini, sistem simulasi menjadi tidak reliabel.
+web menyebabkan latensi yang besar ketika melakukan pertukuran data antarserver.
+Karena adanya latensi besar ini, sistem simulasi menjadi tidak reliabel.
 
 Berdasarkan latar belakang serta keadaan saat ini, definisi rumusan masalah
 untuk tugas akhir ini adalah sebagai berikut.
@@ -79,10 +72,9 @@ Batasan pada pengerjaan tugas akhr adalah
 
 \begin{enumerate}
 	\item pengujian akan dilakukan pada komputer yang terdapat di gedung Lab
-	      Tek\-no\-lo\-gi VIII ITB;
+	      Tek\-no\-lo\-gi VIII ITB; dan
 	\item hanya ada 3 protokol atau kakas komunikasi yang diuji: ROS, ZeroMQ,
-	      dan Apache Thrift; dan
-	\item jalur komunikasi hanya akan dinilai berdasarkan latensi.
+	      dan Apache Thrift.
 \end{enumerate}
 
 \section{Metodologi}
@@ -143,17 +135,11 @@ Berikut adalah jadwal pelaksanaan Tugas Akhir I dan II yang dirinci per mingguny
 			\gantttitlelist{1,...,4}{1} \\
 
 			% tasks
-			\ganttbar{Menentukan to\-pik \& calon pembimbing}{1}{1} \\
-			\ganttbar{Alokasi topik \& pem\-bim\-bing TA oleh tim TA}{2}{2} \\
-			\ganttbar{Menyusun Bab II}{3}{6} \\
 			\ganttbar{Mempelajari CARLA}{4}{4} \\
 			\ganttbar{Mempelajari sistem saat ini}{5}{5} \\
 			\ganttbar{Eksplorasi ROS}{6}{7} \\
-			\ganttbar{Menyusun Bab I}{7}{10} \\
 			\ganttbar{Implementasi jalur komunikasi menggunakan ROS}{8}{11} \\
-			\ganttbar{Menyusun Bab III}{11}{13} \\
 			\ganttbar{Eksplorasi protokol komunikasi lain}{14}{20} \\
-			\ganttbar{Seminar TA I}{17}{18}
 		\end{ganttchart}
 	}
 	\caption{Jadwal Pelaksanaan Tugas Akhir (bagian 1)}
@@ -192,11 +178,8 @@ Berikut adalah jadwal pelaksanaan Tugas Akhir I dan II yang dirinci per mingguny
 				\gantttitlelist{1,...,4}{1} \\
 
 				% tasks
-				\ganttbar{Menyusun Bab IV}{1}{16} \\
 				\ganttbar{Perancangan kerangka kerja pengujian}{1}{8} \\
 				\ganttbar{Implementasi kerangka kerja pengujian}{9}{16} \\
-				\ganttbar{Menyusun Bab V}{17}{18} \\
-				\ganttbar{Sidang TA 2}{21}{22}
 			\end{ganttchart}
 		}
 	\end{center}
