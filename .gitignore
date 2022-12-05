@@ -14,7 +14,7 @@
 *.backup
 *.synctex.gz
 texmf
-thesis.pdf
+*.pdf
 .directory
 build/*
 
