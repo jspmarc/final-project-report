@@ -8,7 +8,7 @@ juga pada bab ini. Lalu, akan dibahas perancangan perbaikan sistem simulasi.
 
 Sistem simulasi yang ada sudah dapat menghubungkan server CARLA dengan server
 NVIDIA Pegasus. Kedua server dihubungkan di sebuah jaringan menggunakan sebuah
-layanan web. Layanan web ini memanfaatkan teknologi HTTP.
+layanan web. Layanan web ini memanfaatkan teknologi HTTP 1.1.
 
 Solusi yang memanfaatkan layanan web dan HTTP ini merupakan \textit{bottleneck}
 besar pada sistem simulasi. Kinerja yang diberikan pada arsitektur sekarang
@@ -21,15 +21,45 @@ Selain itu, teknologi HTTP di bawah HTTP 2.0 juga tidak mendukung data
 waktu dan \textit{resource} lebih untuk pemrosesannya.
 
 Berdasarkan analisis masalah, dibutuhkan pembaruan pada sistem simulasi agar
-memiliki kinerja yang lebih baik. Selain itu, diperlukan jalur komunikasi yang
-mendukung pengiriman data \textit{binary}. Selain cepat dan mendukung
-\textit{binary}, jalur komunikasi tentu saja harus reliabel agar tidak ada data
-yang hilang.
+memiliki kinerja yang lebih baik. Kinerja yang lebih baik ini bisa didapatkan
+dengan mengubah metode komunikasi antara server CARLA dan server Pegasus. Selain
+itu, jalur komunikasi juga harus mendukung pengiriman data \textit{binary}.
+Selain cepat dan mendukung \textit{binary}, jalur komunikasi tentu saja harus
+reliabel agar tidak ada data yang hilang.
 
-\section{Analisis Solusi Sistem Simulasi}
+\section{Analisis Solusi}
 
-% Jelasin bentuk sistemnya yang ideal gimana
-\blindtext
+Solusi yang dapat diberikan untuk masalah pada sistem simulasi adalah pembaruan
+pada arsitektur sistem solusi dan mengganti metode komunikasi yang digunakan.
+Pembaruan pada arsitektur akan menghilangkan \textit{middleware} layanan web di
+antara server CARLA dengan server NVIDIA Pegasus. Lalu, metode komunikasi yang
+akan digunakan harus dapat mendukung kebutuhan kinerja dan pengiriman data
+\textit{binary}.
+
+Metode komunikasi yang dapat digunakan ada beberapa pilihan. Metode-metode
+tersebut adalah ZeroMQ, gRPC, dan ROS. ZeroMQ dipilih karena berjalan di atas
+TCP yang artinya akan mendukung data \textit{binary}. Selain itu, ZeroMQ
+mendukung berbagai skema komunikasi: \textit{pub/sub},
+\textit{request/response}, dan \textit{push/pull}. Metode gRPC adalah
+peningkatan dari protokol RPC yang menggunakan HTTP 2.0 sehingga memiliki
+kinerja yang baik. HTTP 2.0 juga mendukung pengiriman data dalam bentuk
+\textit{binary}.  Selain itu, gRPC mendukung \textit{data streaming} sehingga
+cocok digunakan untuk kebutuhan pengiriman data dari sensor. Metode terakhir
+adalah menggunakan ROS. ROS adalah sekumpulan kakas yang sering digunakan pada
+lingkungan IoT. Selain itu pada percobaan sebelumnya
+\parencite{brogle_CarlaHILS}, ROS sudah dibuktikan sebagai salah satu alternatif
+metode komunikasi yang baik untuk sistem simulasi HILS. ROS sendiri mendukung
+skema komunikasi \textit{pub/sub} dan \textit{request/response}.
+
+Dari ketiga metode solusi tersebut akan dipilih yang memiliki kinerja paling
+baik melalui beberapa percobaan. Percobaan ini akan dilakukan selama pembuatan
+jalur komunikasi pada sistem simulasi HILS.
+
+Selain pemilihan metode komunikasi, akan dilakukan pembaruan terhadap arsitektur
+sistem simulasi. Layanan web akan dihilangkan sehingga server CARLA akan
+berkomunikasi langsung dengan server Pegasus. Hal ini berpotensi mengakibatkan
+berkurangnya latensi ketika terjadi komunikasi antara server CARLA dengan server
+Pegasus.
 
 \section{Rancangan Pembuatan Jalur Komunikasi Sistem Simulasi}
 
