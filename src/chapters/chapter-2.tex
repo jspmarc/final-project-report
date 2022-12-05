@@ -13,9 +13,9 @@ CARLA.
 \section{Simulator CARLA}
 
 CARLA (\textit{Car Learning to Act}) adalah perangkat lunak sumber terbuka
-(\textit{open source}) yang memiliki tujuan utama menyimulasikan kendaraan
-autonomous. CARLA dibangun dari nol untuk mampu melakukan pelatihan, pembuatan
-prototipe, and validasi model kemudi otonom, termasuk persepsi dan kontrol dari
+(\textit{o\-pen sour\-ce}) yang memiliki tujuan utama menyimulasikan kendaraan
+autonomous. CAR\-LA dibangun dari nol untuk mampu melakukan pelatihan, pembuatan
+prototipe, dan validasi model kemudi otonom, termasuk persepsi dan kontrol dari
 model tersebut \parencite{dos_carla}.
 
 \begin{center}
@@ -27,7 +27,7 @@ model tersebut \parencite{dos_carla}.
 \end{center}
 
 CARLA sendiri dibangun di atas mesin gim (\textit{game engine}) Unreal Engine 4
-(UE4).  UE4 dipilih karena memiliki simulasi fisika dan kualitas grafis terbaik,
+(UE4). UE4 dipilih karena memiliki simulasi fisika dan kualitas grafis terbaik,
 setidaknya pada saat CARLA dibuat. Selain itu, UE4 juga memiliki ekosistem untuk
 pengaya (\textit{plugin}) dan sistem untuk menambahkan logika dasar untuk
 (\textit{non-playable character}\footnote{Istilah untuk karakter yang tidak
@@ -46,10 +46,11 @@ digunakan untuk membangun lingkungan simulasi yang realistis.
 
 Selain dari model 3D, lingkungan simulasi yang realistis didapatkan juga dari
 cuaca dan waktu hari. Cuaca dan waktu hari pada CARLA dapat dikustomisasi
-sedemikian rupa untuk memungkinkan berbagai macam skenario simulasi. Selain itu,
-NPC yang ada di CARLA akan menggunakan sebuah model dari kendaraan ataupun
-pejalan kaki. NPC bergerak berdasarkan suatu aturan yang sudah ditentukan,
-misalnya mengikuti suatu pemilihan keputusan ketika di lampu lalu lintas.
+se\-de\-mi\-ki\-an rupa untuk memungkinkan berbagai macam skenario simulasi.
+Selain itu, NPC yang ada di CARLA akan menggunakan sebuah model dari kendaraan
+ataupun pejalan kaki. NPC bergerak berdasarkan suatu aturan yang sudah
+ditentukan, misalnya mengikuti suatu pemilihan keputusan ketika di lampu lalu
+lintas.
 
 Selain model, CARLA juga menyediakan berbagai sensor untuk menyimulasikan
 pengambilan data. Sensor-sensor tersebut dapat ``ditempelkan'' ke kendaraan
@@ -64,7 +65,7 @@ berinteraksi dengannya. Server pada CARLA berfungsi untuk menjalankan simulasi
 dan me-\textit{render scene}-nya. Lalu, klien bertugas untuk mengirimkan
 perintah dan ``perintah meta'' ke server dan menerima data sensor. Perintah yang
 dapat dikirimkan klien digunakan untuk mengendalikan kendaraan yang
-disimulasikan.  Sedangkan ``perintah meta'' digunakan untuk mengatur lingkungan
+disimulasikan. Sedangkan ``perintah meta'' digunakan untuk mengatur lingkungan
 simulasi, misalnya cuaca, sensor yang digunakan, dan jumlah kendaraan/pejalan
 kaki NPC.
 
@@ -75,8 +76,8 @@ sebuah server komputasi yang menggunakan NVIDIA Pegasus.
 \section{NVIDIA Pegasus}
 
 NVIDIA Pegasus adalah salah satu produk cetusan NVIDIA Corporation di bawah lini
-produk NVIDIA Drive PX. Nama pasar dari NVIDIA Pegasus adalah NVIDIA Drive PX
-Pegasus. Lini produk NVIDIA Drive sendiri merupakan platform komputer untuk
+produk NVIDIA Drive PX. Nama pasar dari NVIDIA Pegasus adalah N\-VI\-DI\-A Drive
+PX Pegasus. Lini produk NVIDIA Drive sendiri merupakan platform komputer untuk
 memberikan fungsionalitas bantuan mengemudi pada kendaraan bermotor.
 
 \begin{figure}
@@ -98,19 +99,19 @@ Xavier. Kombinasi CPU dan GPU ini dapat menghasilkan 320 TOPS (\textit{trillion
 NVIDIA Pegasus mendukung sampai dengan 16 kamera (6 di antaranya adalah lidar).
 
 Pada sistem simulasi yang dibuat, NVDIA Pegasus akan menjadi server yang
-bertanggung jawab atas komputasi serta \textit{decision making}. NVIDIA Pegasus
-yang digunakan memiliki kumpulan kakas dan pustaka untuk membangun aplikasi
-robot yang disebut ROS (\textit{robot operating system}) sehingga dapat menjadi
-\textit{node} ROS.
+ber\-tang\-gung jawab atas komputasi serta \textit{decision making}. NVIDIA
+Pegasus yang digunakan memiliki kumpulan kakas dan pustaka untuk membangun
+aplikasi robot yang disebut ROS (\textit{robot operating system}) sehingga dapat
+menjadi \textit{node} ROS.
 
 \section{Metode Komunikasi antara Simulator CARLA dan NVI\-DI\-A Pegasus}
 
 Pada keadaan yang ada, komunikasi antara simulator CARLA dengan NVIDIA Pegasus
-menggunakan perantara \textit{web service} yang berbasis HTTP. Penggunaan HTTP
-pada \textit{web service} menjadi \textit{bottleneck}/penghambat kinerja
-terbesar sistem simulasi. Ketika dilakukan secara SILS (\textit{software in the
-    loop simulation} tanpa NVIDIA Pegasus) didapatkan kinerja 4000 transaksi per
-detik, sedangkan ketika NVIDIA Pegasus ditambahkan ke sistem (menjadi HILS,
+menggunakan perantara \textit{web service} yang berbasis HTTP 1.1. Penggunaan
+HTTP 1.1 pada \textit{web service} menjadi \textit{bottleneck}/penghambat
+kinerja terbesar sistem simulasi. Ketika dilakukan secara SILS (\textit{software
+    in the loop simulation} tanpa NVIDIA Pegasus) didapatkan kinerja 4000 transaksi
+per detik, sedangkan ketika NVIDIA Pegasus ditambahkan ke sistem (menjadi HILS,
 \textit{hardware in the loop simulation}) didapatkan 100--110 transaksi per
 detik \parencite{trilaksono_laporanRispro}. Oleh karena itu, dibutuhkan protokol
 atau metode komunikasi lain yang dapat meningkatkan kinerja jalur komunikasi.
