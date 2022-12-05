@@ -6,7 +6,25 @@ juga pada bab ini. Lalu, akan dibahas perancangan perbaikan sistem simulasi.
 
 \section{Analisis Masalah}
 
-\blindtext
+Sistem simulasi yang ada sudah dapat menghubungkan server CARLA dengan server
+NVIDIA Pegasus. Kedua server dihubungkan di sebuah jaringan menggunakan sebuah
+layanan web. Layanan web ini memanfaatkan teknologi HTTP.
+
+Solusi yang memanfaatkan layanan web dan HTTP ini merupakan \textit{bottleneck}
+besar pada sistem simulasi. Kinerja yang diberikan pada arsitektur sekarang
+sangat buruk. Dari 4000 transaksi per detik pada SILS, ketika menggunakan HILS
+dan layanan web, turun menjadi 100-110 transaksi per detik. Kinerja buruk ini
+mengakibatkan sistem simulasi terhambat pada jalur komunikasinya.
+
+Selain itu, teknologi HTTP di bawah HTTP 2.0 juga tidak mendukung data
+\textit{binary} dengan baik. Hal ini mengakibatkan data dari sensor membutuhkan
+waktu dan \textit{resource} lebih untuk pemrosesannya.
+
+Berdasarkan analisis masalah, dibutuhkan pembaruan pada sistem simulasi agar
+memiliki kinerja yang lebih baik. Selain itu, diperlukan jalur komunikasi yang
+mendukung pengiriman data \textit{binary}. Selain cepat dan mendukung
+\textit{binary}, jalur komunikasi tentu saja harus reliabel agar tidak ada data
+yang hilang.
 
 \section{Analisis Perbaikan Sistem Simulasi}
 
