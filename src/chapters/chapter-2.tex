@@ -4,7 +4,7 @@ Pada bab ini, Penulis akan menguraikan hasil studi literatur dalam penyusunan
 tugas akhir ini. Subbab pertama membahas simulator CARLA, yaitu perangkat lunak
 yang digunakan sebagai alat simulasi. Subbab kedua menjelaskan NVIDIA Pegasus
 yang akan digunakan sebagai mesin untuk menjalankan algoritma \textit{decision
-    making} di lingkungan simulasi dan \textit{production}. Lalu, pada subbab ketiga
+	making} di lingkungan simulasi dan \textit{production}. Lalu, pada subbab ketiga
 akan dibahas beberapa cara komunikasi yang dapat digunakan pada antara server
 simulator CARLA dengan NVIDIA Pegasus. Terakhir, subbab keempat akan membahas
 penelitian-penelitian terkait simulasi \textit{autonomous vehicle} menggunakan
@@ -19,11 +19,11 @@ prototipe, dan validasi model kemudi otonom, termasuk persepsi dan kontrol dari
 model tersebut \parencite{dos_carla}.
 
 \begin{center}
-    \begin{figure}
-        %% TODO: Ubah ke gambar yang di-SS sendiri
-        \includegraphics[width=1.0\textwidth]{resources/chapter-2/CARLA.jpg}
-        \caption{Antarmuka simulator CARLA \parencite{loze_carlaDemocratizes}}
-    \end{figure}
+	\begin{figure}
+		%% TODO: Ubah ke gambar yang di-SS sendiri
+		\includegraphics[width=1.0\textwidth]{resources/chapter-2/CARLA.jpg}
+		\caption{Antarmuka simulator CARLA \parencite{loze_carlaDemocratizes}}
+	\end{figure}
 \end{center}
 
 CARLA sendiri dibangun di atas mesin gim (\textit{game engine}) Unreal Engine 4
@@ -31,7 +31,7 @@ CARLA sendiri dibangun di atas mesin gim (\textit{game engine}) Unreal Engine 4
 setidaknya pada saat CARLA dibuat. Selain itu, UE4 juga memiliki ekosistem untuk
 pengaya (\textit{plugin}) dan sistem untuk menambahkan logika dasar untuk
 (\textit{non-playable character}\footnote{Istilah untuk karakter yang tidak
-    dapat dimainkan pada gim.}). UE4 dan sifat sumber terbuka CARLA memungkinkan
+	dapat dimainkan pada gim.}). UE4 dan sifat sumber terbuka CARLA memungkinkan
 komunitas untuk menambahkan berbagai hal sesuai dengan kebutuhan mereka atau
 bahkan memperbaiki CARLA.
 
@@ -55,7 +55,7 @@ lintas.
 Selain model, CARLA juga menyediakan berbagai sensor untuk menyimulasikan
 pengambilan data. Sensor-sensor tersebut dapat ``ditempelkan'' ke kendaraan
 simulasi. Contoh sensor yang tersedia adalah kamera dan LIDAR (\textit{Light
-    Detection and Ranging}), dan lain-lain. Selain data dari sensor, bisa didapatkan
+	Detection and Ranging}), dan lain-lain. Selain data dari sensor, bisa didapatkan
 juga data seperti kecepatan dan percepatan (mirip dengan data dari GPS) dari
 kendaraan.
 
@@ -80,22 +80,22 @@ produk NVIDIA Drive PX. Nama pasar dari NVIDIA Pegasus adalah N\-VI\-DI\-A Drive
 PX Pegasus. Lini produk NVIDIA Drive sendiri merupakan platform komputer untuk
 memberikan fungsionalitas bantuan mengemudi pada kendaraan bermotor.
 
-\begin{figure}
-    \begin{center}
-        %% TODO: Foto sendiri (?)
-        \includegraphics[width=\textwidth]{resources/chapter-2/pegasus.png}
-        \caption{NVIDIA Pegasus \parencite{trilaksono_laporanRispro}}
-    \end{center}
-\end{figure}
+\begin{center}
+	\begin{figure}
+		%% TODO: Foto sendiri (?)
+		\includegraphics[width=\textwidth]{resources/chapter-2/pegasus.png}
+		\caption{NVIDIA Pegasus \parencite{trilaksono_laporanRispro}}
+	\end{figure}
+\end{center}
 
 Mengutip dari \parencite{oh_2017}, NVIDIA Pegasus adalah komputer yang mendukung
 pengemudian \textit{autonomous} secara penuh. Artinya, NVIDIA Pegasus dapat
 digunakan untuk membuat sebuah kendaraan bermotor menjadi \textit{autonomous
-    vehcile} jika sensor dan algoritma yang digunakan tepat.
+	vehcile} jika sensor dan algoritma yang digunakan tepat.
 
 NVIDIA Pegasus menggunakan 2 GPU dengan arsitektur post-Volta dan 2 SoC NVIDIA
 Xavier. Kombinasi CPU dan GPU ini dapat menghasilkan 320 TOPS (\textit{trillion
-    operations/second}) untuk komputasi intelegensi buatan. Untuk koneksi I/O,
+	operations/second}) untuk komputasi intelegensi buatan. Untuk koneksi I/O,
 NVIDIA Pegasus mendukung sampai dengan 16 kamera (6 di antaranya adalah lidar).
 
 Pada sistem simulasi yang dibuat, NVDIA Pegasus akan menjadi server yang
@@ -110,7 +110,7 @@ Pada keadaan yang ada, komunikasi antara simulator CARLA dengan NVIDIA Pegasus
 menggunakan perantara \textit{web service} yang berbasis HTTP 1.1. Penggunaan
 HTTP 1.1 pada \textit{web service} menjadi \textit{bottleneck}/penghambat
 kinerja terbesar sistem simulasi. Ketika dilakukan secara SILS (\textit{software
-    in the loop simulation} tanpa NVIDIA Pegasus) didapatkan kinerja 4000 transaksi
+	in the loop simulation} tanpa NVIDIA Pegasus) didapatkan kinerja 4000 transaksi
 per detik, sedangkan ketika NVIDIA Pegasus ditambahkan ke sistem (menjadi HILS,
 \textit{hardware in the loop simulation}) didapatkan 100--110 transaksi per
 detik \parencite{trilaksono_laporanRispro}. Oleh karena itu, dibutuhkan protokol
@@ -118,14 +118,14 @@ atau metode komunikasi lain yang dapat meningkatkan kinerja jalur komunikasi.
 Selain itu, jalur komunikasi yang digunakan harus dapat mengirimkan pesan berupa
 teks \textit{string}, larik angka, atau data \textit{binary} (misalnya gambar).
 
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=1.0\textwidth]{resources/chapter-2/komunikasi
-            data pada simulasi.png}
-        \caption{Arsitektur komunikasi pada HILS
-            \parencite{trilaksono_laporanRispro}}
-    \end{center}
-\end{figure}
+\begin{center}
+	\begin{figure}
+		\includegraphics[width=1.0\textwidth]{resources/chapter-2/komunikasi
+			data pada simulasi.png}
+		\caption{Arsitektur komunikasi pada HILS
+			\parencite{trilaksono_laporanRispro}}
+	\end{figure}
+\end{center}
 
 Beberapa alternatif metode jalur komunikasi dapat digunakan untuk
 meng\-hu\-bung\-kan kedua server akan dibahas pada subbab ini. metode tersebut
@@ -146,8 +146,8 @@ dilakukan secara lokal atau \textit{remote}; pengembang hanya perlu tahu
 pemanggilan fungsi tersebut akan menghasilkan suatu nilai baru dan akan membuat
 program \textit{blocking} (menunggu) sampai nilai baru tersebut
 didapatkan\footnote{terdapat variasi RPC, \textit{asynchronous} RPC, yang
-    memungkinkan pemanggilan fungsi \textit{remote} tanpa menghasilkan
-    \textit{return} sehingga tidak perlu ditunggu.}.
+	memungkinkan pemanggilan fungsi \textit{remote} tanpa menghasilkan
+	\textit{return} sehingga tidak perlu ditunggu.}.
 
 Implementasi RPC yang akan dibahas pada subbab ini adalah Apache Thrift.
 Apa\-che Thrift juga merupakan implementasi RPC yang akan digunakan untuk
@@ -176,7 +176,7 @@ Thrift tidak perlu memikirkan cara melakukan RPC, melainkan hanya perlu
 men\-de\-fi\-ni\-si\-kan layanan-layanan yang diberikan serta struktur data
 tambahan pada sebuah berkas Thrift IDL (\textit{interface definition language}).
 Dari definisi pada IDL tersebut, pembangkit kode Thrift (Thrift \textit{code
-    generator}) akan membuat \textit{interface} untuk server dan klien. Pengguna
+	generator}) akan membuat \textit{interface} untuk server dan klien. Pengguna
 Thrift hanya perlu mengimplementasikan layanan-layanan tersebut pada sisi
 server, sedangkan urusan protokol, transpor, dan menangani pemanggilan RPC dapat
 menggunakan kakas dari pustaka Apache Thrift.
@@ -196,7 +196,7 @@ menggunakan 1 \textit{thread} ataupun banyak \textit{thread} dengan I/O
 Komunikasi berorientasi pesan adalah salah satu metode komunikasi pada sistem
 terdistribusi. Metode ini utamanya bersifat
 \textit{asynchronous}\footnote{Beberapa implementasi bisa \textit{synchronous}
-    juga.}, artinya konsumen/klien tidak perlu \textit{blocking} ketika membuat
+	juga.}, artinya konsumen/klien tidak perlu \textit{blocking} ketika membuat
 \textit{request}. Sifat \textit{asynchronous} ini merupakan alternatif untuk
 serta cara berkomunikasi \textit{request/response} lainnya dan berguna ketika
 konsumen tidak membutuhkan hasil pemrosesan pesan.
@@ -230,7 +230,7 @@ yang benar. Selain itu, pesan yang dikirim dapat berupa \textit{string} maupun
 \textit{binary}. Pesan yang berupa \textit{string} adalah pesan dalam format
 \textit{raw} JSON. Sedangkan dalam rupa \textit{binary}, rosbridge mendukung
 kompresi dan \textit{encoding} dengan CBOR (\textit{concise binary object
-    representation}) dan CBOR-\textit{raw}. Pesan CBOR harus didekompresi oleh
+	representation}) dan CBOR-\textit{raw}. Pesan CBOR harus didekompresi oleh
 penerima menjadi \textit{raw} JSON.
 
 Perbedaan antara CBOR dengan CBOR-\textit{raw} adalah format pesannya. Pada
@@ -253,11 +253,11 @@ biasa), \textit{many-to-one} (\textit{socket} mendengarkan ke beberapa
 \textit{port}), dan \textit{one-to-many}. Pola komunikasi yang didukung oleh
 ZeroMQ adalah \textit{request-reply}, \textit{publish-subscribe}, dan
 \textit{pipeline}. ZeroMQ juga memiliki sebuah antrian pesan (\textit{message
-    queue}) sehingga pesan yang dikirimkan ke konsumen akan disimpan
+	queue}) sehingga pesan yang dikirimkan ke konsumen akan disimpan
 sampai konsumen siap menerima pesan.
 
 ZeroMQ berjalan di atas lapisan transpor ZMTP (ZeroMQ \textit{message transport
-    protocol}). Semantik ZMTP memastikan pesan tidak akan diterima lebih dari 1 kali
+	protocol}). Semantik ZMTP memastikan pesan tidak akan diterima lebih dari 1 kali
 oleh konsumen dan semua pesan akan diterima oleh konsumen dengan urutan yang
 benar. Selain itu, \textit{frame} pesan yang diterima konsumen akan
 di-\textit{queue} di memori penerima sampai semua \textit{frame} diterima.
@@ -270,7 +270,7 @@ Terdapat sebuah penelitian yang memiliki lingkup serta lingkungan sama dengan
 tugas akhir ini. Penelitian tersebut juga menggunakan CARLA untuk HILS.
 
 \subsection{\textit{Hardware-in-the-Loop Autonomous Driving Simulation Without
-        Real-Time Constraints}}
+		Real-Time Constraints}}
 
 Pada penelitian ini \parencite{brogle_CarlaHILS}, dilakukan HILS menggunakan
 NVIDIA Jetson TX1 sebagai perangkat keras untuk komputasi dan simulasi
@@ -284,13 +284,13 @@ dipublikasikan ke topik yang didengarkan oleh pemroses data LiDAR dan vidio.
 \textit{Node} yang terhubung dengan CARLA akan dikirimkan data terkait kendali
 kendaraan oleh \textit{node} yang disebut \textit{path planning node}.
 
-\begin{figure}
-    \begin{center}
-        \includegraphics[width=1.0\textwidth]{resources/chapter-2/carla-jetson-arch.png}
-        \caption{Arsitektur sistem simulasi \parencite{brogle_CarlaHILS}}
-        \label{chapter-2-carla-jetson-arch}
-    \end{center}
-\end{figure}
+\begin{center}
+	\begin{figure}
+		\includegraphics[width=1.0\textwidth]{resources/chapter-2/carla-jetson-arch.png}
+		\caption{Arsitektur sistem simulasi \parencite{brogle_CarlaHILS}}
+		\label{chapter-2-carla-jetson-arch}
+	\end{figure}
+\end{center}
 
 Hasil eksperimen pada penelitian ini adalah hasil simulasi menggunakan HILS dan
 CARLA tidak berbeda jauh dengan keadaan dunia nyata. Selain itu, didapatkan juga
