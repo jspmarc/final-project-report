@@ -146,50 +146,75 @@ dilakukan secara lokal atau \textit{remote}; pengembang hanya perlu tahu
 pemanggilan fungsi tersebut akan menghasilkan suatu nilai baru dan akan membuat
 program \textit{blocking} (menunggu) sampai nilai baru tersebut
 didapatkan\footnote{terdapat variasi RPC, \textit{asynchronous} RPC, yang
-	memungkinkan pemanggilan fungsi \textit{remote} tanpa menghasilkan
-	\textit{return} sehingga tidak perlu ditunggu.}.
+    memungkinkan pemanggilan fungsi \textit{remote} tanpa menghasilkan
+    \textit{return} sehingga tidak perlu ditunggu.}.
 
-Implementasi RPC yang akan dibahas pada subbab ini adalah Apache Thrift.
-Apa\-che Thrift juga merupakan implementasi RPC yang akan digunakan untuk
-membangun jalur komunikasi antara server NVIDIA Pegasus dengan server simulator
-CARLA. Apache Thrift dipilih karena kemampuannya mengirimkan pesan dalam format
-\textit{binary}. Selain itu, karena kinerja Apache Thrift lebih baik
-dibandingkan dengan HTTP dan implementasi RPC oleh Google, gRPC
-\parencite{abernethy_buildingHighPerformanceMSThrift}.
+Implementasi RPC yang akan dibahas pada subbab ini adalah gRPC. gRPC juga
+merupakan implementasi RPC yang akan digunakan untuk membangun jalur komunikasi
+antara server NVIDIA Pegasus dengan server simulator CARLA. gRPC dipilih karena
+kemampuannya mengirimkan pesan dalam format \textit{binary} dan mengirimkan
+pesan secara \textit{streaming}. Akan tetapi, gRPC bukan merupakan implementasi
+RPC dengan kinerja dan efisiensi penggunaan \textit{resource} komputer terbaik
+\parencite{chris_rpc_benchmark}. Kendati demikian, fitur \textit{streaming} data
+dinilai lebih penting daripada efisiensi \textit{resource} pada \textit{use
+    case} simulasi ini.
 
-\subsubsection{Apache Thrift}
+\subsubsection{gRPC}
 
-Apache Thrift adalah sebuah implementasi RPC dalam bentuk \textit{framework}
-yang diciptakan oleh Facebook, Inc. (sekarang Meta Platforms, Inc.) lalu
-disumbangkan ke Apache Software Foundation. Tujuan utama dari pembuatan Apache
-Thrift adalah sebuah jembatan antar-bahasa pemrograman yang memiliki kinerja
-tinggi \parencite{agarwal_thrift} sehingga Apache Thrift dapat digunakan lintas
-bahasa pemrograman.
+gRPC adalah salah satu implementasi RPC dalam bentuk \textit{framework} dari
+Google. Google merilis gRPC proyek sumber terbuka pada tahun 2016. Teknologi
+gRPC datang dari teknologi internal di Google bernama Stubby. Google merilis
+Stubby menjadi gRPC ke publik untuk menstandardisasi Stubby dengan standard
+baru: HTTP/2, SPDY, dan QUIC. Selain itu, untuk memperluas fungsionalitas Stubby
+agar dapat digunakan untuk aplikasi \textit{mobile}, IoT, dan komputasi awan.
 
-Apache Thrift memiliki beberapa abstraksi dan kakas yang memudahkan pengembang
-untuk menggunakan RPC. Abstraksi-abstraksi tersebut adalah sistem tipe, protokol
-(untuk \textit{encoding} pesan), transpor, pemberian versi, dan prosesor.
+gRPC dapat digunakan di berbagai bahasa pemrograman. Secara bawaan, gRPC
+mendukung 10 bahasa. Untuk mendukung banyak bahasa dan memberikan abstraksi,
+gRPC memiliki tiga jenis arsitektur. Arsitektur-arsitektur tersebut adalah
+arsitektur untuk ``bahasa terbungkus'' (\textit{wrapped languages}), Go, dan
+Java. Tugas akhir ini akan menggunakan bahasa Python dan C++ sehingga hanya
+arsitektur untuk ``bahasa terbungkus'' yang dijelaskan secara detail. Arsitektur
+gRPC untuk ``bahasa terbungkus'' dapat dilihat pada gambar
+\ref{chapter-2-grpc-stack}.
 
-Abstraksi yang diberikan oleh Apache Thrift memudahkan penggunanya dalam
-me\-la\-ku\-kan pengembangan sebuah layanan menggunakan RPC. Pengguna Apache
-Thrift tidak perlu memikirkan cara melakukan RPC, melainkan hanya perlu
-men\-de\-fi\-ni\-si\-kan layanan-layanan yang diberikan serta struktur data
-tambahan pada sebuah berkas Thrift IDL (\textit{interface definition language}).
-Dari definisi pada IDL tersebut, pembangkit kode Thrift (Thrift \textit{code
-	generator}) akan membuat \textit{interface} untuk server dan klien. Pengguna
-Thrift hanya perlu mengimplementasikan layanan-layanan tersebut pada sisi
-server, sedangkan urusan protokol, transpor, dan menangani pemanggilan RPC dapat
-menggunakan kakas dari pustaka Apache Thrift.
+\begin{figure}
+    \centering
+    \includegraphics[width=1.0\textwidth]{resources/chapter-2/grpc-arch.jpeg}
+    \caption{Arsitektur gRPC untuk ``bahasa terbungkus''
+        \parencite{mastrangelo_grpcStack}}
+    \label{chapter-2-grpc-stack}
+\end{figure}
 
-Dengan menggunakan kakas bawaan dari pustaka Thrift, pesan \textit{request} yang
-di\-ki\-rim\-kan melalui lapisan transpor Thrift dapat berupa \textit{binary},
-JSON, dan bentuk yang mudah dibaca manusia. Lalu, transpor yang didukung pustaka
-bawaan Thrift adalah transpor menggunakan memori, berkas, HTTP, dan
-\textit{socket} (TCP). Pustaka Thrift juga menyediakan transpor yang melakukan
-kompresi dan transpor yang membagi pesan menjadi beberapa \textit{frame}. Jenis
-server yang disediakan oleh pustaka bawaan Thrift pun beragam. Server bisa
-menggunakan 1 \textit{thread} ataupun banyak \textit{thread} dengan I/O
-\textit{blocking} maupun non-\textit{blocking}.
+Pada ``bahasa terbungkus'', pemanggilan prosedur \textit{remote} menggunakan
+gRPC me\-la\-lu\-i sebuah \textit{stub} yang me\-le\-wa\-ti
+\textit{interceptor}. Lalu, pemanggilan dari \textit{stub} akan dilanjutkan ke
+pustaka pembungkus (\textit{wrapper}) untuk tiap bahasa yang
+me\-ner\-je\-mah\-kan pemanggilan tadi ke pemanggilan fungsi C. Fungsi C yang
+dipanggil adalah bagian dari C-core. C-core pustaka gRPC untuk mengabstraksikan
+lapisan transpor. Secara bawaan, C-core akan menggunakan HTTP 2.0 sebagai
+lapisan transpor.
+
+Pada arsitektur untuk Java, pemanggilan ke prosedur di \textit{stub} tidak lagi
+harus ke pustaka pembungkus, melainkan langsung ke Java-core setelah melewati
+\textit{interceptor}. Java-core memiliki peran yang sama dengan C-core. Lalu,
+untuk arsitektur Go, pemanggilan ke prosedur di \textit{stub} langsung ke
+Go-core, tidak ada lagi \textit{interceptor} dan pustaka pembungkus.
+
+\textit{Stub} pada arsitektur gRPC dibangkitkan (\textit{generate}) dari IDL
+(\textit{interface definion language}). gRPC dapat menggunakan IDL yang
+berbeda-beda, tapi yang memberikan dukungan terhadap gRPC baru Protocol Buffer
+(protobuf) dan Flatbuffers. Pengguna gRPC harus mendefinisikan layanan
+(\textit{service}), struktur data, dan \textit{enum} yang dapat digunakan pada
+IDL. Layanan yang diberikan kemudian diimplementasikan di sisi server.
+
+Ketika melakukan RPC, gRPC akan menserialisasi data menjadi format tertentu yang
+dikirim melaui lapisan transpor, misalnya HTTP 2.0. Penerima (server) akan
+mendeserialisasi data tersebut lalu menjalankan prosedur/fungsi terkait. Setelah
+itu, \textit{return} dari fungsi/prosedur akan diserialisasi dan dikembalikan ke
+pengirim. Format serialisasi tergantung pada metode serialisasi yang digunakan
+dan berkaitan erat dengan IDL yang digunakan. Pada tugas akhir ini, IDL dan metode
+serialisasi yang akan digunakan adalah protobuf, artinya data akan
+diserialisasikan menjadi larik dari \textit{byte}.
 
 \subsection{Komunikasi Berorientasi Pesan}
 
