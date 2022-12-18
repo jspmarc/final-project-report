@@ -8,7 +8,7 @@ juga pada bab ini. Lalu, akan dibahas perancangan perbaikan sistem simulasi.
 
 Sistem simulasi yang ada sudah dapat menghubungkan server CARLA dengan server
 NVIDIA Pegasus. Kedua server dihubungkan di sebuah jaringan menggunakan sebuah
-layanan web. Layanan web ini memanfaatkan teknologi HTTP 1.1.
+layanan web. Layanan web ini memanfaatkan teknologi HTTP/1.1.
 
 Solusi yang memanfaatkan layanan web dan HTTP ini merupakan \textit{bottleneck}
 besar pada sistem simulasi. Kinerja yang diberikan pada arsitektur sekarang
@@ -16,7 +16,7 @@ sangat buruk. Dari 4000 transaksi per detik pada SILS, ketika menggunakan HILS
 dan layanan web, turun menjadi 100-110 transaksi per detik. Kinerja buruk ini
 mengakibatkan sistem simulasi terhambat pada jalur komunikasinya.
 
-Selain itu, teknologi HTTP di bawah HTTP 2.0 juga tidak mendukung data
+Selain itu, teknologi HTTP di bawah HTTP/2 juga tidak mendukung data
 \textit{binary} dengan baik. Hal ini mengakibatkan data dari sensor membutuhkan
 waktu dan \textit{resource} lebih untuk pemrosesannya.
 
@@ -41,8 +41,8 @@ tersebut adalah ZeroMQ, gRPC, dan ROS. ZeroMQ dipilih karena berjalan di atas
 TCP yang artinya akan mendukung data \textit{binary}. Selain itu, ZeroMQ
 mendukung berbagai skema komunikasi: \textit{pub/sub},
 \textit{request/response}, dan \textit{push/pull}. Metode gRPC adalah
-peningkatan dari protokol RPC yang menggunakan HTTP 2.0 sehingga memiliki
-kinerja yang baik. HTTP 2.0 juga mendukung pengiriman data dalam bentuk
+peningkatan dari protokol RPC yang menggunakan HTTP/2 sehingga memiliki
+kinerja yang baik. HTTP/2 juga mendukung pengiriman data dalam bentuk
 \textit{binary}.  Selain itu, gRPC mendukung \textit{data streaming} sehingga
 cocok digunakan untuk kebutuhan pengiriman data dari sensor. Metode terakhir
 adalah menggunakan ROS. ROS adalah sekumpulan kakas yang sering digunakan pada

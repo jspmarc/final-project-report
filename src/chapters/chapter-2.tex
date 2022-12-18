@@ -105,8 +105,8 @@ menjadi \textit{node} ROS.
 \section{Metode Komunikasi antara Simulator CARLA dan NVI\-DI\-A Pegasus}
 
 Pada keadaan yang ada, komunikasi antara simulator CARLA dengan NVIDIA Pegasus
-menggunakan perantara \textit{web service} yang berbasis HTTP 1.1. Penggunaan
-HTTP 1.1 pada \textit{web service} menjadi \textit{bottleneck}/penghambat
+menggunakan perantara \textit{web service} yang berbasis HTTP/1.1. Penggunaan
+HTTP/1.1 pada \textit{web service} menjadi \textit{bottleneck}/penghambat
 kinerja terbesar sistem simulasi. Ketika dilakukan secara SILS (\textit{software
     in the loop simulation} tanpa NVIDIA Pegasus) didapatkan kinerja 4000 transaksi
 per detik, sedangkan ketika NVIDIA Pegasus ditambahkan ke sistem (menjadi HILS,
@@ -188,7 +188,7 @@ gRPC me\-la\-lu\-i sebuah \textit{stub} yang me\-le\-wa\-ti
 pustaka pembungkus (\textit{wrapper}) untuk tiap bahasa yang
 me\-ner\-je\-mah\-kan pemanggilan tadi ke pemanggilan fungsi C. Fungsi C yang
 dipanggil adalah bagian dari C-core. C-core pustaka gRPC untuk mengabstraksikan
-lapisan transpor. Secara bawaan, C-core akan menggunakan HTTP 2.0 sebagai
+lapisan transpor. Secara bawaan, C-core akan menggunakan HTTP/2 sebagai
 lapisan transpor.
 
 \textit{Stub} pada arsitektur gRPC dibangkitkan (\textit{generate}) dari IDL
@@ -199,7 +199,7 @@ berbeda-beda, tapi yang memberikan dukungan terhadap gRPC baru Protocol Buffer
 IDL. Layanan yang diberikan kemudian diimplementasikan di sisi server.
 
 Ketika melakukan RPC, gRPC akan menserialisasi data menjadi format tertentu yang
-dikirim melaui lapisan transpor, misalnya HTTP 2.0. Penerima (server) akan
+dikirim melaui lapisan transpor, misalnya HTTP/2. Penerima (server) akan
 mendeserialisasi data tersebut lalu menjalankan prosedur/fungsi terkait. Setelah
 itu, \textit{return} dari fungsi/prosedur akan diserialisasi dan dikembalikan ke
 pengirim. Format serialisasi tergantung pada metode serialisasi yang digunakan
