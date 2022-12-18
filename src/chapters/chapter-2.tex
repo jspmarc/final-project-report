@@ -140,8 +140,8 @@ implementasi fungsi berada di komputer lain di dalam jaringan.
 
 Ketika menggunakan RPC, pengembang tidak perlu tahu pemanggilan sebuah fung\-si
 dilakukan secara lokal atau \textit{remote}; pengembang hanya perlu tahu
-pemanggilan fungsi tersebut akan menghasilkan suatu nilai baru dan akan membuat
-program \textit{blocking} (menunggu) sampai nilai baru tersebut
+pemanggilan fungsi tersebut akan menghasilkan suatu nilai baru dan berpotensi
+membuat program \textit{blocking} (menunggu) sampai nilai baru tersebut
 didapatkan\footnote{terdapat variasi RPC, \textit{asynchronous} RPC, yang
     memungkinkan pemanggilan fungsi \textit{remote} tanpa menghasilkan
     \textit{return} sehingga tidak perlu ditunggu.}.
@@ -223,43 +223,70 @@ terdistribusi. Metode ini utamanya bersifat
 serta cara berkomunikasi \textit{request/response} lainnya dan berguna ketika
 konsumen tidak membutuhkan hasil pemrosesan pesan.
 
-Implementasi untuk komunikasi berorientasi pesan yang akan dibahas adalah
-protokol rosbridge dan pustaka ZeroMQ. Kedua protokol juga akan digunakan untuk
-membuat jalur komunikasi antara server NVIDIA Pegasus dengan server simulator
-CARLA.
+Selain sifat \textit{asynchronous}, keunggulan lain dari komunikasi berorientasi
+pesan ada\-lah menghilangkan kebutuhan mesin ``server'' (yang mengeksekusi) pesan
+tidak harus sedang berjalan ketika pesan dikirimkan. Tidak seperti RPC yang
+mengharuskan mesin server dan klien berjalan agar pemanggilan fungsi
+\textit{remote} dapat berjalan.
 
-% TODO: ganti jadi ROS aja
-\subsubsection{Rosbridge}
+Implementasi untuk komunikasi berorientasi pesan yang akan dibahas adalah ROS
+dan pustaka ZeroMQ. Kedua protokol juga akan digunakan untuk membuat jalur
+komunikasi antara server NVIDIA Pegasus dengan server simulator CARLA.
 
-Rosbridge adalah protokol komunikasi yang menambahkan antarmuka ke aplika\-si
-non-ROS agar dapat berkomunikasi dengan \textit{node} ROS. Komunikasi dapat
-dilakukan dengan pola \textit{publish/subscribe} ke suatu topik ROS. Dengan pola
-\textit{publish/subscribe}, ROS dapat melakukan komunikasi \textit{one-to-one},
-\textit{one-to-many}, \textit{many-to-one}, \textit{many-to-one}, dan
-\textit{many-to-many}. Selain itu, komunikasi dapat dilakukan juga dengan pola
-\textit{request/reply} dengan memanggil \textit{service} ROS.
+% TODO: apa iya masih message-oriented?
+\subsubsection{ROS 2}
 
-Protokol rosbridge menggunakan format JSON untuk pesannya. Pesan yang valid
-harus mengandung \textit{field} \texttt{"op"}. \textit{Field} tersebut digunakan
-untuk menentukan jenis pesan. Pesan juga dapat mengandung \textit{field}
-\texttt{"id"} yang digunakan sebagai penanda transaksi atau keterhubungan antara
-beberapa pesan. Selain kedua \textit{field} tersebut, pesan rosbridge juga dapat
-mengandung \textit{field} lainnya tergantung jenis \texttt{op}.
+ROS 2 adalah peningkatan dari ROS. ROS adalah kependekan dari \textit{robot
+    operating system} dan merupakan sekumpulan pustaka dan kakas perangkat lunak
+untuk membangun aplikasi robotik. ROS dilengkapi dengan berbagai macam kakas
+dan perangkat lunak, mulai dari \textit{driver} sampai kakas pemrograman. ROS
+menyediakan layanan serupa dengan sistem operasi meskipun ROS bukan sistem
+operasi ``nyata'' seperti Linux, Windows, ataupun MacOS.
 
-Secara arsitektur, rosbridge menggunakan WebSocket sebagai layanan
-trans\-por\-nya. Artinya, pesan pada rosbridge pasti akan sampai dengan urutan
-yang benar. Selain itu, pesan yang dikirim dapat berupa \textit{string} maupun
-\textit{binary}. Pesan yang berupa \textit{string} adalah pesan dalam format
-\textit{raw} JSON. Sedangkan dalam rupa \textit{binary}, rosbridge mendukung
-kompresi dan \textit{encoding} dengan CBOR (\textit{concise binary object
-    representation}) dan CBOR-\textit{raw}. Pesan CBOR harus didekompresi oleh
-penerima menjadi \textit{raw} JSON.
+% ROS harus diinstal di atas sistem operasi, seperti Linux, agar dapat digunakan.
+% ROS juga dapat dijalankan di atas Docker. Perangkat lunak di ROS diorganisir
+% menjadi \textit{packages}. Setiap \textit{packages} dapat terdiri dari
+% \textit{node}, pustaka, dan lain-lain.
 
-Perbedaan antara CBOR dengan CBOR-\textit{raw} adalah format pesannya. Pada
-CBOR-\textit{raw}, pesan dikirim dalam format serialisasi ROS. Keuntungan
-menggunakan C\-B\-O\-R-\textit{raw} adalah peningkatan kinerja jika \textit{parsing}
-hanya sebagian pesan, aplikasi dapat membaca berkas \texttt{bag}, atau
-\textit{parsing} pesan ingin dilakukan seterlambat mungkin atau secara paralel.
+Proses-proses yang melakukan komputasi pada ROS disebut \textit{node} di level
+graf komputasi. Disebut graf karena setiap \textit{node} di ROS saling terhubung
+satu sama lain membentuk sebuah jaringan \textit{peer-to-peer}. Sebuah
+\textit{node} dibuat agar skalanya \textit{fine-grained} dan bertanggung jawab
+hanya pada satu hal. Dalam kasus ini, ROS mirip dengan \textit{service}/layanan
+pada arsitektur \textit{microservice}.
+
+Antar-\textit{node} ROS dapat berkomunikasi dengan tiga metode, yaitu
+\begin{itemize}
+    \item \textit{topic}: komunikasi asinkron dengan pola
+          \textit{publisher}-\textit{subscriber},
+    \item \textit{service}: komunikasi secara asinkron dengan pola
+          \textit{request}-respon seperti RPC, dan
+    \item \textit{action}: mendeskripsikan sebuah aksi.
+\end{itemize}
+Pada tugas akhir ini, hanya akan digunakan \textit{topic} dan \textit{service}.
+Setiap \textit{topic} dapat memiliki sebuah berkas \texttt{.msg} yang
+menjelaskan isi pesan \textit{topic} apabila tidak menggunakan tipe data
+sederhana (\textit{string}, \textit{integer}, dll.). Selain itu, setiap
+\textit{service} juga harus didefinsikan melalui sebuah berkas IDL \texttt{.srv}
+yang menjelaskan bentuk \textit{request} dan respon.
+
+Komunikasi antar-\textit{node} secara ba\-wa\-an menggunakan DDS. DDS secara
+bawaan mendukung komunikasi dengan pola \textit{publisher}-\textit{subscriber}
+dengan QoS (\textit{quality of service}). Komunikasi dengan \textit{topic}
+memanfaatkan pola tersebut. Lalu, untuk pola \textit{service}, digunakan
+perpanjangan dari DDS, yaitu DDS-RPC. DDS sendiri sebenarnya hanya standar
+dengan implementasi yang berbeda-beda. Secara bawaan, ROS 2 menggunakan Fast DDS
+dari eProsima.
+
+Pemanfaatan DDS ini diabstraksikan oleh ROS menggunakan beberapa pustaka untuk
+memudahkan pengembangan aplikasi ROS. Aplkasi yang ditulis akan memanfaatkan
+API pustaka klien, misalnya \texttt{rclpy} (untuk Python). API pustaka klien
+melakukan pemanggilan ke antarmuka pustaka klien yang disebut \texttt{rcl}.
+\texttt{rcl} memberikan akses ke graf ROS dan kejadian (\textit{events}) pada
+graf. \texttt{rcl} juga mengatur siklus hidup \textit{node} di antara beberapa
+hal lainnya. \texttt{rcl} akan memanfaatkan \texttt{rmw} (antarmuka
+\textit{middleware} ROS). \texttt{rmw} memberikan abstraksi dari
+\textit{middleware} (atau lapisan transpor) yang digunakan.
 
 \subsubsection{ZeroMQ}
 
@@ -276,7 +303,9 @@ biasa), \textit{many-to-one} (\textit{socket} mendengarkan ke beberapa
 ZeroMQ adalah \textit{request-reply}, \textit{publish-subscribe}, dan
 \textit{pipeline}. ZeroMQ juga memiliki sebuah antrian pesan (\textit{message
     queue}) sehingga pesan yang dikirimkan ke konsumen akan disimpan
-sampai konsumen siap menerima pesan.
+sampai konsumen siap menerima pesan. Meskipun terhadap antrian pesan, ZeroMQ
+tidak memiliki \textit{message broker}\footnote{\textit{zero} pada ZeroMQ
+    artinya nol \textit{broker}}.
 
 ZeroMQ berjalan di atas lapisan transpor ZMTP (ZeroMQ \textit{message transport
     protocol}). Semantik ZMTP memastikan pesan tidak akan diterima lebih dari 1 kali
