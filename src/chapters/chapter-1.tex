@@ -35,9 +35,9 @@ protokol juga harus dapat mengirimkan data dalam format \textit{string} dan
 kendali untuk mengendalikan trem.
 
 Sistem simulasi yang dibuat bersifat HILS (\textit{hardware-in-the-loop
-	simulation}).  Artinya, perangkat keras yang digunakan pada simulasi juga akan
-digunakan pada produk akhir trem otonom.  Perangkat keras yang digunakan kembali
-adalah server NVIDIA Pegasus.
+	simulation}). Artinya, perangkat keras yang digunakan pada simulasi juga akan
+digunakan pada produk akhir trem otonom. Perangkat keras yang digunakan pada
+produk akhir adalah server NVIDIA Pegasus.
 
 \section{Rumusan Masalah}
 
@@ -74,7 +74,7 @@ Batasan pada pengerjaan tugas akhr adalah
 	\item pengujian akan dilakukan pada komputer yang terdapat di gedung Lab
 	      Tek\-no\-lo\-gi VIII ITB; dan
 	\item hanya ada 3 protokol atau kakas komunikasi yang diuji: ROS, ZeroMQ,
-	      dan Apache Thrift.
+	      dan gRPC.
 \end{enumerate}
 
 \section{Metodologi}
@@ -149,42 +149,40 @@ Berikut adalah jadwal pelaksanaan Tugas Akhir I dan II yang dirinci per mingguny
 \end{figure}
 
 \begin{figure}[ht]
-	\begin{center}
-		\linespread{0.8}
-		\resizebox{\textwidth}{!}{
-			\begin{ganttchart}[
-					y unit title=0.5cm,
-					y unit chart=1.3cm,
-					bar height=0.7,
-					vgrid,
-					title height=1,
-					bar label font=\tiny,
-					bar label node/.style={
-							text width=4cm,
-							align=right,
-							anchor=east,
-							font=\raggedleft
-						},
-				]{1}{24}
-				%labels
-				\gantttitle{Februari}{4}
-				\gantttitle{Maret}{4}
-				\gantttitle{April}{4}
-				\gantttitle{Mei}{4}
-				\gantttitle{Juni}{4}
-				\gantttitle{Juli}{4} \\
-				\gantttitlelist{1,...,4}{1}
-				\gantttitlelist{1,...,4}{1}
-				\gantttitlelist{1,...,4}{1}
-				\gantttitlelist{1,...,4}{1}
-				\gantttitlelist{1,...,4}{1}
-				\gantttitlelist{1,...,4}{1} \\
+	\linespread{0.8}
+	\resizebox{\textwidth}{!}{
+		\begin{ganttchart}[
+				y unit title=0.5cm,
+				y unit chart=1.3cm,
+				bar height=0.7,
+				vgrid,
+				title height=1,
+				bar label font=\tiny,
+				bar label node/.style={
+						text width=4cm,
+						align=right,
+						anchor=east,
+						font=\raggedleft
+					},
+			]{1}{24}
+			%labels
+			\gantttitle{Februari}{4}
+			\gantttitle{Maret}{4}
+			\gantttitle{April}{4}
+			\gantttitle{Mei}{4}
+			\gantttitle{Juni}{4}
+			\gantttitle{Juli}{4} \\
+			\gantttitlelist{1,...,4}{1}
+			\gantttitlelist{1,...,4}{1}
+			\gantttitlelist{1,...,4}{1}
+			\gantttitlelist{1,...,4}{1}
+			\gantttitlelist{1,...,4}{1}
+			\gantttitlelist{1,...,4}{1} \\
 
-				% tasks
-				\ganttbar{Perancangan kerangka kerja pengujian}{1}{8} \\
-				\ganttbar{Implementasi kerangka kerja pengujian}{9}{16} \\
-			\end{ganttchart}
-		}
-	\end{center}
+			% tasks
+			\ganttbar{Perancangan kerangka kerja pengujian}{1}{8} \\
+			\ganttbar{Implementasi kerangka kerja pengujian}{9}{16} \\
+		\end{ganttchart}
+	}
 	\caption{Jadwal Pelaksanaan Tugas Akhir (bagian 2)}
 \end{figure}
