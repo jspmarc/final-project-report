@@ -191,12 +191,6 @@ dipanggil adalah bagian dari C-core. C-core pustaka gRPC untuk mengabstraksikan
 lapisan transpor. Secara bawaan, C-core akan menggunakan HTTP 2.0 sebagai
 lapisan transpor.
 
-Pada arsitektur untuk Java, pemanggilan ke prosedur di \textit{stub} tidak lagi
-harus ke pustaka pembungkus, melainkan langsung ke Java-core setelah melewati
-\textit{interceptor}. Java-core memiliki peran yang sama dengan C-core. Lalu,
-untuk arsitektur Go, pemanggilan ke prosedur di \textit{stub} langsung ke
-Go-core, tidak ada lagi \textit{interceptor} dan pustaka pembungkus.
-
 \textit{Stub} pada arsitektur gRPC dibangkitkan (\textit{generate}) dari IDL
 (\textit{interface definion language}). gRPC dapat menggunakan IDL yang
 berbeda-beda, tapi yang memberikan dukungan terhadap gRPC baru Protocol Buffer
@@ -242,11 +236,6 @@ untuk membangun aplikasi robotik. ROS dilengkapi dengan berbagai macam kakas
 dan perangkat lunak, mulai dari \textit{driver} sampai kakas pemrograman. ROS
 menyediakan layanan serupa dengan sistem operasi meskipun ROS bukan sistem
 operasi ``nyata'' seperti Linux, Windows, ataupun MacOS.
-
-% ROS harus diinstal di atas sistem operasi, seperti Linux, agar dapat digunakan.
-% ROS juga dapat dijalankan di atas Docker. Perangkat lunak di ROS diorganisir
-% menjadi \textit{packages}. Setiap \textit{packages} dapat terdiri dari
-% \textit{node}, pustaka, dan lain-lain.
 
 Proses-proses yang melakukan komputasi pada ROS disebut \textit{node} di level
 graf komputasi. Disebut graf karena setiap \textit{node} di ROS saling terhubung
