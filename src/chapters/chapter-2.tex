@@ -237,6 +237,12 @@ dan perangkat lunak, mulai dari \textit{driver} sampai kakas pemrograman. ROS
 menyediakan layanan serupa dengan sistem operasi meskipun ROS bukan sistem
 operasi ``nyata'' seperti Linux, Windows, ataupun MacOS.
 
+Setiap perangkat lunak pada ROS diorganisir menjadi \textit{packages}. Setiap
+\textit{package} dapat mengandung proses (\textit{node}), himpunan data,
+pustaka, dan lain-lain. \textit{Package} adalah struktur terkecil dari sebuah
+artifak pada ROS. Sebuah \textit{package} yang mengandung proses dapat
+di-\textit{run} untuk menjalankan sebuah proses komputasi.
+
 Proses-proses yang melakukan komputasi pada ROS disebut \textit{node} di level
 graf komputasi. Disebut graf karena setiap \textit{node} di ROS saling terhubung
 satu sama lain membentuk sebuah jaringan \textit{peer-to-peer}. Sebuah
