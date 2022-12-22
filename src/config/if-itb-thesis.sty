@@ -68,6 +68,9 @@
   \addtocontents{toc}{\protect\value{tocdepth}=-1}%
   \addtocontents{atoc}{\protect\value{tocdepth}=\savedtocdepth}%
 
+  % source: https://tex.stackexchange.com/a/74530
+  \renewcommand{\thesection}{\thechapter.\Alph{section}}
+
   \titlecontents{chapter}
     [0pt]
     {\bfseries}
