@@ -163,7 +163,8 @@ Google. Google merilis gRPC proyek sumber terbuka pada tahun 2016. Teknologi
 gRPC datang dari teknologi internal di Google bernama Stubby. Google merilis
 Stubby menjadi gRPC ke publik untuk menstandardisasi Stubby dengan standard
 baru: HTTP/2, SPDY, dan QUIC. Selain itu, untuk memperluas fungsionalitas Stubby
-agar dapat digunakan untuk aplikasi \textit{mobile}, IoT, dan komputasi awan.
+agar dapat digunakan untuk aplikasi \textit{mobile}, IoT, dan komputasi awan
+\parencite{ryan_grpcPricinples}.
 
 gRPC dapat digunakan di berbagai bahasa pemrograman. Secara bawaan, gRPC
 mendukung 10 bahasa. Untuk mendukung banyak bahasa dan memberikan abstraksi,
@@ -189,7 +190,7 @@ pustaka pembungkus (\textit{wrapper}) untuk tiap bahasa yang
 me\-ner\-je\-mah\-kan pemanggilan tadi ke pemanggilan fungsi C. Fungsi C yang
 dipanggil adalah bagian dari C-core. C-core pustaka gRPC untuk mengabstraksikan
 lapisan transpor. Secara bawaan, C-core akan menggunakan HTTP/2 sebagai
-lapisan transpor.
+lapisan transpor \parencite{mastrangelo_grpcStack}.
 
 \textit{Stub} pada arsitektur gRPC dibangkitkan (\textit{generate}) dari IDL
 (\textit{interface definion language}). gRPC dapat menggunakan IDL yang
