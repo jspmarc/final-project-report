@@ -96,93 +96,38 @@ Tahapan pelaksanaan tugas akhir ini adalah sebagai berikut.
 	\item Analisis hasil pengujian.
 \end{enumerate}
 
-\section{Jadwal Pelaksanaan Tugas Akhir}
+\section{Sistematika Pembahasan}
 
-% Tuliskan rencana kegiatan dan jadwal (dirinci sampai per minggu) mulai dari
-% awal pelaksanaan Tugas Akhir I s.d. sidang tugas akhir berikut milestones dan
-% deliverables yang harus diberikan. Jadwal ini dapat dibantu dengan membuat
-% sebuah tabel timeline atau gantt chart.
+% Subbab ini berisi penjelasan ringkas isi per bab. Penjelasan ditulis satu
+% paragraf per bab buku.
 
-Berikut adalah jadwal pelaksanaan Tugas Akhir I dan II yang dirinci per minggunya.
+Pada buku ini akan terdapat 5 bab, yaitu
+\begin{enumerate}
+	\item Pendahuluan,
+	\item Studi Literatur,
+	\item Analisis dan Rancangan Metode Komunikasi Sistem HILS,
+	\item Implementasi dan Pengujian Metode Komunikasi Sistem HILS, dan
+	\item Kesimpulan dan Saran.
+\end{enumerate}
 
-\begin{figure}[ht]
-	\linespread{0.8}
-	\resizebox{\textwidth}{!}{
-		\begin{ganttchart}[
-				y unit title=0.5cm,
-				y unit chart=1.3cm,
-				bar height=0.7,
-				vgrid,
-				title height=1,
-				bar label font=\tiny,
-				bar label node/.style={
-						text width=4cm,
-						align=right,
-						anchor=east,
-						font=\raggedleft
-					},
-			]{1}{20}
-			%labels
-			\gantttitle{September}{4}
-			\gantttitle{Oktober}{4}
-			\gantttitle{November}{4}
-			\gantttitle{Desember}{4}
-			\gantttitle{Januari}{4} \\
-			\gantttitlelist{1,...,4}{1}
-			\gantttitlelist{1,...,4}{1}
-			\gantttitlelist{1,...,4}{1}
-			\gantttitlelist{1,...,4}{1}
-			\gantttitlelist{1,...,4}{1} \\
+Bab pertama adalah bab pendahuluan yang membahas masalah dan latar belakang
+masalah. Lalu, dari masalah tersebut dirumuskan tujuan dari penelitian yang
+dilakukan. Agar penelitian tidak terlalu luas, bab pendahuluan juga membahas
+batasan masalah. Terakhir, bab pendahuluan juga membahas metodologi penelitian.
 
-			% tasks
-			\ganttbar{Mempelajari CARLA}{4}{4} \\
-			\ganttbar{Mempelajari sistem saat ini}{5}{5} \\
-			\ganttbar{Eksplorasi rosbridge}{6}{7} \\
-			\ganttbar{Implementasi jalur komunikasi menggunakan
-				rosbridge}{8}{9} \\
-			\ganttbar{Mempelajari CARLA ROS Bridge}{10}{11} \\
-			\ganttbar{Implementasi jalur komunikasi menggunakan ROS}{11}{13} \\
-			\ganttbar{Eksplorasi protokol komunikasi lain}{14}{20} \\
-		\end{ganttchart}
-	}
-	\caption{Jadwal Pelaksanaan Tugas Akhir (bagian 1)}
-\end{figure}
+Selanjutnya adalah bab studi literatur. Sesuai namanya, bab ini membahas hasil
+studi literatur terkait topik TA yang diangkat, yaitu membuat sistem HILS untuk
+simulasi trem \textit{autonomous}. Bab ini akan menjabarkan perangkat lunak, yang
+digunakan, misalnya \textit{simulator} CARLA dan ZeroMQ, serta hasil penelitian
+sebelumnya yang terkait topik tugas akhir.
 
-\begin{figure}[ht]
-	\linespread{0.8}
-	\resizebox{\textwidth}{!}{
-		\begin{ganttchart}[
-				y unit title=0.5cm,
-				y unit chart=1.3cm,
-				bar height=0.7,
-				vgrid,
-				title height=1,
-				bar label font=\tiny,
-				bar label node/.style={
-						text width=4cm,
-						align=right,
-						anchor=east,
-						font=\raggedleft
-					},
-			]{1}{24}
-			%labels
-			\gantttitle{Februari}{4}
-			\gantttitle{Maret}{4}
-			\gantttitle{April}{4}
-			\gantttitle{Mei}{4}
-			\gantttitle{Juni}{4}
-			\gantttitle{Juli}{4} \\
-			\gantttitlelist{1,...,4}{1}
-			\gantttitlelist{1,...,4}{1}
-			\gantttitlelist{1,...,4}{1}
-			\gantttitlelist{1,...,4}{1}
-			\gantttitlelist{1,...,4}{1}
-			\gantttitlelist{1,...,4}{1} \\
+Bab ketiga adalah analisis dan rancangan metode komunikasi untuk sistem HILS.
+Pada bab ini akan membahas hasil analisis sistem dalam bentuk kebutuhan
+non-fungsional sistem. Lalu, dari hasil analisis tersebut akan dibuat rancangan
+untuk sistem HILS serta metode komunikasinya.
 
-			% tasks
-			\ganttbar{Perancangan kerangka kerja pengujian}{1}{8} \\
-			\ganttbar{Implementasi kerangka kerja pengujian}{9}{16} \\
-		\end{ganttchart}
-	}
-	\caption{Jadwal Pelaksanaan Tugas Akhir (bagian 2)}
-\end{figure}
+Setelah dianalisis dan dirancang, dilakukan implementasi dan pengujian. Hasil
+implementasi dan pengujian dituangkan pada bab keempat buku ini.
+
+Setelah semuanya selesai, dituliskan kesimpulan dan saran terkait proses
+pembuatan tugas akhir dan penulisan buku ini.
