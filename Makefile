@@ -15,4 +15,3 @@ build: $(main_file_path)
 
 clean:
 	rm -rf $(out_dir)/* $(build_dir)/*
-	find . -iname "*~" -exec rm '{}' ';'
