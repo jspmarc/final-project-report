@@ -5,76 +5,122 @@
 Dalam pengembangan kota-kota di Indonesia, dibutuhkan kendaraan umum yang aman,
 murah, mudah diakses, dan berkelanjutan (\textit{sustainable}). Salah satu moda
 transportasi umum yang dapat memenuhi keempat hal tersebut adalah trem listrik.
-Agar bisa lebih aman, trem listrik akan memanfaatkan inteligensi buatan dan
-pembelajaran mesin sehingga trem tidak membutuhkan masinis dan bisa beroperasi
-secara otonom.
+Untuk mengurangi biaya operasional, trem listrik akan memanfaatkan inteligensi
+buatan dan algoritma kendali sehingga trem tidak membutuhkan masinis dan bisa
+beroperasi secara otonom.
 
-Pengembangan teknologi pembelajaran mesin dan algoritma kendali otonom yang
-digunakan memerlukan banyak data dan pengujian. Proses pengumpulan data dan
-pengujian ini akan mahal dan membutuhkan waktu yang lama. Selain itu, akan
-berbahaya apabila algoritma belum matang. Oleh karena itu, pembelajaran dan
-pengujian akan menggunakan simulasi.
+Pengembangan teknologi kecerdasan buatan dan algoritma kendali otonom yang
+digunakan memerlukan banyak pengujian dan data. Proses pengumpulan data dan
+pengujian ini akan mahal dan membutuhkan waktu yang lama apabila dilakukan
+secara langsung. Selain itu, akan berbahaya apabila algoritma belum matang. Oleh
+karena itu, pengujian algoritma kendali akan menggunakan simulasi.
 
-Sistem simulasi yang dibuat akan membutuhkan dua komputer:
+Pembuatan sistem simulasi ini bertujuan untuk mempermudah dan mempercepat
+pengerjaan proyek \textit{autonomous tram}. Pembuatan simulasi dikerjakan oleh
+tim simulasi. Tugas akhir dan proyek \textit{capstone} ini adalah bagian dari
+pengerjaan pekerjaan pada tim simulasi. Selain tim simulasi, terdapat tiga tim
+lain, yaitu
 \begin{enumerate}
-	\item komputer untuk menjalankan simulasi (disebut server CARLA), dan
-	\item komputer yang akan digunakan pada trem dan mengandung algoritma
-	      kendali serta pembelajaran mesin (disebut server NVIDIA Pegasus).
+	\item tim \textit{decision making}: bertugas untuk mengembangkan program dan
+		algoritma kendali untuk trem otonom,
+	\item tim \textit{localization dan mapping}: bertugas untuk memetakan data
+		lokasi ke dalam program kendali yang disebut GRS, dan
+	\item tim persepsi: bertugas mengembangkan model pembelajaran mesin untuk
+		memahami/membaca bacaan dari sensor, seperti sensor lidar dan kamera,
+		untuk kemudian digunakan pada algoritma kendali.
 \end{enumerate}
-Kedua komputer (server) akan terhubung melalui sebuah jaringan menggunakan
-sebuah protokol komunikasi. Sistem simulasi yang dibuat harus cukup cepat dalam
-mengirimkan data antarkomputer, selain harus dapat mereplikasi keadaan dunia
-nyata. Tugas akhir ini akan membahas pemilihan protokol komunikasi dan
-pengembangan sistem simulasi tersebut.
 
-Protokol komunikasi yang dipilih harus dapat mengirimkan data \textit{binary}.
-Hal ini karena ada beberapa sensor yang disimulasikan dan data dari sensor
-akan dikirim ke algoritma kendali dalam format tersebut. Selain \textit{binary},
-protokol juga harus dapat mengirimkan data dalam format \textit{string} dan
-\textit{integer}. Kedua data tersebut digunakan sebagai respon dari algoritma
-kendali untuk mengendalikan trem.
+Simulasi dijalankan pada sebuah sistem simulasi dengan skema simulasi
+\textit{hardware-in-the-loop} (HILS). Artinya, perangkat keras yang akan
+digunakan pada produk akhir nanti akan digunakan juga pada simulasi. Simulasi
+HILS membutuhkan dua komputer:
+\begin{enumerate}
+	\item komputer untuk menjalankan program simulator dan menghasilkan data
+		sensor virtual (disebut komputer SILS), dan
+	\item komputer yang akan digunakan pada trem; mengandung algoritma
+		kendali serta pembelajaran mesin dan menghasilkan kendali untuk trem
+		(dapat dilakukan pada dua komputer yang disebut AGX dan RKB).
+\end{enumerate}
 
-Sistem simulasi yang dibuat bersifat HILS (\textit{hardware-in-the-loop
-	simulation}). Artinya, perangkat keras yang digunakan pada simulasi juga akan
-digunakan pada produk akhir trem otonom. Perangkat keras yang digunakan pada
-produk akhir adalah server NVIDIA Pegasus.
+Perangkat keras yang akan digunakan pada produk akhir adalah NVIDIA Pegasus,
+pada proyek ini disebut AGX. Akan tetapi untuk pengujian dan karena AGX sering
+digunakan di lapangan, ada komputer cadangan yang disebut RKB. Komputer RKB
+digunakan untuk pengujian program sebelum dikompilasi dan disalin ke AGX.
+
+Komputer SILS dan AGX/RKB akan terhubung melalui sebuah jaringan lokal (LAN).
+Oleh karena itu, lingkungan simulasi akan memiliki jaringan yang cukup ideal
+karena latensi seharusnya tidak terlalu besar dan tidak banyak gangguan pada
+jaringan. Kendati demikian, mekanisme komunikasi yang dikembangkan harus tetap
+dapat mengirimkan data \textit{binary} yang besar dengan cukup cepat (agar tidak
+menghambat jalannya kinerja program simulator) dan tanpa gangguan. Hal ini
+karena data sensor virtual, seperti sensor kamera dan lidar, yang disimulasikan
+akan dikirim ke program kendali dalam format \textit{binary}. Selain
+\textit{binary}, protokol juga harus dapat mengirimkan data dalam format
+\textit{integer}. Kendali dari algoritma kendali adalah data dengan tipe data
+\textit{integer}.
+
+Untuk mendukung simulasi, program simulator yang akan digunakan adalah CARLA
+(\textit{car learning to act}). Pada CARLA, penggunanya dapat men-\textit{spawn}
+kendaraan sepeda, mobil, dan sepeda motor. Selain itu, penggunanya juga dapat
+men-\textit{spawn} pejalan kaki. Untuk menyimulasikan sensor, CARLA menyediakan
+beberapa sensor virtual yang dapat dihubungkan ke kendaraan yang
+di-\textit{spawn}. Data dari sensor virtual ini dapat dibaca secara asinkron
+menggunakan API dengan bahasa Python.
+
+Hasil akhir dari tugas akhir ini adalah sebuah pustaka C++ yang digunakan pada
+program kendali untuk menerima data dan sebuah pustaka Python yang digunakan
+pada \textit{custom agent} untuk \textit{custom scenario runner} yang merupakan
+hasil akhir topik tugas akhir yang lain pada proyek \textit{capstone} ini.
 
 \section{Rumusan Masalah}
 
-Pada keadaan saat ini, server CARLA dan server NVIDIA Pegasus dihubungkan
+Pada keadaan saat ini, komputer SILS dan komputer AGX/RKB dihubungkan
 menggunakan layanan web (\textit{web service}). Layanan web yang ada menggunakan
-protokol HTTP untuk komunikasinya. Penggunaan HTTP untuk komunikasi pada layanan
-web menyebabkan latensi yang besar ketika melakukan pertukuran data antarserver.
-Karena adanya latensi besar ini, sistem simulasi menjadi tidak reliabel.
+protokol HTTP untuk komunikasinya. Selain itu, terdapat penulisan dan pembacaan
+ke \textit{file} dan basis data SQL pada proses komunikasi. Adanya operasi
+\textit{file} dan basis data pada layanan web menyebabkan \textit{I/O overhead}
+yang besar dan berdampak pada latensi yang besar ketika melakukan pertukuran
+data antarserver. Karena adanya latensi besar ini, sistem simulasi menjadi tidak
+reliabel. Selain masalah latensi, sistem menjadi lebih kompleks.
+
+Selain itu, layanan web ini belum mendukung pembacaan sensor CARLA dan juga
+belum mendukung pengiriman data \textit{binary}. Pada layanan web, data yang
+dikirimkan masih data mentah yang didapatkan langsung dari API Python CARLA,
+dan bukan data sensor.
 
 Berdasarkan latar belakang serta keadaan saat ini, definisi rumusan masalah
 untuk tugas akhir ini adalah sebagai berikut.
 \begin{enumerate}
-	\item Bagaimana cara mengimplementasikan jalur komunikasi yang reliabel
-	      untuk kebutuhan simulasi kendaraan otonom?
-	\item Protokol atau kakas komunikasi apa yang paling tepat digunakan untuk
-	      sistem simulasi kendaraan otonom?
+	\item Bagaimana cara mengimplementasikan mekanisme komunikasi yang reliabel
+		(cukup cepat dan stabil) untuk kebutuhan simulasi
+		\textit{hardware-in-the-loop} kendaraan otonom?
+	\item Bagaimana cara agar sistem simulasi dapat mengirim dan menerima
+		berbagai jenis data sensor?
 \end{enumerate}
 
 \section{Tujuan}
 
 Tugas akhir ini memiliki 2 tujuan utama, yaitu
 \begin{enumerate}
-	\item mengimplementasikan jalur komunikasi yang reliabel untuk sistem
-	      simulasi kendaraan otonom, dan
-	\item menentukan protokol atau kakas komunikasi yang paling tepat untuk
-	      sistem simulasi kendaraan otonom.
+	\item mengimplementasikan mekanisme komunikasi yang reliabel untuk sistem
+		simulasi \textit{hardware-in-the-loop} kendaraan otonom, dan
+	\item mengimplementasikan sistem simulasi yang dapat mengirimkan dan
+		menerima memanfaatkan data dari berbagai jenis sensor.
 \end{enumerate}
 
 \section{Batasan Masalah}
 
-Batasan pada pengerjaan tugas akhr adalah
+Batasan pada pengerjaan tugas akhir ini adalah
 
 \begin{enumerate}
-	\item pengujian akan dilakukan pada komputer yang terdapat di gedung Lab
-	      Tek\-no\-lo\-gi VIII ITB; dan
-	\item hanya ada 3 protokol atau kakas komunikasi yang diuji: ROS, ZeroMQ,
-	      dan gRPC.
+	\item pengujian kinerja akan dilakukan pada komputer RKB dan SILS yang
+		terdapat di gedung Lab Tek\-no\-lo\-gi VIII ITB;
+	\item pengujian hanya akan menggunakan sebuah sensor kamera virtual dan
+		sebuah sensor GNSS virtual; dan
+	\item pengujian kinerja mekanisme komunikasi menggunakan layanan web hanya akan
+		dilakukan secara teoretis karena kesulitan dalam menjalankan layanan web
+		dan harus ada banyak modifikasi agar secara fitur sepadan dengan
+		implementasi mekanisme komunikasi baru.
 \end{enumerate}
 
 \section{Metodologi}
@@ -88,12 +134,16 @@ Tahapan pelaksanaan tugas akhir ini adalah sebagai berikut.
 
 \begin{enumerate}
 	\item Mempelajari CARLA.
-	\item Mempelajari sistem saat ini.
+	\item Menganalisis kebutuhan sistem.
+	\item Mempelajari implementasi di kondisi sekarang.
 	\item Eksplorasi kakas dan protokol yang akan digunakan.
-	\item Perancangan kerangka kerja pengujian.
-	\item Implementasi kerangka kerja pengujian.
-	\item Eksperimen dan pengujian.
-	\item Analisis hasil pengujian.
+	\item Perancangan pustaka.
+	\item Implementasi pustaka.
+	\item Pengujian pustaka.
+	\item Menambahkan pustaka ke program GRS (program kendali) dan
+		\textit{custom agent}.
+	\item Pengumpulan dan pengolahan data kinerja.
+	\item Analisis hasil data kinerja.
 \end{enumerate}
 
 \section{Sistematika Pembahasan}
@@ -101,12 +151,12 @@ Tahapan pelaksanaan tugas akhir ini adalah sebagai berikut.
 % Subbab ini berisi penjelasan ringkas isi per bab. Penjelasan ditulis satu
 % paragraf per bab buku.
 
-Pada buku ini akan terdapat 5 bab, yaitu
+Pada buku ini akan terdapat lima bab, yaitu
 \begin{enumerate}
 	\item Pendahuluan,
 	\item Studi Literatur,
-	\item Analisis dan Rancangan Metode Komunikasi Sistem HILS,
-	\item Implementasi dan Pengujian Metode Komunikasi Sistem HILS, dan
+	\item Analisis dan Rancangan Mekanisme Komunikasi Sistem HILS,
+	\item Implementasi dan Pengujian Mekanisme Komunikasi Sistem HILS, dan
 	\item Kesimpulan dan Saran.
 \end{enumerate}
 
@@ -117,14 +167,14 @@ batasan masalah. Terakhir, bab pendahuluan juga membahas metodologi penelitian.
 
 Selanjutnya adalah bab studi literatur. Sesuai namanya, bab ini membahas hasil
 studi literatur terkait topik TA yang diangkat, yaitu membuat sistem HILS untuk
-simulasi trem \textit{autonomous}. Bab ini akan menjabarkan perangkat lunak, yang
-digunakan, misalnya \textit{simulator} CARLA dan ZeroMQ, serta hasil penelitian
-sebelumnya yang terkait topik tugas akhir.
+simulasi trem otonom. Bab ini akan menjabarkan perangkat lunak, yang digunakan,
+misalnya \textit{simulator} CARLA dan ZeroMQ, serta hasil penelitian sebelumnya
+yang terkait topik tugas akhir.
 
-Bab ketiga adalah analisis dan rancangan metode komunikasi untuk sistem HILS.
+Bab ketiga adalah analisis dan rancangan mekanisme komunikasi untuk sistem HILS.
 Pada bab ini akan membahas hasil analisis sistem dalam bentuk kebutuhan
 non-fungsional sistem. Lalu, dari hasil analisis tersebut akan dibuat rancangan
-untuk sistem HILS serta metode komunikasinya.
+untuk sistem HILS serta mekanisme komunikasinya.
 
 Setelah dianalisis dan dirancang, dilakukan implementasi dan pengujian. Hasil
 implementasi dan pengujian dituangkan pada bab keempat buku ini.
