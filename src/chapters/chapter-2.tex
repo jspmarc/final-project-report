@@ -150,7 +150,7 @@ Beberapa pustaka dan kakas yang disediakan NVIDIA DriveWorks adalah visualisasi
 (GUI), pengoptimal TensorRT, lapisan abstraksi kendaraan, perkiraan
 ``egomotion'', perekam data, dan \textit{logging} dan diagnosis sistem. Selain
 itu, beberapa fitur utama dari NVIDIA DriveWorks adalah
-\begin{itemize}
+\begin{enumerate}
     \item lapisan abstraksi sensor: memberikan antarmuka yang sama untuk
         memanipulasi semua sensor yang didukung, kemampuan untuk membuat sensor
         virtual menggunakan data yang direkam, dan lain-lain;
@@ -162,7 +162,7 @@ itu, beberapa fitur utama dari NVIDIA DriveWorks adalah
     \item kerangka kerja DNN (\textit{deep neural network}): kerangka kerja yang
         dapat digunakan untuk mamuat dan memprediksi menggunakan model ML
         TensorRT yang sudah di-\textit{train}.
-\end{itemize}
+\end{enumerate}
 
 Pada tugas akhr ini, NVIDIA DriveWorks digunakan untuk membaca dan
 memroses data-data sensor. Selain itu, sensor virtual pada NVIDIA DriveWorks
@@ -175,7 +175,7 @@ memori perangkat sehingga oleh NVIDIA DriveWorks dianggap data dari
 
 Pada keadaan yang ada, komunikasi antara komputer SILS dengan komputer RKB/AGX
 menggunakan perantara \textit{web service} yang berbasis HTTP (dapat dilihat
-pada gambar \ref{chapter-2-old-hils}). Penggunaan HTTP pada \textit{web service}
+pada Gambar \ref{chapter-2-old-hils}). Penggunaan HTTP pada \textit{web service}
 sendiri sebenarnya bukan \textit{bottleneck}/penghambat kinerja terbesar sistem
 simulasi. \textit{Bottleneck} terbesar adalah operasi I/O yang dilakukan setiap
 kali dilakukan pengiriman data. Dilakukan delapan operasi I/O yang berjalan
@@ -285,7 +285,7 @@ NVIDIA Jetson TX1 sebagai perangkat keras untuk komputasi dan simulasi
 menggunakan simulator CARLA. Salah satu hasil dari penelitian ini adalah
 integrasi antara simulator CARLA dengan kakas ROS.
 
-Arsitektur untuk menggunakan ROS dalam simulasi HILS dapat dilihat pada gambar
+Arsitektur untuk menggunakan ROS dalam simulasi HILS dapat dilihat pada Gambar
 \ref{chapter-2-carla-jetson-arch}. Terdapat sebuah \textit{node}  yang
 bertugas mendapatkan data kamera dan LiDAR dari CARLA. Kemudian, data tersebut
 dipublikasikan ke topik yang didengarkan oleh pemroses data LiDAR dan vidio.
