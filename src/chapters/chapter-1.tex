@@ -70,7 +70,8 @@ menggunakan API dengan bahasa Python.
 Hasil akhir dari tugas akhir ini adalah sebuah pustaka C++ yang digunakan pada
 program kendali untuk menerima data dan sebuah pustaka Python yang digunakan
 pada \textit{custom agent} untuk \textit{custom scenario runner} yang merupakan
-hasil akhir topik tugas akhir yang lain pada proyek \textit{capstone} ini.
+hasil akhir topik tugas akhir yang lain pada proyek \textit{capstone} ini. Kedua
+pustaka ini akan disebut sebagai ``hils-connector''.
 
 \section{Rumusan Masalah}
 
@@ -92,11 +93,11 @@ dan bukan dari sensor.
 Berdasarkan latar belakang serta keadaan saat ini, definisi rumusan masalah
 untuk tugas akhir ini adalah sebagai berikut.
 \begin{enumerate}
-	\item Bagaimana cara mengimplementasikan mekanisme komunikasi yang reliabel
-		(cukup cepat dan stabil) untuk kebutuhan simulasi
+	\item Bagaimana cara mengimplementasikan mekanisme komunikasi dengan kinerja
+		yang cepat dalam pengiriman data untuk kebutuhan simulasi
 		\textit{hardware-in-the-loop} kendaraan otonom?
-	\item Bagaimana cara agar sistem simulasi dapat mengirim dan menerima
-		berbagai jenis data sensor?
+	\item Bagaimana cara agar sistem simulasi dapat mengirim, menerima, dan
+		memanfaatkan berbagai jenis data sensor?
 \end{enumerate}
 
 \section{Tujuan}
@@ -105,8 +106,8 @@ Tugas akhir ini memiliki 2 tujuan utama, yaitu
 \begin{enumerate}
 	\item mengimplementasikan mekanisme komunikasi yang reliabel untuk sistem
 		simulasi \textit{hardware-in-the-loop} kendaraan otonom, dan
-	\item mengimplementasikan sistem simulasi yang dapat mengirimkan dan
-		menerima memanfaatkan data dari berbagai jenis sensor.
+	\item mengimplementasikan sistem simulasi yang dapat mengirimkan, 
+		menerima, dan memanfaatkan data dari berbagai jenis sensor.
 \end{enumerate}
 
 \section{Batasan Masalah}
@@ -156,8 +157,8 @@ Pada buku ini akan terdapat lima bab, yaitu
 \begin{enumerate}
 	\item Pendahuluan,
 	\item Studi Literatur,
-	\item Analisis dan Rancangan Mekanisme Komunikasi Sistem HILS,
-	\item Implementasi dan Pengujian Mekanisme Komunikasi Sistem HILS, dan
+	\item Analisis dan Rancangan Sistem HILS,
+	\item Implementasi dan Pengujian Sistem HILS, dan
 	\item Kesimpulan dan Saran.
 \end{enumerate}
 
@@ -173,10 +174,11 @@ digunakan, misalnya \textit{simulator} CARLA dan ZeroMQ, perangkat keras yang
 digunakan, yaitu trem dan NVIDIA Pegasus, serta hasil penelitian sebelumnya yang
 terkait topik tugas akhir.
 
-Bab ketiga adalah analisis dan rancangan mekanisme komunikasi untuk sistem HILS.
-Pada bab ini akan membahas hasil analisis sistem dalam bentuk kebutuhan
-non-fungsional sistem. Lalu, dari hasil analisis tersebut akan dibuat rancangan
-untuk sistem HILS serta mekanisme komunikasinya.
+Bab ketiga adalah analisis dan rancangan untuk sistem HILS. Bab ini membahas
+hasil analisis masalah pada sistem komunikasi yang ada. Dari masalah-masalah
+tersebut akan dianalisis kebutuhan-kebutuhan, baik fungsional maupun
+non-fungsional untuk mengembangkan sistem simulasi yang lebih baik. Setelah
+dianalisis akan dibuat rancangan dari solusi tersebut.
 
 Setelah dianalisis dan dirancang, dilakukan implementasi dan pengujian. Hasil
 implementasi dan pengujian dituangkan pada bab keempat buku ini. Detail

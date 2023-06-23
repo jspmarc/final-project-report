@@ -1,79 +1,191 @@
-\chapter{Analisis dan Rancangan Jalur Komunikasi Sistem Simulasi}
+\chapter{Analisis dan Rancangan Sistem HILS}
 
 Pada bab ini akan dibahas analisis permasalahan pada sistem simulasi yang sudah
-ada. Setelah itu, akan dilakukan analisis terhadap solusi yang akan dibahas pada
-juga pada bab ini. Lalu, akan dibahas perancangan perbaikan sistem simulasi.
+ada. Setelah itu, akan dilakukan analisis dan perancangan terhadap solusi yang
+akan dibuat pada buku ini.
 
-\section{Analisis Masalah Sistem Simulasi}
+\section{Deskripsi Umum Proyek \textit{Capstone}}
 
-Sistem simulasi yang ada sudah dapat menghubungkan server CARLA dengan server
-NVIDIA Pegasus. Kedua server dihubungkan di sebuah jaringan menggunakan sebuah
-layanan web. Layanan web ini memanfaatkan teknologi HTTP/1.1.
+Tugas akhir yang dikerjakan oleh tim \textit{capstone} bertujuan untuk memenuhi
+kebutuhan tim simulasi pada proyek pengembangan trem otonom. Tim simulasi
+dibentuk agar pengujian algoritma kendali dan pengumpulan data tidak harus
+dilakukan dengan trem yang nyata. Alasannya adalah untuk keamanan, menghemat
+biaya, dan menghemat waktu. Pengujian nyata dengan algoritma yang belum siap
+dapat menyebabkan orang atau kendaraan lain ditabrak oleh trem. Selain itu,
+dengan simulasi para pengembang tidak perlu terjun ke lapangan di Kota Madiun
+dan tidak perlu menyewa trem serta rel untuk melakukan pengujian.
 
-Solusi yang memanfaatkan layanan web dan HTTP ini merupakan \textit{bottleneck}
-besar pada sistem simulasi. Kinerja yang diberikan pada arsitektur sekarang
-sangat buruk. Dari 4000 transaksi per detik pada SILS, ketika menggunakan HILS
-dan layanan web, turun menjadi 100-110 transaksi per detik. Kinerja buruk ini
-mengakibatkan sistem simulasi terhambat pada jalur komunikasinya.
+Proyek pengembangan trem otonom sendiri sudah memasuki tahun kedua, akan tetapi
+pada tahun pertama belum ada tim simulasi. Program untuk simulasi, baik SILS
+(\textit{software-in-the-loop-simulation}) maupun HILS
+(\textit{hardware-in-the-loop-simulation}), tidak memiliki waktu pengembangan
+yang banyak dan hanya sekadar ada. Oleh karenanya, tim \textit{capstone} perlu
+mengimplementasikan atau memperbaiki sistem simulasi HILS agar pengujian HILS
+dapat  dilakukan. Selain itu, tim \textit{capstone} juga harus dapat membuat
+lingkungan simulasi yang semirip mungkin dengan keadaan di Indonesia serta
+membuat beberapa skenario simulasi agar pengujian dapat dilakukan secara
+otomatis.
 
-Selain itu, teknologi HTTP di bawah HTTP/2 juga tidak mendukung data
-\textit{binary} dengan baik. Hal ini mengakibatkan data dari sensor membutuhkan
-waktu dan \textit{resource} lebih untuk pemrosesannya.
+Tugas akhir ini bertujuan untuk membuat sistem simulasi agar HILS lebih reliabel
+dan memiliki dengan kinerja yang baik. Program HILS sendiri sudah pernah
+diimplementasi pada tahun pertama proyek, akan tetapi implementasinya memiliki
+beberapa keluhan yang akan dibahas pada bab ini. Dari keluhan-keluhan tersebut
+akan dibahas analisis serta rancangan solusi untuk memperbaiki program HILS yang
+ada.
 
-Berdasarkan analisis masalah, dibutuhkan pembaruan pada sistem simulasi agar
-memiliki kinerja yang lebih baik. Kinerja yang lebih baik ini bisa didapatkan
-dengan mengubah metode komunikasi antara server CARLA dan server Pegasus. Selain
-itu, jalur komunikasi juga harus mendukung pengiriman data \textit{binary}.
-Selain cepat dan mendukung \textit{binary}, jalur komunikasi tentu saja harus
-reliabel agar tidak ada data yang hilang.
+\section{Analisis Masalah Sistem HILS Saat ini}
+
+Sistem simulasi yang ada sudah dapat menghubungkan komputer SILS dengan server
+komputer RKB/AGX sehingga sistem simulasi HILS sudah dapat digunakan. Akan
+tetapi masih ada keluhan terkait kinerja sistem smulasi HILS, yaitu proses
+simulasi yang sangat lambat dan menyebabkan simulasi kurang realistis. Jumlah
+transaksi data per detik turun dari 4000 transaksi data per detik pada SILS,
+turun menjadi 100-110 transaksi data per detik ketika menggunakan HILS dan
+layanan web.
+
+Padahal kedua komputer pada sistem HILS sudah terhubung pada jaringan lokal
+(LAN) yang artinya latensi dan gangguan jaringan akan minimum, jika ada.
+Oleh karena itu, kemungkinan \textit{bottleneck} terdapat pada implementasi
+mekanisme komunikasi. Implementasi mekanisme komunikasi menggunakan sebuah
+layanan web yang arsitekturnya dapat dilihat pada diagram di gambar
+\ref{chapter-2-old-hils}. Proses pada implementasi HILS yang lama dapat dilihat
+pada diagram \textit{sequence} di gambar
+\ref{chapter-3-sequence-diagram-old-hils}. Pada proses pengiriman data, terdapat
+delapan operasi I/O yang berjalan secara sinkronis, yaitu
+\begin{enumerate}
+	\item penulisan CARLA \textit{measurement} ke \textit{file} di SILS,
+	\item pembacaan CARLA \textit{measurement} dari \textit{file} di SILS,
+	\item pengiriman CARLA \textit{measurement} menggunakan HTTP dari SILS ke
+		layanan web,
+	\item penulisan CARLA \textit{measurement} ke basis data pada layanan web,
+	\item permintaan HTTP dari AGX/RKB ke layanan web untuk membaca data,
+	\item pembacaan CARLA \textit{measurement} dari basis data pada layanan web,
+	\item penulisan CARLA \textit{measurement} ke \textit{file} pada AGX/RKB,
+		dan
+	\item pembacaan CARLA \textit{measurement} dari \textit{file} pada AGX/RKB.
+\end{enumerate}
+
+\begin{figure}[h!]
+    \centering
+	\includegraphics[width=1.0\textwidth]{resources/chapter-3/sequence-diagram-old-hils-process.png}
+	\caption{Proses pengiriman data CARLA \textit{measurement} kondisi saat ini}
+    \label{chapter-3-sequence-diagram-old-hils}
+\end{figure}
+
+Dari diagram \textit{sequence} dapat diperkiran \textit{bottleneck} disebabkan
+banyaknya operasi I/O sinkronis yang berdampak pada \textit{overhead} operasi
+I/O. \textit{Overhead} operasi I/O a\-kan menjadi lebih buruk lagi apabila data
+yang dikirimkan berukuran besar, misalnya data sensor kamera. Selain itu, sistem
+yang ada juga lebih rumit dari seharusnya. Terdapat perantara berupa layanan web
+dan basis data padahal data bisa saja dikirimkan langsung dari komputer SILS ke
+komputer AGX/RKB.
+
+Selain masalah kinerja, terdapat keluhan juga karena sistem HILS yang ada belum
+menggunakan data sensor. Sistem HILS yang ada masih memanfaatkan CARLA
+\textit{measurement}. Data dari CARLA \textit{measurement} mencakup posisi x,
+posisi y, kecepatan, dan jarak relatif. Data-data ini dibutuhkan untuk
+mendapatkan oleh algoritma kendali, akan tetapi seharusnya didapatkan dari
+sensor. Pada sistem HILS saat ini, data \textit{measurement} tersebut didapatkan
+dengan memanggil fungsi dari API Python CARLA.
 
 \section{Analisis Solusi}
 
-Solusi yang dapat diberikan untuk masalah pada sistem simulasi adalah pembaruan
-pada arsitektur sistem solusi dan mengganti metode komunikasi yang digunakan.
-Pembaruan pada arsitektur akan menghilangkan \textit{middleware} layanan web di
-antara server CARLA dengan server NVIDIA Pegasus. Lalu, metode komunikasi yang
-akan digunakan harus dapat mendukung kebutuhan kinerja dan pengiriman data
-\textit{binary}.
+Dari analisis masalah, didapatkan dua keluhan pada implementasi sebelumnya,
+yaitu masalah kinerja dan belum ada dukungan terhadap data sensor. Dari
+keluhan-keluhan tersebut, dibutuhkan sebuah solusi yang dapat meningkatkan
+kinerja HILS dan dapat menggunakan data sensor. Sensor-sensor yang harus
+didukung pada solusi adalah sensor kamera, lidar, dan GNSS. Ketiga sensor harus
+dapat digunakan secara bersamaan.
 
-Metode komunikasi yang dapat digunakan ada beberapa pilihan. Metode-metode
-tersebut adalah ZeroMQ, gRPC, dan ROS. ZeroMQ dipilih karena berjalan di atas
-TCP yang artinya akan mendukung data \textit{binary}. Selain itu, ZeroMQ
-mendukung berbagai skema komunikasi: \textit{pub/sub},
-\textit{request/response}, dan \textit{push/pull}. Metode gRPC adalah
-peningkatan dari protokol RPC yang menggunakan HTTP/2 sehingga memiliki
-kinerja yang baik. HTTP/2 juga mendukung pengiriman data dalam bentuk
-\textit{binary}.  Selain itu, gRPC mendukung \textit{data streaming} sehingga
-cocok digunakan untuk kebutuhan pengiriman data dari sensor. Metode terakhir
-adalah menggunakan ROS. ROS adalah sekumpulan kakas yang sering digunakan pada
-lingkungan IoT. Selain itu pada percobaan sebelumnya
-\parencite{brogle_CarlaHILS}, ROS sudah dibuktikan sebagai salah satu alternatif
-metode komunikasi yang baik untuk sistem simulasi HILS. ROS sendiri mendukung
-skema komunikasi \textit{pub/sub} dan \textit{request/response}.
+Dari kebutuhan-kebutuhan tersebut, ada dua buah alternatif solusi: melakukan
+peningkatan (\textit{upgrade}) program HILS yang sudah ada atau menulis ulang
+program HILS. Dari kedua alternatif, dipilih alternatif penulisan ulang program
+HILS. Alasannya adalah karena pada solusi pertama memiliki kompleksitas yang
+lebih tinggi karena ada lebih banyak komponen pada sistem. Selain itu, layanan
+web pada solusi pertama tidak terintegrasi langsung pada program utama, baik di
+komputer SILS maupun komputer AGX/RKB. Layanan web membutuhkan program bantuan
+yang berkomunikasi dengan program utama menggunakan \textit{file}. Hal ini ingin
+dihindari karena adanya \textit{overhead} I/O. Selain itu, meskipun layanan web
+memiliki \textit{coupling} yang rendah dengan kedua program utama, kohesinya
+juga rendah. Karena kedua alasan itulah dinilai alternatif kedua akan lebih
+mudah untuk dilaksanakan.
 
-Dari ketiga metode solusi tersebut akan dipilih yang memiliki kinerja paling
-baik melalui beberapa percobaan. Percobaan ini akan dilakukan selama pembuatan
-jalur komunikasi pada sistem simulasi HILS.
+Selanjutnya adalah pemilihan mekanisme komunikasi. Berdasarkan studi literatur,
+terdapat dua alternatif untuk mekanisme komunikasi, yaitu ROS dan ZeroMQ. ROS
+sendiri adalah salah satu kerangka kerja dan mekanisme komunikasi yang sering
+digunakan untuk kebutuhan simulasi robot. Akan tetapi, karena kendala teknis ROS
+tidak dapat dipilih. Oleh karena itu, dari pilihan antara ROS dan ZeroMQ,
+dipilih ZeroMQ.
 
-Selain pemilihan metode komunikasi, akan dilakukan pembaruan terhadap arsitektur
-sistem simulasi. Layanan web akan dihilangkan sehingga server CARLA akan
-berkomunikasi langsung dengan server Pegasus. Hal ini berpotensi mengakibatkan
-berkurangnya latensi ketika terjadi komunikasi antara server CARLA dengan server
-Pegasus.
+Kendala teknis yang menyebabkan ROS tidak dapat digunakan adalah ketidakcocokan
+antara versi ROS di komputer SILS dengan komputer AGX/RKB. Komputer SILS
+menggunakan sistem operasi Ubuntu 20.04 yang menggunakan ROS 2, sedangkan
+komputer AGX/RKB menggunakan sistem operasi Ubuntu 18.04 yang menggunakan ROS 1.
+ROS 2 dan ROS 1 memiliki arsitektur komunikasi yang berbeda, hal ini menyebabkan
+ketidakcocokan antara ROS 2 dengan ROS 1. Meskipun ada program untuk
+menjembatani ROS 2 dan ROS 1, hal tersebut dihindari karena adanya kemungkinan
+penambahan latensi.
 
-\section{Rancangan Pembuatan Jalur Komunikasi Sistem Simulasi}
+\section{Rancangan Solusi}
 
-Proses perancangan pembuatan jalur komunikasi sistem simulasi seperti diagram
-alir pada gambar \ref{chapter-3-perancangan}. Perancangan diawali dengan
-mengubah arsitektur sistem simulasi, setelah itu menambahkan \textit{monitoring}
-sistem simulasi, lalu menganalisis data \textit{monitoring} untuk menentukan
-metode komunikasi terbaik. Desain arsitektur baru untuk sistem simulasi dapat
-dilihat pada lampiran \ref{appendix-arsitektur-baru}. Lalu, algoritma sistem
-simulasi dapat dilihat pada lampiran \ref{appendix-algoritma-monitoring}.
+Karena program utama di sisi komputer SILS dan AGX/RKB sudah ada atau sedang
+dikerjakan, maka dipililh solusi dalam bentuk pustaka agar pemuatan bisa
+dilakukan secara modular dan independen dari kedua program utama. Menciptakan
+\textit{coupling} yang rendah antara pustaka dengan kedua program utama. Selain
+itu, keuntungan pustaka adalah program GRS jadi dapat memilih untuk memuat
+pustaka yang akan dibuat atau tidak pada proses kompilasi sehingga dapat sedikit
+menghemat \textit{resource} terutama memori. Pustaka yang dibuat akan disebut
+``hils-connector''.
 
-\begin{figure}[ht]
-	\centering
-	\includegraphics[height=0.6\textheight]{resources/chapter-3/flowchart-perancangan.png}
-	\caption{Diagram Alir Perancangan Solusi}
-	\label{chapter-3-perancangan}
+Pustaka yang akan dibuat ada dua, yaitu pustaka C++11 untuk program GRS di
+komputer AGX/RKB dan pustaka Python 3 untuk \textit{agent} program
+\textit{scenario runner}. Pustaka Python akan disebut ``\textit{producer}''
+karena memproduksi data sensor. Pustaka C++ akan disebut ``\textit{consumer}''
+karena mengonsumsi data sensor. Selain data sensor, juga akan ada data berupa
+kontrol/perintah dengan format sebuah \texttt{int} yang dikirim dari
+\textit{consumer} ke \textit{producer} setelah data sensor berhasil diproses.
+
+Lalu untuk fitur pustaka itu sendiri, pustaka akan langsung berkomunikasi satu
+sama lain tanpa menggunakan perantara. Hal ini membuat solusi lebih sederhana
+dan mengurangi \textit{overhead} untuk berkomunikasi dengan perantara. Pustaka
+juga akan menyediakan API untuk mengirimkan data dan menerima data. Untuk
+mendukung berbagai jenis sensor, pustaka juga akan memiliki fitur
+\textit{parsing}, serialisasi, dan deserialisasi untuk sensor GNSS, kamera, dan
+lidar.
+
+API yang disediakan oleh pustaka ``producer'' akan langsung mengkonsumsi data
+sensor dari CARLA sehingga pengguna pustaka tidak perlu melakukan modifikasi
+apapun pada data sensor CARLA. Begitu juga pada pustaka ``consumer''. Balikan
+API akan disesuikan sehingga pengguna pustaka dapat langsung menggunakan data
+sensor dan langsung ``memasukkannya'' ke sensor virtual NVIDIA DriveWorks.
+
+Lalu, untuk mengurangi berbagai \textit{overhead} tambahan yang dapat muncul
+karena operasi pada jaringan, dipilih mekanisme komunikasi menggunakan ZeroMQ.
+ZeroMQ adalah \textit{message queue} sehingga cocok digunakan untuk operasi
+asinkron yang sesuai dengan pengiriman data sensor dari CARLA. Lalu, ZeroMQ juga
+sangat dekat dengan TCP, tapi tanpa kompleksitas \textit{raw} TCP. Hal tersebut
+dikarenakan salah satu tujuan utama ZeroMQ adalah mengurangi latensi hinga
+sesedikit mungkin dan memaksimalkan \textit{throughput}. ZeroMQ juga tidak
+memiliki \textit{broker}, hal ini sesuai dengan keinginan menghilangi perantara
+sehingga \textit{producer} dan \textit{consumer} dapat langsung berkomunikasi
+satu sama lain.
+
+Dari solusi pustaka yang ditawarkan, dapat dibentuk sebuah arsitektur sistem
+HILS. Arsitektur ini dapat dilihat pada diagram \textit{deployment} di gambar
+\ref{chapter-3-new-architecture}. Lalu, gambaran kasar proses pada sistem
+simulasi untuk satu \textit{step} simulasi dapat dilihat pada diagram
+\textit{sequence} di gambar \ref{chapter-3-new-sequence}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.0\textwidth]{resources/chapter-3/deployment-diagram-new-hils.png}
+    \caption{Arsitektur Sistem HILS Baru}
+    \label{chapter-3-new-architecture}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.0\textwidth]{resources/chapter-3/sequence-diagram-new-hils-kasar.png}
+		\caption{Gambaran kasar prose satu \textit{step} simulasi}
+    \label{chapter-3-new-sequence}
 \end{figure}
