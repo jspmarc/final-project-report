@@ -1,14 +1,17 @@
 \chapter{Studi Literatur}
 
 Pada bab ini, Penulis akan menguraikan hasil studi literatur dalam penyusunan
-tugas akhir ini. Subbab pertama membahas simulator CARLA, yaitu perangkat lunak
-yang digunakan sebagai alat simulasi. Subbab kedua menjelaskan NVIDIA Pegasus
-yang akan digunakan sebagai mesin untuk menjalankan algoritma \textit{decision
-    making} di lingkungan simulasi dan \textit{production}. Lalu, pada subbab ketiga
-akan dibahas beberapa cara komunikasi yang dapat digunakan pada antara komputer
-SILS dengan komputer RKB/AGX. Terakhir, subbab keempat akan membahas
-penelitian-penelitian terkait simulasi \textit{autonomous vehicle} menggunakan
-CARLA.
+tugas akhir ini. Subbab pertama membahas trem, yaitu kendaraan yang akan
+disimulasikan menjadi otonom pada tugas akhir ini. Selanjutnya, akan dibahas
+simulator CARLA, yaitu perangkat lunak yang digunakan sebagai alat simulasi.
+Subbab ketiga menjelaskan NVIDIA Pegasus yang akan digunakan sebagai mesin untuk
+menjalankan algoritma \textit{decision making} di lingkungan simulasi dan
+\textit{production}. Lalu, subbab keempat akan membahas NVIDIA DriveWorks
+sebagai SDK (\textit{software development kit}) pengembangan perangkat lunak
+pada NVIDIA Pegasus. Lalu, pada subbab kelima akan dibahas kondisi metode
+komunikasi jalur komunikasi dan ZeroMQ sebagai alternatif. Terakhir, subbab
+keenam akan membahas penelitian-penelitian terkait simulasi \textit{autonomous
+vehicle} menggunakan CARLA.
 
 \section{Trem}
 
@@ -19,13 +22,17 @@ memuat lebih banyak penumpang daripada mobil biasa. Lalu, kebanyakan trem
 menggunakan listrik sehingga tidak ada emisi karbon dioksida di kota dan tidak
 banyak mengeluarkan suara.
 
+Di Indonesia sendiri, trem sudah ada sejak jaman penjajahan. Trem banyak
+digunakan di Ibu Kota Negara, Jakarta, sampai 15 April 1954. Untungnya, trem
+masih banyak digunakan di daerah Madiun dan Solo.
+
 Tugas akhir ini adalah bagian dari proyek pengembangan trem otonom. Trem otonom
-adalah salah satu bentuk kendaraan otonom. Trem otonom, secara teori, tidak
-membutuhkan masinis untuk mengoperasikannya. Pengereman dan percepatan trem
-dikendalikan program kecerdasan buatan. Tugas akhir ini akan menggunakan trem
-otonom virtual yang dijalankan pada dunia simulasi. Dengan simulasi, algoritma
-kendali dapat diuji tanpa adanya risiko kecelakaan serta tanpa harus menyewa
-trem.
+yang dikembangkan menggunakan basis trem di Kota Solo dan Kota Madiun. Trem
+otonom, secara teori, tidak membutuhkan masinis untuk mengoperasikannya.
+Pengereman dan percepatan trem dikendalikan program kecerdasan buatan. Tugas
+akhir ini akan menggunakan trem otonom virtual yang dijalankan pada dunia
+simulasi. Dengan simulasi, algoritma kendali dapat diuji tanpa adanya risiko
+kecelakaan serta tanpa harus menyewa trem.
 
 \section{Simulator CARLA}
 
@@ -84,9 +91,12 @@ disimulasikan. Sedangkan ``perintah meta'' digunakan untuk mengatur lingkungan
 simulasi, misalnya cuaca, sensor yang digunakan, dan jumlah kendaraan/pejalan
 kaki NPC.
 
-Pada sistem simulasi TA ini, komponen klien dan server CARLA akan dijalankan
-pada server SILS. Data yang didapatkan dari CARLA akan dikirim ke server AGX/RKB
-untuk dikonsumi oleh program GRS (kendali).
+Pada sistem simulasi tugas akhir, komponen klien dan server CARLA akan
+dijalankan pada server SILS. Data yang didapatkan dari CARLA akan dikirim ke
+server AGX/RKB untuk dikonsumi oleh program GRS (kendali). Klien CARLA akan
+berkomunikasi dengan sebuah \textit{agent} dengan sebuah API Python sehingga
+\textit{agent} dapat mendapatkan data dari CARLA dan mengirimkannya ke komputer
+RKB/AGX.
 
 \section{NVIDIA Pegasus}
 
