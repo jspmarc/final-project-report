@@ -9,9 +9,9 @@ menjalankan algoritma \textit{decision making} di lingkungan simulasi dan
 \textit{production}. Lalu, subbab keempat akan membahas NVIDIA DriveWorks
 sebagai SDK (\textit{software development kit}) pengembangan perangkat lunak
 pada NVIDIA Pegasus. Lalu, pada subbab kelima akan dibahas kondisi metode
-komunikasi jalur komunikasi dan ZeroMQ sebagai alternatif. Terakhir, subbab
-keenam akan membahas penelitian-penelitian terkait simulasi \textit{autonomous
-vehicle} menggunakan CARLA.
+komunikasi jalur komunikasi serta ZeroMQ dan ROS2 sebagai alternatif ke kondisi
+yang ada. Terakhir, subbab keenam akan membahas penelitian-penelitian terkait
+simulasi \textit{autonomous vehicle} menggunakan CARLA.
 
 \section{Trem}
 
@@ -171,7 +171,7 @@ dari komputer SILS. Data dari komputer SILS akan dimuat secara langsung ke
 memori perangkat sehingga oleh NVIDIA DriveWorks dianggap data dari
 \textit{file} rekaman.
 
-\section{ZeroMQ}
+\section{Metode Komunikasi antara Simulator CARLA dan NVI\-DI\-A Pegasus}
 
 Pada keadaan yang ada, komunikasi antara komputer SILS dengan komputer RKB/AGX
 menggunakan perantara \textit{web service} yang berbasis HTTP (dapat dilihat
@@ -193,20 +193,16 @@ baca/tulis ke \textit{file} dan basis data serta permintaan HTTP.
 Dampaknya dapat dilihat ketika dibandingkan dengan SILS (\textit{software
     in the loop simulation}, tanpa NVIDIA Pegasus) didapatkan kinerja 4000 transaksi
 per detik. Sedangkan ketika menjadi HILS, hanya didapatkan 100--110 transaksi per
-detik \parencite{trilaksono_laporanRispro}. Oleh karena itu, dibutuhkan
-mekanisme komunikasi lain yang dapat meningkatkan kinerja sistem simulasi.
+detik \parencite{trilaksono_laporanRispro}. Oleh karena itu, pada subbab ini
+akan dibahas beberapa metode komunikasi alternatif yang dapat digunakan untuk
+menyederhanakan arsitektur dan lebih cocok dengan kasus penggunaan sistem
+simulasi. Alternatif-alternatif tersebut adalah ZeroMQ dan ROS. Kedua alternatif
+dipilih karena CARLA mengirimkan sensor secara asinkron dan keduanya dinilai
+lebih baik dalam menangani komunikasi asinkron daripada HTTP.
 
-Karena kendala kinerja dan kompleksitas sistem yang ada, dipilih ZeroMQ
-(\textit{zero message queue}) sebagai alternatif dari implementasi HILS yang
-ada. ZeroMQ menawarkan sebuah protokol/metode komunikasi yang sederhana, cepat,
-dan murah (dari segi \textit{resource}). Alasan memililh menggunakan ZeroMQ
-daripada HTTP adalah komunikasi pada HILS dengan CARLA akan dilakukan secara
-asinkron, sehingga \textit{message queue} lebih cocok. Selain itu, penulisan
-program dengan HTTP akan lebih sulit karena harus membuat \textit{queue}
-sendiri. Terakhir, salah tujuan utama dari ZeroMQ adalah membuat metode
-komunikasi yang meminimalkan latensi sehingga daya jual ZeroMQ pun semakin kuat.
+\subsection{ZeroMQ}
 
-ZeroMQ sendiri adalah sebuah pustaka yang memberikan pe\-ning\-ka\-tan di atas
+ZeroMQ adalah sebuah pustaka yang memberikan pe\-ning\-ka\-tan di atas
 \textit{socket} tradisional. ZeroMQ memberikan fungsionalitas tambahan terhadap
 \textit{socket} dan mengabstraksi pembuatan koneksi TCP dengan harapan
 memudahkan pengembangan aplikasi terdistribusi. Fungsionalitas yang ditambahkan
@@ -232,6 +228,49 @@ akan diterima oleh konsumen dengan urutan yang benar. Selain itu,
 penerima sampai semua \textit{frame} diterima. Semantik ZMTP juga memastikan
 \textit{socket} dapat membuat dan menerima koneksi serta \textit{socket}
 akan menyambungkan kembali jika koneksi terputus.
+
+ZeroMQ dipilih menjadi salah satu alternatif solusi untuk metode komunikasi
+karena ZeroMQ menawarkan metode komunikasi yang sederhana, cepat, dan murah
+(dari segi \textit{resource}). Selain itu, salah satu tujuan utama dari ZeroMQ
+adalah membuat metode komunikasi yang meminimalkan latensi.
+
+\subsection{ROS 2}
+
+ROS 2 adalah peningkatan dari ROS. ROS adalah kependekan dari \textit{robot
+    operating system} dan merupakan sekumpulan pustaka dan kakas perangkat lunak
+untuk membangun aplikasi robotik. ROS 2 dibuat karena ROS menunjukkan masalah di
+sektor keamanan, reliabilitas, dan penggunaan pada aplikasi skala besar
+\parencite{doi:10.1126/scirobotics.abm6074_ros}. Misalnya, ROS memiliki satu
+titik kegagalan, sedangkan masalah ini tidak ada di ROS 2.
+
+ROS dilengkapi dengan berbagai macam kakas dan perangkat lunak, mulai dari
+\textit{driver} sampai kakas pemrograman. ROS dapat menyediakan fitur serupa
+dengan sistem operasi, misalnya abstraksi perangkat keras, kendali perangkat
+\textit{low-level}, implementasi fungsionalitas yang sering digunakan,
+\textit{message-passing} antar-proses, dan \textit{package management}
+\parencite{x_rosIntro}.  Meskipun demikian ROS bukan sistem operasi ``nyata''
+seperti Linux, Windows, ataupun MacOS karena ROS harus diinstal di atas sistem
+operasi ``nyata'' tersebut.
+
+Setiap perangkat lunak pada ROS diorganisir menjadi \textit{packages}. Setiap
+\textit{package} dapat mengandung proses (\textit{node}), himpunan data,
+pustaka, dan lain-lain. \textit{Package} adalah struktur terkecil dari sebuah
+artifak pada ROS. Sebuah \textit{package} yang mengandung proses dapat
+di-\textit{run} untuk menjalankan sebuah proses komputasi.
+
+Proses-proses yang melakukan komputasi pada ROS disebut \textit{node} di level
+graf komputasi. Disebut graf karena setiap \textit{node} di ROS saling terhubung
+satu sama lain membentuk sebuah jaringan \textit{peer-to-peer}. Sebuah
+\textit{node} dibuat agar skalanya \textit{fine-grained} dan bertanggung jawab
+hanya pada satu hal. Dalam kasus ini, ROS mirip dengan \textit{service}/layanan
+pada arsitektur \textit{microservice}.
+
+ROS2 didasarkan pada DDS untuk komunikasinya. DDS secara bawaan mendukung
+komunikasi dengan pola \textit{publisher}-\textit{subscriber} dengan QoS
+(\textit{quality of service}). Komunikasi dengan \textit{topic} memanfaatkan
+pola tersebut. Lalu, untuk pola \textit{service}, digunakan perpanjangan dari
+DDS, yaitu DDS-RPC. DDS sendiri sebenarnya hanya standar dengan implementasi
+yang berbeda-beda. Secara bawaan, ROS 2 menggunakan Fast DDS dari eProsima.
 
 \section{Penelitian Terkait}
 
