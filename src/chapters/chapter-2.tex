@@ -42,7 +42,7 @@ autonomous. CAR\-LA dibangun dari nol untuk mampu melakukan pelatihan, pembuatan
 prototipe, dan validasi model kemudi otonom, termasuk persepsi dan kontrol dari
 model tersebut \parencite{dos_carla}.
 
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.5\textwidth]{resources/chapter-2/CARLA-cropped.png}
     \caption{Antarmuka simulator CARLA}
@@ -105,7 +105,7 @@ produk NVIDIA Drive PX. Nama pasar dari NVIDIA Pegasus adalah N\-VI\-DI\-A Drive
 PX Pegasus. Lini produk NVIDIA Drive sendiri merupakan platform komputer untuk
 memberikan fungsionalitas bantuan mengemudi pada kendaraan bermotor.
 
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \includegraphics[width=\textwidth]{resources/chapter-2/pegasus.png}
     \caption{NVIDIA Pegasus \parencite{trilaksono_laporanRispro}}
@@ -178,24 +178,23 @@ menggunakan perantara \textit{web service} yang berbasis HTTP (dapat dilihat
 pada gambar \ref{chapter-2-old-hils}). Penggunaan HTTP pada \textit{web service}
 sendiri sebenarnya bukan \textit{bottleneck}/penghambat kinerja terbesar sistem
 simulasi. \textit{Bottleneck} terbesar adalah operasi I/O yang dilakukan setiap
-kali dilakukan pengiriman data. Terdapat enam operasi I/O antara komputer SILS
-dengan komputer RKB/AGX. Operasi-operasi tersebut berbentuk baca/tulis ke
-\textit{file} dan basis data.
+kali dilakukan pengiriman data. Dilakukan delapan operasi I/O yang berjalan
+secara sinkronis untuk mengirimkan data. Operasi-operasi tersebut berbentuk
+baca/tulis ke \textit{file} dan basis data serta permintaan HTTP.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.0\textwidth]{resources/chapter-2/komunikasi
+        data pada simulasi.png}
+    \caption{Arsitektur komunikasi pada HILS \parencite{trilaksono_laporanRispro}}
+    \label{chapter-2-old-hils}
+\end{figure}
 
 Dampaknya dapat dilihat ketika dibandingkan dengan SILS (\textit{software
     in the loop simulation}, tanpa NVIDIA Pegasus) didapatkan kinerja 4000 transaksi
 per detik. Sedangkan ketika menjadi HILS, hanya didapatkan 100--110 transaksi per
 detik \parencite{trilaksono_laporanRispro}. Oleh karena itu, dibutuhkan
 mekanisme komunikasi lain yang dapat meningkatkan kinerja sistem simulasi.
-
-\begin{figure}
-    \centering
-    \includegraphics[width=1.0\textwidth]{resources/chapter-2/komunikasi
-        data pada simulasi.png}
-    \caption{Arsitektur komunikasi pada HILS, server simulasi adalah komputer SILS
-        dan Pegasus adalah komputer RKB/AGX \parencite{trilaksono_laporanRispro}}
-    \label{chapter-2-old-hils}
-\end{figure}
 
 Karena kendala kinerja dan kompleksitas sistem yang ada, dipilih ZeroMQ
 (\textit{zero message queue}) sebagai alternatif dari implementasi HILS yang
@@ -254,7 +253,7 @@ dipublikasikan ke topik yang didengarkan oleh pemroses data LiDAR dan vidio.
 \textit{Node} yang terhubung dengan CARLA akan dikirimkan data terkait kendali
 kendaraan oleh \textit{node} yang disebut \textit{path planning node}.
 
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \includegraphics[width=1.0\textwidth]{resources/chapter-2/carla-jetson-arch.png}
     \caption{Arsitektur sistem simulasi \parencite{brogle_CarlaHILS}}
