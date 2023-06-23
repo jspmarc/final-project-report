@@ -1,13 +1,158 @@
-\chapter{Evaluasi dan Pembahasan}
+\chapter{Implementasi dan Pengujian Sistem HILS}
 
-\section{Tujuan Pengujian}
-\blindtext
+\section{Implementasi Pustaka untuk Sistem HILS}
 
-\section{Skenario Pengujian}
-\blindtext
+Berdasarkan analisis dan rancangan solusi pada bab 3, dapat dimulai implementasi
+sistem HILS baru. Implementasi sistem HILS dimulai dengan eksplorasi ROS2 dan
+ZeroMQ. Kemudian dilanjutkan dengan pembuatan program \textit{proof of concept}
+menggunakan salah satu mekanisme komunikasi. Setelah \textit{proof of concept}
+diterima, dilanjutkan penulisan pustaka \textit{consumer} dan terakihir
+implementasi pustaka \textit{producer}.
+
+Melalui proses eksplorasi dan penulisan \textit{proof of concept}, didapatkan
+metode komunikasi yang cocok adalah ZeroMQ. Oleh karena itu, proses implementasi
+dilanjutkan dengan fokus pada ZeroMQ.
+
+Pustaka yang pertama ditulis adalah pustaka \textit{consumer} (si\-si
+kom\-pu\-ter AGX/RKB) karena program utama komputer SILS (pengguna
+\textit{producer}) belum selesai pada proses penulisan pustaka. Akibatnya,
+pengujian pustaka \textit{consumer} lebih mudah dilakukan pada saat itu.
+
+Pustaka \textit{producer} dan \textit{consumer} akan memanfaatkan pemrograman
+berorientasi objek untuk menstruktur kodenya. Pustaka yang dibuat juga dibuat
+seabstrak mungkin dan tidak \textit{coupled} pada trem saja. Sehingga pustaka
+yang ditulis dapat digunakan untuk simulasi \textit{hardware-in-the-loop} jenis
+kendaraan otonom lainnya.
+
+Diagram kelas dari pustaka \textit{consumer} dapat dilihat pada gambar
+\ref{chapter-4-consumer-class-diagram}. Kelas (atau \textit{interface}) yang
+melakukan komunikasi adalah kelas abstrak \texttt{Endpoint}. Kelas tersebut
+dibuat abstrak dan diinstansiasi menggunakan pola pemrograman \textit{factory}.
+\texttt{Endpoint} dibuat abstrak agar apabila ingin ditambahkan metode
+komunikasi lain, hal tersebut dapat dilakukan dengan mudah. Contoh kasus
+penggunaan penambahan metode komunikasi lain adalah pengujian atau
+\textit{benchmarking} metode komunikasi. Selain itu, terdapat kelas yang akan
+menyediakan layanan untuk program GRS, yaitu \texttt{CarlaService}. Kelas ini
+mengabstraksi komunikasi dan deserialisasi ataupun serialisasi data dari
+\texttt{Endpoint}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.0\textwidth]{resources/chapter-4/consumer-class_diagram.png}
+	\caption{Diagram Kelas Pustaka \textit{Consumer}}
+    \label{chapter-4-consumer-class-diagram}
+\end{figure}
+
+Setelah pustaka \textit{consumer} berhasil, implementasi dilanjutkan dengan
+pembuatan pustaka \textit{producer}. Diagram kelas pustaka \textit{producer}
+dapat dilihat pada gambar \ref{chapter-4-producer-class-diagram}. Pembuatan
+pustaka \textit{producer} juga mengikuti filosofi penulilsan pustaka
+\textit{consumer}. Pustaka dibuat seabstrak mungkin sehingga tidak
+\textit{coupled} dengan trem. Selain itu, antarmuka \texttt{Endpoint} juga
+dibuat abstrak agar dapat ditambahkan metode komunikasi yang lain. Perbedaan
+implementasi adalah pada kelas yang berinteraksi dengan program utama. Pada
+pustaka \textit{producer}, ada empat kelas yang berinteraksi dengan program
+utama, yaitu \texttt{CameraHandler}, \texttt{LidarHandler},
+\texttt{GnssHandler}, dan \texttt{ControlHandler}. Keempat kelas memiliki peran
+masing-masing dan terspesialisasi untuk menangani data atau sensor tertentu.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1.0\textwidth]{resources/chapter-4/producer-class_diagram.png}
+	\caption{Diagram Kelas Pustaka \textit{Producer}}
+    \label{chapter-4-producer-class-diagram}
+\end{figure}
+
+\section{Metode Pengujian Implementasi dan Kinerja}
+
+Pengujian akan menguji dua aspek, yaitu
+\begin{itemize}
+	\item pengujian implementasi: meninjau kemampuan sistem HILS dalam mengirim,
+		menerima, dan menggunakan data dari sensor, dan
+	\item pengujian kinerja: meninjau latensi yang dibutuhkan untuk mengirim
+		data.
+\end{itemize}
+Bagian ini akan membahas metode dan rencana pengujian kedua aspek tersebut.
+Pengujian yang dilakukan langsung menguji sistem dan tidak hanya menguji pustaka
+karena pada sistem HILS sudah termasuk pustaka yang dibuat dan hasil akhir
+tugas akhir ini adalah sebuah sistem HILS yang memanfaatkan suatu pustaka untuk
+komunikasinya.
+
+\subsection{Pengujian Implementasi Sistem HILS}
+
+Pengujian implementasi dilakukan dengan menjalankan program utama di komputer
+SILS dan komputer AGX/RKB. Kemudian, akan dilakukan observasi untuk memeriksa
+sistem HILS sudah memenuhi kriteria-kriteria berikut atau belum.
+
+\begin{itemize}
+	\item kecepatan trem di program GRS sesuai dengan bacaan sensor GNSS,
+	\item tampilan kamera di program GRS sesuai dengan yang ada di program
+		ScenarioRunner,
+	\item tampilan lidar di program GRS menggambarkan objek-objek yang ada di
+		sekitar trem,
+	\item trem dapat maju atau berhenti tanpa masukan dari papan ketik, dan
+	\item trem maju ketika mendapatkan kendali maju dan berhenti ketika
+		mendapatkan kendali berhenti.
+\end{itemize}
+
+Kriteria ini selaras dengan tujuan tugas akhir yang kedua, yaitu
+mengimplementasikan sistem simulasi yang dapat mengirimkan, menerima, dan
+memanfaatkan data dari berbagai jenis sensor.
+
+\subsection{Pengujian Kinerja Sistem HILS}
+
+Dari segi kinerja, hal yang ingin dipastikan adalah CARLA dapat berjalan dengan
+stabil dan kecepatan minimum 2 FPS (\textit{frames per second}). Hal tersebut
+diobservasi dengan menjalankan kedua program utama. Selain dari kecepatan
+simulator, aspek kinerja juga akan dinilai dari perbandingan dengan implementasi
+HILS sebelumnya. Latensi pengiriman data harus lebih rendah dibandingkan latensi
+implementasi HILS sebelumnya.
+
+Untuk kriteria kedua, pengujian latensi implementasi HILS sebelumnya akan
+dilakukan secara teoretis. Hal ini karena implementasi HILS sebelumnya sudah
+sulit untuk dijalankan. Selain itu, jenis data yang dikirim pada implementasi
+HILS sebelumnya juga berbeda. Pengujian secara teoretis ini dilakukan dengan
+menulis ulang sebagian dari mekanisme komunikasi implementasi HILS sebelumnya.
+Bagian yang akan ditulis ulang adalah operasi pembacaan data dari \textit{file},
+penulisan dan pembacaan ke basis data, serta penulisan data sensor yang dibaca
+dari basis data ke \textit{file}. Dengan demikian, ada 4 operasi I/O dari
+implementasi HILS sebelumnya yang ditulis ulang untuk pengujian latensi secara
+teoretis.
+
+Apabila sistem HILS berhasil memenuhi kedua kriteria tersebut, sistem dapat
+dianggap sudah berhasil memenuhi kedua tujuan tugas akhir. Hal tersebut karena
+kinerja sistem akan dipengaruhi mekanisme komunikasi yang digunakan (tujuan
+pertama) dan juga cara pustaka di sistem HILS menserialisasi (mengirim) dan
+mendeserialisasi (menerima) data sensor (tujuan kedua).
 
 \section{Hasil Pengujian}
-\blindtext
+
+Penjabaran hasil pengujian aspek implementasi dan kinerja juga akan dipisah.
+Penjabaran dipisah karena hal yang diujikan dan dipastikan dari kedua aspek
+berbeda.
+
+\subsection{Hasil Pengujian Implementasi Sistem HILS}
+
+Dari pengujian yang dilakukan, ditemukan bahwa sistem HILS dapat memenuhi
+seluruh kriteria yang untuk pengujian implementasi sistem. Program GRS berhasil
+mengonsumsi data-data sensor GNSS, kamera, dan lidar. Kemudian, data ketiga
+sensor tersebut dapat ditampilkan dengan tepat pada program GRS.
+
+\subsection{Hasil Pengujian Kinerja Sistem HILS}
+
+Dari pengujian kinerja, ditemukan sistem gagal memiliki kinerja yang buruk
+apabila sensor lidar digunakan. Kecepatan simulator bahkan tidak mencapai 1 FPS.
+
+Akan tetapi ketika diujicobakan lagi tanpa sensor lidar, sistem memiliki kinerja
+yang sangat baik. Untungnya, ada versi dari program GRS yang tidak memanfaatkan
+sensor lidar sehingga program GRS versi tersebut digunakan untuk pengujian
+kinerja selanjutnya.
+
+Ketika diujikan dengan program GRS tanpa lidar, latensi pengiriman data sensor
+GNSS dan kamera tidak terasa ketika simulasi dijalankan. Proses pengiriman data
+sensor kamera dan GNSS terasa instan ketika simulasi dijalankan.
+
+Lalu, ketika dibandingkan dengan sistem sebelumnya berikut adalah data-datanya.
 
 \section{Pembahasan}
 \blindtext

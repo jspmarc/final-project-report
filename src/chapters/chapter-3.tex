@@ -41,7 +41,9 @@ tetapi masih ada keluhan terkait kinerja sistem smulasi HILS, yaitu proses
 simulasi yang sangat lambat dan menyebabkan simulasi kurang realistis. Jumlah
 transaksi data per detik turun dari 4000 transaksi data per detik pada SILS,
 turun menjadi 100-110 transaksi data per detik ketika menggunakan HILS dan
-layanan web.
+layanan web. Target kecepatan simulasi yang harus dicapai untuk dianggap cukup
+cepat adalah CARLA dapat berjalan stabil dengan minimum 2 FPS (\textit{frames
+per second}).
 
 Padahal kedua komputer pada sistem HILS sudah terhubung pada jaringan lokal
 (LAN) yang artinya latensi dan gangguan jaringan akan minimum, jika ada.
@@ -174,7 +176,9 @@ Dari solusi pustaka yang ditawarkan, dapat dibentuk sebuah arsitektur sistem
 HILS. Arsitektur ini dapat dilihat pada diagram \textit{deployment} di gambar
 \ref{chapter-3-new-architecture}. Lalu, gambaran kasar proses pada sistem
 simulasi untuk satu \textit{step} simulasi dapat dilihat pada diagram
-\textit{sequence} di gambar \ref{chapter-3-new-sequence}.
+\textit{sequence} di gambar \ref{chapter-3-new-sequence}. Perlu dicatat bahwa
+HILS \textit{agent} adalah \textit{agent} yang digunakan pada program
+ScenarioRunner.
 
 \begin{figure}[h!]
     \centering
@@ -186,6 +190,6 @@ simulasi untuk satu \textit{step} simulasi dapat dilihat pada diagram
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1.0\textwidth]{resources/chapter-3/sequence-diagram-new-hils-kasar.png}
-		\caption{Gambaran kasar prose satu \textit{step} simulasi}
+		\caption{Gambaran kasar proses satu \textit{step} simulasi}
     \label{chapter-3-new-sequence}
 \end{figure}

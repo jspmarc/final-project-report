@@ -67,7 +67,8 @@ beberapa sensor virtual yang dapat dihubungkan ke kendaraan yang
 di-\textit{spawn}. Data dari sensor virtual ini dapat dibaca secara asinkron
 menggunakan API dengan bahasa Python.
 
-Hasil akhir dari tugas akhir ini adalah sebuah pustaka C++ yang digunakan pada
+Hasil akhir dari tugas akhir ini adalah sebuah sistem HILS yang memanfaatkan
+suatu pustaka. Pustaka tersebut terdiri daari pustaka C++ yang digunakan pada
 program kendali untuk menerima data dan sebuah pustaka Python yang digunakan
 pada \textit{custom agent} untuk \textit{custom scenario runner} yang merupakan
 hasil akhir topik tugas akhir yang lain pada proyek \textit{capstone} ini. Kedua
@@ -80,9 +81,10 @@ menggunakan layanan web (\textit{web service}). Layanan web yang ada menggunakan
 protokol HTTP untuk komunikasinya. Selain itu, terdapat penulisan dan pembacaan
 ke \textit{file} dan basis data SQL pada proses komunikasi. Adanya operasi
 \textit{file} dan basis data pada layanan web menyebabkan \textit{I/O overhead}
-yang besar dan berdampak pada latensi yang besar ketika melakukan pertukuran
-data antarserver. Karena adanya latensi besar ini, sistem simulasi menjadi tidak
-reliabel. Selain masalah latensi, sistem menjadi lebih kompleks.
+yang besar dan berdampak pada \textit{overhead} yang besar ketika melakukan
+pertukuran data antarserver. Karena adanya \textit{overhead} besar ini, sistem
+simulasi menjadi tidak reliabel. Selain masalah latensi, sistem menjadi lebih
+kompleks.
 
 Selain itu, layanan web ini belum mendukung pembacaan sensor CARLA dan juga
 belum mendukung pengiriman data \textit{binary}. Pada layanan web, data yang
@@ -138,7 +140,7 @@ Tahapan pelaksanaan tugas akhir ini adalah sebagai berikut.
 	\item Mempelajari CARLA.
 	\item Menganalisis kebutuhan sistem.
 	\item Mempelajari implementasi di kondisi sekarang.
-	\item Eksplorasi kakas dan protokol yang akan digunakan.
+	\item Eksplorasi kakas dan metode komunikasi yang akan digunakan.
 	\item Perancangan pustaka.
 	\item Implementasi pustaka.
 	\item Pengujian pustaka.
@@ -182,8 +184,7 @@ dianalisis akan dibuat rancangan dari solusi tersebut.
 
 Setelah dianalisis dan dirancang, dilakukan implementasi dan pengujian. Hasil
 implementasi dan pengujian dituangkan pada bab keempat buku ini. Detail
-implementasi pustaka dan metode pengujian kinerja akan dibahas pada bab ini.
-Selain itu, bab ini juga akan membahas data terkait kinerja mekanisme komunikasi
+implementasi pustaka dan metode pengujian akan dibahas pada bab ini. Selain itu, bab ini juga akan membahas data terkait kinerja mekanisme komunikasi
 yang dibuat dan hasilnya jika dibandingkan dengan metode yang sudah ada.
 
 Setelah semuanya selesai, dituliskan kesimpulan dari analisis kinerja dan
