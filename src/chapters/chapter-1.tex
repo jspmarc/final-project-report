@@ -22,12 +22,12 @@ pengerjaan pekerjaan pada tim simulasi. Selain tim simulasi, terdapat tiga tim
 lain, yaitu
 \begin{enumerate}
 	\item tim \textit{decision making}: bertugas untuk mengembangkan program dan
-		algoritma kendali untuk trem otonom,
+	      algoritma kendali untuk trem otonom,
 	\item tim \textit{localization dan mapping}: bertugas untuk memetakan data
-		lokasi ke dalam program kendali yang disebut GRS, dan
+	      lokasi ke dalam program kendali yang disebut GRS, dan
 	\item tim persepsi: bertugas mengembangkan model pembelajaran mesin untuk
-		memahami/membaca bacaan dari sensor, seperti sensor lidar dan kamera,
-		untuk kemudian digunakan pada algoritma kendali.
+	      memahami/membaca bacaan dari sensor, seperti sensor lidar dan kamera,
+	      untuk kemudian digunakan pada algoritma kendali.
 \end{enumerate}
 
 Simulasi dijalankan pada sebuah sistem simulasi dengan skema simulasi
@@ -36,10 +36,10 @@ digunakan pada produk akhir nanti akan digunakan juga pada simulasi. Simulasi
 HILS membutuhkan dua komputer:
 \begin{enumerate}
 	\item komputer untuk menjalankan program simulator dan menghasilkan data
-		sensor virtual (disebut komputer SILS), dan
+	      sensor virtual (disebut komputer SILS), dan
 	\item komputer yang akan digunakan pada trem; mengandung algoritma
-		kendali serta pembelajaran mesin dan menghasilkan kendali untuk trem
-		(dapat dilakukan pada dua komputer yang disebut AGX dan RKB).
+	      kendali serta pembelajaran mesin dan menghasilkan kendali untuk trem
+	      (dapat dilakukan pada dua komputer yang disebut AGX dan RKB).
 \end{enumerate}
 
 Perangkat keras yang akan digunakan pada produk akhir adalah NVIDIA Pegasus,
@@ -96,10 +96,10 @@ Berdasarkan latar belakang serta keadaan saat ini, definisi rumusan masalah
 untuk tugas akhir ini adalah sebagai berikut.
 \begin{enumerate}
 	\item Bagaimana cara mengimplementasikan mekanisme komunikasi dengan kinerja
-		yang cepat dalam pengiriman data untuk kebutuhan simulasi
-		\textit{hardware-in-the-loop} kendaraan otonom?
+	      yang cepat dalam pengiriman data untuk kebutuhan simulasi
+	      \textit{hardware-in-the-loop} kendaraan otonom?
 	\item Bagaimana cara agar sistem simulasi dapat mengirim, menerima, dan
-		memanfaatkan berbagai jenis data sensor?
+	      memanfaatkan berbagai jenis data sensor?
 \end{enumerate}
 
 \section{Tujuan}
@@ -107,9 +107,9 @@ untuk tugas akhir ini adalah sebagai berikut.
 Tugas akhir ini memiliki 2 tujuan utama, yaitu
 \begin{enumerate}
 	\item mengimplementasikan mekanisme komunikasi yang reliabel untuk sistem
-		simulasi \textit{hardware-in-the-loop} kendaraan otonom, dan
-	\item mengimplementasikan sistem simulasi yang dapat mengirimkan, 
-		menerima, dan memanfaatkan data dari berbagai jenis sensor.
+	      simulasi \textit{hardware-in-the-loop} kendaraan otonom, dan
+	\item mengimplementasikan sistem simulasi yang dapat mengirimkan,
+	      menerima, dan memanfaatkan data dari berbagai jenis sensor.
 \end{enumerate}
 
 \section{Batasan Masalah}
@@ -118,13 +118,13 @@ Batasan pada pengerjaan tugas akhir ini adalah
 
 \begin{enumerate}
 	\item pengujian kinerja akan dilakukan pada komputer RKB dan SILS yang
-		terdapat di gedung Lab Tek\-no\-lo\-gi VIII ITB;
+	      terdapat di gedung Lab Tek\-no\-lo\-gi VIII ITB;
 	\item pengujian hanya akan menggunakan sebuah sensor kamera virtual dan
-		sebuah sensor GNSS virtual; dan
+	      sebuah sensor GNSS virtual; dan
 	\item pengujian kinerja mekanisme komunikasi menggunakan layanan web hanya akan
-		dilakukan secara teoretis karena kesulitan dalam menjalankan layanan web
-		dan harus ada banyak modifikasi agar secara fitur sepadan dengan
-		implementasi mekanisme komunikasi baru.
+	      dilakukan secara teoretis karena kesulitan dalam menjalankan layanan web
+	      dan harus ada banyak modifikasi agar secara fitur sepadan dengan
+	      implementasi mekanisme komunikasi baru.
 \end{enumerate}
 
 \section{Metodologi}
@@ -145,7 +145,7 @@ Tahapan pelaksanaan tugas akhir ini adalah sebagai berikut.
 	\item Implementasi pustaka.
 	\item Pengujian pustaka.
 	\item Menambahkan pustaka ke program GRS (program kendali) dan
-		\textit{custom agent}.
+	      \textit{custom agent}.
 	\item Pengumpulan dan pengolahan data kinerja.
 	\item Analisis hasil data kinerja.
 \end{enumerate}

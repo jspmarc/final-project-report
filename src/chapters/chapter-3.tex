@@ -43,7 +43,7 @@ transaksi data per detik turun dari 4000 transaksi data per detik pada SILS,
 turun menjadi 100-110 transaksi data per detik ketika menggunakan HILS dan
 layanan web. Target kecepatan simulasi yang harus dicapai untuk dianggap cukup
 cepat adalah CARLA dapat berjalan stabil dengan minimum 2 FPS (\textit{frames
-per second}).
+	per second}).
 
 Padahal kedua komputer pada sistem HILS sudah terhubung pada jaringan lokal
 (LAN) yang artinya latensi dan gangguan jaringan akan minimum, jika ada.
@@ -58,20 +58,20 @@ delapan operasi I/O yang berjalan secara sinkronis, yaitu
 	\item penulisan CARLA \textit{measurement} ke \textit{file} di SILS,
 	\item pembacaan CARLA \textit{measurement} dari \textit{file} di SILS,
 	\item pengiriman CARLA \textit{measurement} menggunakan HTTP dari SILS ke
-		layanan web,
+	      layanan web,
 	\item penulisan CARLA \textit{measurement} ke basis data pada layanan web,
 	\item permintaan HTTP dari AGX/RKB ke layanan web untuk membaca data,
 	\item pembacaan CARLA \textit{measurement} dari basis data pada layanan web,
 	\item penulisan CARLA \textit{measurement} ke \textit{file} pada AGX/RKB,
-		dan
+	      dan
 	\item pembacaan CARLA \textit{measurement} dari \textit{file} pada AGX/RKB.
 \end{enumerate}
 
 \begin{figure}[h!]
-    \centering
+	\centering
 	\includegraphics[width=1.0\textwidth]{resources/chapter-3/sequence-diagram-old-hils-process.png}
 	\caption{Proses pengiriman data CARLA \textit{measurement} kondisi saat ini}
-    \label{chapter-3-sequence-diagram-old-hils}
+	\label{chapter-3-sequence-diagram-old-hils}
 \end{figure}
 
 Dari diagram \textit{sequence} dapat diperkiran \textit{bottleneck} disebabkan
@@ -181,15 +181,15 @@ HILS \textit{agent} adalah \textit{agent} yang digunakan pada program
 ScenarioRunner.
 
 \begin{figure}[h!]
-    \centering
-    \includegraphics[width=1.0\textwidth]{resources/chapter-3/deployment-diagram-new-hils.png}
-    \caption{Arsitektur Sistem HILS Baru}
-    \label{chapter-3-new-architecture}
+	\centering
+	\includegraphics[width=1.0\textwidth]{resources/chapter-3/deployment-diagram-new-hils.png}
+	\caption{Arsitektur Sistem HILS Baru}
+	\label{chapter-3-new-architecture}
 \end{figure}
 
 \begin{figure}[h!]
-    \centering
-    \includegraphics[width=1.0\textwidth]{resources/chapter-3/sequence-diagram-new-hils-kasar.png}
-		\caption{Gambaran kasar proses satu \textit{step} simulasi}
-    \label{chapter-3-new-sequence}
+	\centering
+	\includegraphics[width=1.0\textwidth]{resources/chapter-3/sequence-diagram-new-hils-kasar.png}
+	\caption{Gambaran kasar proses satu \textit{step} simulasi}
+	\label{chapter-3-new-sequence}
 \end{figure}

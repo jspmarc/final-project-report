@@ -43,9 +43,9 @@ prototipe, dan validasi model kemudi otonom, termasuk persepsi dan kontrol dari
 model tersebut \parencite{dos_carla}.
 
 \begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.5\textwidth]{resources/chapter-2/CARLA-cropped.png}
-    \caption{Antarmuka simulator CARLA}
+	\centering
+	\includegraphics[width=0.5\textwidth]{resources/chapter-2/CARLA-cropped.png}
+	\caption{Antarmuka simulator CARLA}
 \end{figure}
 
 CARLA sendiri dibangun di atas mesin gim (\textit{game engine}) Unreal Engine 4
@@ -53,7 +53,7 @@ CARLA sendiri dibangun di atas mesin gim (\textit{game engine}) Unreal Engine 4
 setidaknya pada saat CARLA dibuat. Selain itu, UE4 juga memiliki ekosistem untuk
 pengaya (\textit{plugin}) dan sistem untuk menambahkan logika dasar untuk
 (\textit{non-playable character}\footnote{Istilah untuk karakter yang tidak
-    dapat dimainkan pada gim.}). UE4 dan sifat sumber terbuka CARLA memungkinkan
+	dapat dimainkan pada gim.}). UE4 dan sifat sumber terbuka CARLA memungkinkan
 komunitas untuk menambahkan berbagai hal sesuai dengan kebutuhan mereka atau
 bahkan memperbaiki CARLA.
 
@@ -77,7 +77,7 @@ lintas.
 Selain model, CARLA juga menyediakan berbagai sensor untuk menyimulasikan
 pengambilan data. Sensor-sensor tersebut dapat ``ditempelkan'' ke kendaraan
 simulasi. Contoh sensor yang tersedia adalah kamera dan LIDAR (\textit{Light
-    Detection and Ranging}), dan lain-lain. Selain data dari sensor, bisa didapatkan
+	Detection and Ranging}), dan lain-lain. Selain data dari sensor, bisa didapatkan
 juga data seperti kecepatan dan percepatan (mirip dengan data dari GPS) dari
 kendaraan.
 
@@ -106,19 +106,19 @@ PX Pegasus. Lini produk NVIDIA Drive sendiri merupakan platform komputer untuk
 memberikan fungsionalitas bantuan mengemudi pada kendaraan bermotor.
 
 \begin{figure}[h!]
-    \centering
-    \includegraphics[width=\textwidth]{resources/chapter-2/pegasus.png}
-    \caption{NVIDIA Pegasus \parencite{trilaksono_laporanRispro}}
+	\centering
+	\includegraphics[width=\textwidth]{resources/chapter-2/pegasus.png}
+	\caption{NVIDIA Pegasus \parencite{trilaksono_laporanRispro}}
 \end{figure}
 
 Mengutip dari \parencite{oh_2017}, NVIDIA Pegasus adalah komputer yang mendukung
 pengemudian \textit{autonomous} secara penuh. Artinya, NVIDIA Pegasus dapat
 digunakan untuk membuat sebuah kendaraan bermotor menjadi \textit{autonomous
-    vehicle} jika sensor dan algoritma yang digunakan tepat.
+	vehicle} jika sensor dan algoritma yang digunakan tepat.
 
 NVIDIA Pegasus menggunakan 2 GPU dengan arsitektur post-Volta dan 2 SoC NVIDIA
 Xavier. Kombinasi CPU dan GPU ini dapat menghasilkan 320 TOPS (\textit{trillion
-    operations/second}) untuk komputasi intelegensi buatan. Untuk koneksi I/O,
+	operations/second}) untuk komputasi intelegensi buatan. Untuk koneksi I/O,
 NVIDIA Pegasus mendukung sampai dengan 16 kamera (6 di antaranya adalah lidar).
 
 Karena NVIDIA Pegasus dapat dihubungkan langsung ke sensor, di produk akhir
@@ -151,17 +151,17 @@ Beberapa pustaka dan kakas yang disediakan NVIDIA DriveWorks adalah visualisasi
 ``egomotion'', perekam data, dan \textit{logging} dan diagnosis sistem. Selain
 itu, beberapa fitur utama dari NVIDIA DriveWorks adalah
 \begin{enumerate}
-    \item lapisan abstraksi sensor: memberikan antarmuka yang sama untuk
-        memanipulasi semua sensor yang didukung, kemampuan untuk membuat sensor
-        virtual menggunakan data yang direkam, dan lain-lain;
-    \item pemroses gambar dan \textit{point cloud} (data lidar): terdapat
-        berbagai pemroses gambar seperti \textit{detection} dan
-        \textit{tracking} dan pemroses \textit{point cloud} seperti segmentasi
-        planar dengan abstraksi perangkat keras sehingga beberapa fitur
-        pemrosesan dapat dipercepat pada NVIDIA Drive tertentu; dan
-    \item kerangka kerja DNN (\textit{deep neural network}): kerangka kerja yang
-        dapat digunakan untuk mamuat dan memprediksi menggunakan model ML
-        TensorRT yang sudah di-\textit{train}.
+	\item lapisan abstraksi sensor: memberikan antarmuka yang sama untuk
+	      memanipulasi semua sensor yang didukung, kemampuan untuk membuat sensor
+	      virtual menggunakan data yang direkam, dan lain-lain;
+	\item pemroses gambar dan \textit{point cloud} (data lidar): terdapat
+	      berbagai pemroses gambar seperti \textit{detection} dan
+	      \textit{tracking} dan pemroses \textit{point cloud} seperti segmentasi
+	      planar dengan abstraksi perangkat keras sehingga beberapa fitur
+	      pemrosesan dapat dipercepat pada NVIDIA Drive tertentu; dan
+	\item kerangka kerja DNN (\textit{deep neural network}): kerangka kerja yang
+	      dapat digunakan untuk mamuat dan memprediksi menggunakan model ML
+	      TensorRT yang sudah di-\textit{train}.
 \end{enumerate}
 
 Pada tugas akhr ini, NVIDIA DriveWorks digunakan untuk membaca dan
@@ -183,15 +183,15 @@ secara sinkronis untuk mengirimkan data. Operasi-operasi tersebut berbentuk
 baca/tulis ke \textit{file} dan basis data serta permintaan HTTP.
 
 \begin{figure}[h!]
-    \centering
-    \includegraphics[width=1.0\textwidth]{resources/chapter-2/komunikasi
-        data pada simulasi.png}
-    \caption{Arsitektur komunikasi pada HILS \parencite{trilaksono_laporanRispro}}
-    \label{chapter-2-old-hils}
+	\centering
+	\includegraphics[width=1.0\textwidth]{resources/chapter-2/komunikasi
+		data pada simulasi.png}
+	\caption{Arsitektur komunikasi pada HILS \parencite{trilaksono_laporanRispro}}
+	\label{chapter-2-old-hils}
 \end{figure}
 
 Dampaknya dapat dilihat ketika dibandingkan dengan SILS (\textit{software
-    in the loop simulation}, tanpa NVIDIA Pegasus) didapatkan kinerja 4000 transaksi
+	in the loop simulation}, tanpa NVIDIA Pegasus) didapatkan kinerja 4000 transaksi
 per detik. Sedangkan ketika menjadi HILS, hanya didapatkan 100--110 transaksi per
 detik \parencite{trilaksono_laporanRispro}. Oleh karena itu, pada subbab ini
 akan dibahas beberapa metode komunikasi alternatif yang dapat digunakan untuk
@@ -217,11 +217,11 @@ ZeroMQ adalah \textit{request-reply}, \textit{publish-subscribe}, dan
 antrian pesan (\textit{message queue}) sehingga pesan yang dikirimkan ke
 konsumen akan disimpan sampai konsumen siap menerima pesan. Meskipun terhadap
 antrian pesan, ZeroMQ tidak memiliki \textit{message
-broker}\footnote{\textit{zero} pada ZeroMQ artinya nol \textit{broker}, nol
-latensi, nol biaya, dan nol administrasi.}.
+	broker}\footnote{\textit{zero} pada ZeroMQ artinya nol \textit{broker}, nol
+	latensi, nol biaya, dan nol administrasi.}.
 
 ZeroMQ berjalan di atas lapisan transpor ZMTP (ZeroMQ \textit{message transport
-    protocol}). ZMTP sendiri berjalan di atas TCP. Semantik ZMTP memastikan
+	protocol}). ZMTP sendiri berjalan di atas TCP. Semantik ZMTP memastikan
 pesan tidak akan diterima lebih dari 1 kali oleh konsumen dan semua pesan
 akan diterima oleh konsumen dengan urutan yang benar. Selain itu,
 \textit{frame} pesan yang diterima konsumen akan di-\textit{queue} di memori
@@ -237,7 +237,7 @@ adalah membuat metode komunikasi yang meminimalkan latensi.
 \subsection{ROS 2}
 
 ROS 2 adalah peningkatan dari ROS. ROS adalah kependekan dari \textit{robot
-    operating system} dan merupakan sekumpulan pustaka dan kakas perangkat lunak
+	operating system} dan merupakan sekumpulan pustaka dan kakas perangkat lunak
 untuk membangun aplikasi robotik. ROS 2 dibuat karena ROS menunjukkan masalah di
 sektor keamanan, reliabilitas, dan penggunaan pada aplikasi skala besar
 \parencite{doi:10.1126/scirobotics.abm6074_ros}. Misalnya, ROS memiliki satu
@@ -278,7 +278,7 @@ Terdapat sebuah penelitian yang memiliki lingkup serta lingkungan sama dengan
 tugas akhir ini. Penelitian tersebut juga menggunakan CARLA untuk HILS.
 
 \subsection{\textit{Hardware-in-the-Loop Autonomous Driving Simulation Without
-        Real-Time Constraints}}
+		Real-Time Constraints}}
 
 Pada penelitian ini \parencite{brogle_CarlaHILS}, dilakukan HILS menggunakan
 NVIDIA Jetson TX1 sebagai perangkat keras untuk komputasi dan simulasi
@@ -293,10 +293,10 @@ dipublikasikan ke topik yang didengarkan oleh pemroses data LiDAR dan vidio.
 kendaraan oleh \textit{node} yang disebut \textit{path planning node}.
 
 \begin{figure}[h!]
-    \centering
-    \includegraphics[width=1.0\textwidth]{resources/chapter-2/carla-jetson-arch.png}
-    \caption{Arsitektur sistem simulasi \parencite{brogle_CarlaHILS}}
-    \label{chapter-2-carla-jetson-arch}
+	\centering
+	\includegraphics[width=1.0\textwidth]{resources/chapter-2/carla-jetson-arch.png}
+	\caption{Arsitektur sistem simulasi \parencite{brogle_CarlaHILS}}
+	\label{chapter-2-carla-jetson-arch}
 \end{figure}
 
 Hasil eksperimen pada penelitian ini adalah hasil simulasi menggunakan HILS dan
