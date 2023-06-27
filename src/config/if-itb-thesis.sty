@@ -50,38 +50,38 @@
 \TOCclone[\lopname]{toc}{atoc}
 \addtocontents{atoc}{\protect\value{tocdepth}=-1}
 \newcommand\listofappendices{
-  \cleardoublepage
-  \phantomsection
-  \listofatoc
-  \addcontentsline{toc}{chapter}{\lopname}
+	\cleardoublepage
+	\phantomsection
+	\listofatoc
+	\addcontentsline{toc}{chapter}{\lopname}
 }
 
 \newcommand*\savedtocdepth{}
 \AtBeginDocument{%
-  \edef\savedtocdepth{\the\value{tocdepth}}%
+	\edef\savedtocdepth{\the\value{tocdepth}}%
 }
 
 \let\originalappendix\appendix
 \renewcommand\appendix{%
-  \originalappendix
-  \cleardoublepage
-  \addtocontents{toc}{\protect\value{tocdepth}=-1}%
-  \addtocontents{atoc}{\protect\value{tocdepth}=\savedtocdepth}%
+	\originalappendix
+	\cleardoublepage
+	\addtocontents{toc}{\protect\value{tocdepth}=-1}%
+	\addtocontents{atoc}{\protect\value{tocdepth}=\savedtocdepth}%
 
-  % source: https://tex.stackexchange.com/a/74530
-  \renewcommand{\thesection}{\thechapter.\Alph{section}}
+	% source: https://tex.stackexchange.com/a/74530
+	\renewcommand{\thesection}{\thechapter.\Alph{section}}
 
-  \titlecontents{chapter}
-    [0pt]
-    {\bfseries}
-    {Lampiran \thecontentslabel.\quad}
-    {}
-    {\hfill\contentspage}
+	\titlecontents{chapter}
+	[0pt]
+	{\bfseries}
+	{Lampiran \thecontentslabel.\quad}
+	{}
+	{\hfill\contentspage}
 
-  \titleformat{\chapter}[block]
-    {\bfseries}
-    {\chaptertitlename\ \thechapter.\quad}{0pt}
-    {\bfseries}
+	\titleformat{\chapter}[block]
+	{\bfseries}
+	{\chaptertitlename\ \thechapter.\quad}{0pt}
+	{\bfseries}
 }
 
 % Define colors
@@ -93,36 +93,36 @@
 
 % Hilangkan titik pada toc
 \makeatletter
-\renewcommand{\@dotsep}{10000} 
+\renewcommand{\@dotsep}{10000}
 \makeatother
 
 % Setel title pada chapter-chapter di toc, lof, lot
 \titlecontents{chapter}
-  [0pt]
-  {\bfseries}
-  {\MakeUppercase{Bab} \thecontentslabel\quad\uppercase}
-  {}
-  {\hfill\contentspage}
+[0pt]
+{\bfseries}
+{\MakeUppercase{Bab} \thecontentslabel\quad\uppercase}
+{}
+{\hfill\contentspage}
 \titlecontents{figure}
-  [0pt]
-  {}
-  {Gambar \thecontentslabel.\quad}
-  {}
-  {\hfill\contentspage}
+[0pt]
+{}
+{Gambar \thecontentslabel.\quad}
+{}
+{\hfill\contentspage}
 \titlecontents{table}
-  [0pt]
-  {}
-  {Tabel \thecontentslabel.\quad}
-  {}
-  {\hfill\contentspage}
+[0pt]
+{}
+{Tabel \thecontentslabel.\quad}
+{}
+{\hfill\contentspage}
 
 % Masukin Daftar Pustaka ke toc
 \let\originalprintbibliography\printbibliography
 \renewcommand\printbibliography{%
-  \phantomsection
-  \cleardoublepage
-  \originalprintbibliography
-  \addcontentsline{toc}{chapter}{\bibname}
+	\phantomsection
+	\cleardoublepage
+	\originalprintbibliography
+	\addcontentsline{toc}{chapter}{\bibname}
 }
 
 % Line satu setengah spasi
@@ -131,9 +131,9 @@
 % Setting judul
 \chapterfont{\centering \Large}
 \titleformat{\chapter}[display]
-  {\Large\centering\bfseries}
-  {\chaptertitlename\ \thechapter}{0pt}
-    {\Large\bfseries\uppercase}
+{\Large\centering\bfseries}
+{\chaptertitlename\ \thechapter}{0pt}
+{\Large\bfseries\uppercase}
 
 % Setting nomor pada subbsubsubbab
 \setcounter{secnumdepth}{3}
@@ -147,51 +147,51 @@
 
 % Set code snippet settings
 \lstset{
-  aboveskip=3mm,
-  basicstyle={\small\ttfamily},
-  belowskip=3mm,
-  captionpos=b,
-  columns=flexible,
-  frame=tb,
-  framexleftmargin=20pt,
-  showstringspaces=false,
-  numbers=left,
-  numbersep=5pt,
-  numberstyle=\tiny\color{gray},
-  keywordstyle=\color{blue},
-  commentstyle=\color{dkgreen},
-  stringstyle=\color{eclipseStrings},
-  breaklines=true,
-  breakatwhitespace=true,
-  tabsize=3,
-  xleftmargin=20pt
+	aboveskip=3mm,
+	basicstyle={\small\ttfamily},
+	belowskip=3mm,
+	captionpos=b,
+	columns=flexible,
+	frame=tb,
+	framexleftmargin=20pt,
+	showstringspaces=false,
+	numbers=left,
+	numbersep=5pt,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{eclipseStrings},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3,
+	xleftmargin=20pt
 }
 
 \lstdefinelanguage{JSON}{
-    basicstyle=\normalfont\ttfamily,
-    commentstyle=\color{eclipseStrings}, % style of value
-    stringstyle=\color{eclipseKeywords}, % style of key
-    numbers=left,
-    numberstyle=\scriptsize,
-    stepnumber=1,
-    numbersep=8pt,
-    showstringspaces=false,
-    breaklines=true,
-    frame=lines,
-    string=[s]{"}{"},
-    comment=[l]{:\ "},
-    morecomment=[l]{:"},
-    literate=
-        *{0}{{{\color{numb}0}}}{1}
-         {1}{{{\color{numb}1}}}{1}
-         {2}{{{\color{numb}2}}}{1}
-         {3}{{{\color{numb}3}}}{1}
-         {4}{{{\color{numb}4}}}{1}
-         {5}{{{\color{numb}5}}}{1}
-         {6}{{{\color{numb}6}}}{1}
-         {7}{{{\color{numb}7}}}{1}
-         {8}{{{\color{numb}8}}}{1}
-         {9}{{{\color{numb}9}}}{1}
+	basicstyle=\normalfont\ttfamily,
+	commentstyle=\color{eclipseStrings}, % style of value
+	stringstyle=\color{eclipseKeywords}, % style of key
+	numbers=left,
+	numberstyle=\scriptsize,
+	stepnumber=1,
+	numbersep=8pt,
+	showstringspaces=false,
+	breaklines=true,
+	frame=lines,
+	string=[s]{"}{"},
+	comment=[l]{:\ "},
+	morecomment=[l]{:"},
+	literate=
+		*{0}{{{\color{numb}0}}}{1}
+		{1}{{{\color{numb}1}}}{1}
+		{2}{{{\color{numb}2}}}{1}
+		{3}{{{\color{numb}3}}}{1}
+		{4}{{{\color{numb}4}}}{1}
+		{5}{{{\color{numb}5}}}{1}
+		{6}{{{\color{numb}6}}}{1}
+		{7}{{{\color{numb}7}}}{1}
+		{8}{{{\color{numb}8}}}{1}
+		{9}{{{\color{numb}9}}}{1}
 }
 
 % Setting daftar kode (?) TODO: konfirmasi boleh ada snippet kode atau ngga
@@ -204,29 +204,29 @@
 \newcommand{\pembimbingDua}{Prof. Dr. Bambang Riyanto Trilaksono}
 \newcommand{\pembimbingDuaNip}{196211151987031004}
 \newcommand{\pembimbingTtd}{
-  \centering
-  \normalsize \normalfont
-  Telah disetujui dan disahkan sebagai \textit{draft} Laporan Tugas \\
-  di Bandung pada tanggal 23 Juni 2023,
+	\centering
+	\normalsize \normalfont
+	Telah disetujui dan disahkan sebagai \textit{draft} Laporan Tugas \\
+	di Bandung pada tanggal 23 Juni 2023,
 
-  \vspace{0.5cm}
-  \setlength{\tabcolsep}{12pt}
-  \begin{tabular}{c@{\hskip 0.5cm}c}
-      Pembimbing I,               & Pembimbing II,             \\
-                                  &                            \\
-                                  &                            \\
-                                  &                            \\
-                                  &                            \\
-      \underline{\pembimbingSatu} & \underline{\pembimbingDua} \\
-      NIP. \pembimbingSatuNip     & NIP. \pembimbingDuaNip     \\
-  \end{tabular}
+	\vspace{0.5cm}
+	\setlength{\tabcolsep}{12pt}
+	\begin{tabular}{c@{\hskip 0.5cm}c}
+		Pembimbing I,               & Pembimbing II,             \\
+		                            &                            \\
+		                            &                            \\
+		                            &                            \\
+		                            &                            \\
+		\underline{\pembimbingSatu} & \underline{\pembimbingDua} \\
+		NIP. \pembimbingSatuNip     & NIP. \pembimbingDuaNip     \\
+	\end{tabular}
 }
 
 \newcommand{\capstoneTitle}{Pengembangan Sistem Simulasi \textit{Autonomous Tram} dengan Simulator CARLA}
 
 \newcommand{\subtitle}{
-\bfseries \Large
-Laporan Tugas Akhir - Capstone
+	\bfseries \Large
+	Laporan Tugas Akhir - Capstone
 
-\capstoneTitle
+	\capstoneTitle
 }
