@@ -6,9 +6,9 @@ built_file = $(build_dir)/$(main_file:.tex=.pdf)
 
 .PHONY: all build clean format
 
-all: format clean build
+all: clean build
 
-build: format
+build: $(main_file_path)
 	mkdir -p $(build_dir)
 	latexmk -pdf -bibtex -outdir=../$(build_dir) -cd $^
 
