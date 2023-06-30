@@ -1,4 +1,4 @@
-\chapter{Pendahuluan}
+\chapter{Pendahuluan}\label{chapter-1}
 
 \section{Latar Belakang}
 
@@ -43,9 +43,10 @@ HILS membutuhkan dua komputer:
 \end{enumerate}
 
 Perangkat keras yang akan digunakan pada produk akhir adalah NVIDIA Pegasus,
-pada proyek ini disebut AGX. Akan tetapi untuk pengujian dan karena AGX sering
-digunakan di lapangan, ada komputer cadangan yang disebut RKB. Komputer RKB
-digunakan untuk pengujian program sebelum dikompilasi dan disalin ke AGX.
+pada proyek ini disebut AGX. RKB sendiri adalah komputer cadangan untuk AGX.
+Komputer RKB digunakan untuk pengujian program sebelum dikompilasi dan disalin
+ke AGX. Selain itu, apabila AGX sedang digunakan untuk pengujian di lapangan,
+RKB digunakan sebagai substitusi sementara.
 
 Komputer SILS dan AGX/RKB akan terhubung melalui sebuah jaringan lokal (LAN).
 Oleh karena itu, lingkungan simulasi akan memiliki jaringan yang cukup ideal
@@ -68,11 +69,13 @@ di-\textit{spawn}. Data dari sensor virtual ini dapat dibaca secara asinkron
 menggunakan API dengan bahasa Python.
 
 Hasil akhir dari tugas akhir ini adalah sebuah sistem HILS yang memanfaatkan
-suatu pustaka. Pustaka tersebut terdiri daari pustaka C++ yang digunakan pada
-program kendali untuk menerima data dan sebuah pustaka Python yang digunakan
-pada \textit{custom agent} untuk \textit{custom scenario runner} yang merupakan
-hasil akhir topik tugas akhir yang lain pada proyek \textit{capstone} ini. Kedua
-pustaka ini akan disebut sebagai ``hils-connector''.
+suatu pustaka. Pustaka tersebut terdiri dari pustaka C++ yang digunakan pada
+program kendali (disebut ``GRS'') untuk menerima data dan sebuah pustaka Python
+yang digunakan pada program utama di komputer SILS. Program utama di komputer
+SILS adalah sebuah \textit{custom agent} untuk program CARLA \textit{custom
+	scenario runner} yang merupakan hasil akhir topik tugas akhir yang lain pada
+proyek \textit{capstone} ini. Kedua pustaka ini akan disebut sebagai
+``hils-connector''.
 
 \section{Rumusan Masalah}
 
@@ -95,10 +98,10 @@ dan bukan dari sensor.
 Berdasarkan latar belakang serta keadaan saat ini, definisi rumusan masalah
 untuk tugas akhir ini adalah sebagai berikut.
 \begin{enumerate}
-	\item Bagaimana cara mengimplementasikan mekanisme komunikasi dengan kinerja
+	\item Bagaimana mengimplementasikan mekanisme komunikasi dengan kinerja
 	      yang cepat dalam pengiriman data untuk kebutuhan simulasi
 	      \textit{hardware-in-the-loop} kendaraan otonom?
-	\item Bagaimana cara agar sistem simulasi dapat mengirim, menerima, dan
+	\item Bagaimana agar sistem simulasi dapat mengirim, menerima, dan
 	      memanfaatkan berbagai jenis data sensor?
 \end{enumerate}
 
@@ -164,29 +167,31 @@ Pada buku ini akan terdapat lima bab, yaitu
 	\item Kesimpulan dan Saran.
 \end{enumerate}
 
-Bab pertama adalah bab pendahuluan yang membahas masalah dan latar belakang
+Bab \ref{chapter-1} adalah bab pendahuluan yang membahas masalah dan latar belakang
 masalah. Lalu, dari masalah tersebut dirumuskan tujuan dari penelitian yang
 dilakukan. Agar penelitian tidak terlalu luas, bab pendahuluan juga membahas
 batasan masalah. Terakhir, bab pendahuluan juga membahas metodologi penelitian.
 
-Selanjutnya adalah bab studi literatur. Sesuai namanya, bab ini membahas hasil
-studi literatur terkait topik tugas akhir yang diangkat, yaitu membuat sistem
-HILS untuk simulasi trem otonom. Bab ini akan menjabarkan perangkat lunak yang
-digunakan, misalnya \textit{simulator} CARLA dan beberapa metode komunikasi,
-perangkat keras yang digunakan, yaitu trem dan NVIDIA Pegasus, serta hasil
-penelitian sebelumnya yang terkait topik tugas akhir.
+Bab \ref{chapter-2} adalah bab studi literatur. Sesuai namanya, bab ini membahas
+hasil studi literatur terkait topik tugas akhir yang diangkat, yaitu membuat
+sistem HILS untuk simulasi trem otonom. Bab ini akan menjabarkan perangkat lunak
+yang digunakan, misalnya \textit{simulator} CARLA dan beberapa metode
+komunikasi, perangkat keras yang digunakan, yaitu trem dan NVIDIA Pegasus, serta
+hasil penelitian sebelumnya yang terkait topik tugas akhir.
 
-Bab ketiga adalah analisis dan rancangan untuk sistem HILS. Bab ini membahas
-hasil analisis masalah pada sistem komunikasi yang ada. Dari masalah-masalah
-tersebut akan dianalisis kebutuhan-kebutuhan, baik fungsional maupun
-non-fungsional untuk mengembangkan sistem simulasi yang lebih baik. Setelah
-dianalisis akan dibuat rancangan dari solusi tersebut.
+Bab \ref{chapter-3} adalah analisis dan rancangan untuk sistem HILS. Bab ini
+membahas hasil analisis masalah pada sistem komunikasi yang ada. Dari
+masalah-masalah tersebut akan dianalisis kebutuhan-kebutuhan, baik fungsional
+maupun non-fungsional untuk mengembangkan sistem simulasi yang lebih baik.
+Setelah dianalisis akan dibuat rancangan dari solusi tersebut.
 
 Setelah dianalisis dan dirancang, dilakukan implementasi dan pengujian. Hasil
-implementasi dan pengujian dituangkan pada bab keempat buku ini. Detail
-implementasi pustaka dan metode pengujian akan dibahas pada bab ini. Selain itu, bab ini juga akan membahas data terkait kinerja mekanisme komunikasi
+implementasi dan pengujian dituangkan pada Bab \ref{chapter-4} buku ini. Detail
+implementasi pustaka dan metode pengujian akan dibahas pada bab ini. Selain itu,
+bab ini juga akan membahas data terkait kinerja mekanisme komunikasi
 yang dibuat dan hasilnya jika dibandingkan dengan metode yang sudah ada.
 
 Setelah semuanya selesai, dituliskan kesimpulan dari analisis kinerja dan
-implementasi pustaka. Selain itu, bab ini juga terdapat saran untuk memperbaiki
-ataupun melanjutkan penelitian dari buku ini.
+implementasi pustaka. Hal-hal tersebut dituliskan pada Bab \ref{chapter-5}.
+Selain itu, Bab \ref{chapter-5} juga terdapat saran untuk memperbaiki ataupun
+melanjutkan penelitian dari buku ini.
