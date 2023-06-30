@@ -37,8 +37,8 @@ kecelakaan serta tanpa harus menyewa trem.
 \section{Simulator CARLA}
 
 CARLA (\textit{Car Learning to Act}) adalah perangkat lunak sumber terbuka
-(\textit{o\-pen sour\-ce}) yang memiliki tujuan utama menyimulasikan kendaraan
-autonomous. CAR\-LA dibangun dari nol untuk mampu melakukan pelatihan, pembuatan
+(\textit{open source}) yang memiliki tujuan utama menyimulasikan kendaraan
+autonomous. CARLA dibangun dari nol untuk mampu melakukan pelatihan, pembuatan
 prototipe, dan validasi model kemudi otonom, termasuk persepsi dan kontrol dari
 model tersebut \parencite{dos_carla}.
 
@@ -68,7 +68,7 @@ digunakan untuk membangun lingkungan simulasi yang realistis.
 
 Selain dari model 3D, lingkungan simulasi yang realistis didapatkan juga dari
 cuaca dan waktu hari. Cuaca dan waktu hari pada CARLA dapat dikustomisasi
-se\-de\-mi\-ki\-an rupa untuk memungkinkan berbagai macam skenario simulasi.
+sedemikian rupa untuk memungkinkan berbagai macam skenario simulasi.
 Selain itu, NPC yang ada di CARLA akan menggunakan sebuah model dari kendaraan
 ataupun pejalan kaki. NPC bergerak berdasarkan suatu aturan yang sudah
 ditentukan, misalnya mengikuti suatu pemilihan keputusan ketika di lampu lalu
@@ -101,7 +101,7 @@ RKB/AGX.
 \section{NVIDIA Pegasus}
 
 NVIDIA Pegasus adalah salah satu produk cetusan NVIDIA Corporation di bawah lini
-produk NVIDIA Drive PX. Nama pasar dari NVIDIA Pegasus adalah N\-VI\-DI\-A Drive
+produk NVIDIA Drive PX. Nama pasar dari NVIDIA Pegasus adalah NVIDIA Drive
 PX Pegasus. Lini produk NVIDIA Drive sendiri merupakan platform komputer untuk
 memberikan fungsionalitas bantuan mengemudi pada kendaraan bermotor.
 
@@ -133,7 +133,7 @@ digunakan pada produk akhir.
 \section{NVIDIA DriveWorks}
 
 NVIDIA DriveWorks adalah SDK (\textit{software development kit}) untuk
-mengembang\-kan perangkat lunak yang digunakan pada kendaraan otonom dengan
+mengembangkan perangkat lunak yang digunakan pada kendaraan otonom dengan
 perangkat keras dari NVIDIA AGX. NVIDIA DriveWorks menyediakan berbagai kakas yang
 dapat  digunakan untuk mempercepat pengembangan algoritma dan perangkat lunak
 untuk kendaraan otonom. Kemampuan dari NVIDIA DriveWorks juga dapat dikembangkan
@@ -171,7 +171,7 @@ dari komputer SILS. Data dari komputer SILS akan dimuat secara langsung ke
 memori perangkat sehingga oleh NVIDIA DriveWorks dianggap data dari
 \textit{file} rekaman.
 
-\section{Metode Komunikasi antara Simulator CARLA dan NVI\-DI\-A Pegasus}
+\section{Metode Komunikasi antara Simulator CARLA dan NVIDIA Pegasus}
 
 Pada keadaan yang ada, komunikasi antara komputer SILS dengan komputer RKB/AGX
 menggunakan perantara \textit{web service} yang berbasis HTTP (dapat dilihat
@@ -202,7 +202,7 @@ lebih baik dalam menangani komunikasi asinkron daripada HTTP.
 
 \subsection{ZeroMQ}
 
-ZeroMQ adalah sebuah pustaka yang memberikan pe\-ning\-ka\-tan di atas
+ZeroMQ adalah sebuah pustaka yang memberikan peningkatan di atas
 \textit{socket} tradisional. ZeroMQ memberikan fungsionalitas tambahan terhadap
 \textit{socket} dan mengabstraksi pembuatan koneksi TCP dengan harapan
 memudahkan pengembangan aplikasi terdistribusi. Fungsionalitas yang ditambahkan
