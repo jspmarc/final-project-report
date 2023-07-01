@@ -1,6 +1,6 @@
 \chapter{Analisis dan Rancangan Sistem HILS}\label{chapter-3}
 
-Pada bab ini akan dibahas analisis permasalahan pada sistem simulasi yang sudah
+Pada Bab \ref{chapter-3} akan dibahas analisis permasalahan pada sistem simulasi yang sudah
 ada. Setelah itu, akan dilakukan analisis dan perancangan terhadap solusi yang
 akan dibuat pada buku ini.
 
@@ -15,33 +15,31 @@ dapat menyebabkan orang atau kendaraan lain ditabrak oleh trem. Selain itu,
 dengan simulasi para pengembang tidak perlu terjun ke lapangan di Kota Madiun
 dan tidak perlu menyewa trem serta rel untuk melakukan pengujian.
 
-Proyek pengembangan trem otonom sendiri sudah memasuki tahun kedua, akan tetapi
-pada tahun pertama belum ada tim simulasi. Program untuk simulasi, baik SILS
-(\textit{software-in-the-loop-simulation}) maupun HILS
-(\textit{hardware-in-the-loop-simulation}), tidak memiliki waktu pengembangan
-yang banyak dan hanya sekadar ada. Oleh karenanya, tim \textit{capstone} perlu
-mengimplementasikan atau memperbaiki sistem simulasi HILS agar pengujian HILS
-dapat  dilakukan. Selain itu, tim \textit{capstone} juga harus dapat membuat
+Proyek pengembangan trem otonom sendiri dan tim simulasi sudah memasuki tahun
+kedua. Akan tetapi, sistem HILS yang ada memiliki banyak masalah, di antaranya
+adalah belum adanya skenario simulasi dan kinerja sistem yang buruk. Oleh
+karenanya, tim \textit{capstone} perlu memperbarui sistem HILS agar pengujian
+HILS dapat dilakukan. Selain itu, tim \textit{capstone} ini juga harus membuat
 lingkungan simulasi yang semirip mungkin dengan keadaan di Indonesia serta
 membuat beberapa skenario simulasi agar pengujian dapat dilakukan secara
 otomatis.
 
-Tugas akhir ini bertujuan untuk membuat sistem simulasi agar HILS lebih reliabel
-dan memiliki dengan kinerja yang baik. Program HILS sendiri sudah pernah
-diimplementasi pada tahun pertama proyek, akan tetapi implementasinya memiliki
-beberapa keluhan yang akan dibahas pada bab ini. Dari keluhan-keluhan tersebut
-akan dibahas analisis serta rancangan solusi untuk memperbaiki program HILS yang
-ada.
+Tugas akhir ini sendiri bertujuan untuk memperbaiki agar sistem HILS dapat
+menggunakan sensor virtual dan memiliki dengan kinerja yang baik.  Sistem HILS
+sendiri sudah pernah diimplementasi pada tahun pertama proyek, akan tetapi
+implementasinya memiliki beberapa keluhan yang akan dibahas pada Subbab
+\ref{chapter-3-problems}. Dari keluhan-keluhan tersebut, akan dilakukan analisis
+serta rancangan solusi untuk memperbaiki sistem HILS yang ada.
 
-\section{Analisis Masalah Sistem HILS Saat ini}
+\section{Analisis Masalah Sistem HILS Saat ini}\label{chapter-3-problems}
 
 Sistem simulasi yang ada sudah dapat menghubungkan komputer SILS dengan server
-komputer RKB/AGX sehingga sistem simulasi HILS sudah dapat digunakan. Akan
-tetapi masih ada keluhan terkait kinerja sistem smulasi HILS, yaitu proses
-simulasi yang sangat lambat dan menyebabkan simulasi kurang realistis. Jumlah
-transaksi data per detik turun dari 4000 transaksi data per detik pada SILS,
-turun menjadi 100-110 transaksi data per detik ketika menggunakan HILS dan
-layanan web. Target kecepatan simulasi yang harus dicapai untuk dianggap cukup
+komputer RKB/AGX sehingga sistem HILS sudah dapat digunakan. Akan tetapi masih
+ada keluhan terkait kinerja sistem HILS, yaitu proses simulasi yang sangat
+lambat, menyebabkan simulasi kurang realistis. Jumlah transaksi data per
+detik turun dari 4000 transaksi data per detik pada SILS, turun menjadi 100-110
+transaksi data per detik ketika menggunakan HILS dan layanan web. Dari ketua tim
+simulasi, target kecepatan simulasi yang harus dicapai untuk dianggap cukup
 cepat adalah CARLA dapat berjalan stabil dengan minimum 2 FPS (\textit{frames
 	per second}).
 
@@ -50,10 +48,10 @@ Padahal kedua komputer pada sistem HILS sudah terhubung pada jaringan lokal
 Oleh karena itu, kemungkinan \textit{bottleneck} terdapat pada implementasi
 mekanisme komunikasi. Implementasi mekanisme komunikasi menggunakan sebuah
 layanan web yang arsitekturnya dapat dilihat pada diagram di Gambar
-\ref{chapter-2-old-hils}. Proses pada implementasi HILS yang lama dapat dilihat
-pada diagram \textit{sequence} di Gambar
-\ref{chapter-3-sequence-diagram-old-hils}. Pada proses pengiriman data, terdapat
-delapan operasi I/O yang berjalan secara sinkronis, yaitu
+\ref{chapter-2-old-hils}. Proses pada sistem HILS yang sudah ada dapat dilihat
+pada diagram sekuens di Gambar \ref{chapter-3-sequence-diagram-old-hils}. Pada
+proses pengiriman data, terdapat delapan operasi I/O yang berjalan secara
+sinkronis, yaitu
 \begin{enumerate}
 	\item penulisan CARLA \textit{measurement} ke \textit{file} di SILS,
 	\item pembacaan CARLA \textit{measurement} dari \textit{file} di SILS,
@@ -74,7 +72,7 @@ delapan operasi I/O yang berjalan secara sinkronis, yaitu
 	\label{chapter-3-sequence-diagram-old-hils}
 \end{figure}
 
-Dari diagram \textit{sequence} dapat diperkiran \textit{bottleneck} disebabkan
+Dari diagram sekuens dapat diperkiran \textit{bottleneck} disebabkan
 banyaknya operasi I/O sinkronis yang berdampak pada \textit{overhead} operasi
 I/O. \textit{Overhead} operasi I/O akan menjadi lebih buruk lagi apabila data
 yang dikirimkan berukuran besar, misalnya data sensor kamera. Selain itu, sistem
@@ -92,16 +90,16 @@ dengan memanggil fungsi dari API Python CARLA.
 
 \section{Analisis Solusi}
 
-Dari analisis masalah, didapatkan dua keluhan pada implementasi sebelumnya,
-yaitu masalah kinerja dan belum ada dukungan terhadap data sensor. Dari
+Dari analisis masalah, didapatkan dua keluhan pada sistem HILS yang ada, yaitu
+masalah kinerja dan belum ada dukungan terhadap data sensor. Dari
 keluhan-keluhan tersebut, dibutuhkan sebuah solusi yang dapat meningkatkan
 kinerja HILS dan dapat menggunakan data sensor. Sensor-sensor yang harus
 didukung pada solusi adalah sensor kamera, lidar, dan GNSS. Ketiga sensor harus
 dapat digunakan secara bersamaan.
 
 Dari kebutuhan-kebutuhan tersebut, ada dua buah alternatif solusi: melakukan
-peningkatan (\textit{upgrade}) program HILS yang sudah ada atau menulis ulang
-program HILS. Dari kedua alternatif, dipilih alternatif penulisan ulang program
+peningkatan (\textit{upgrade}) sistem HILS yang sudah ada atau menulis ulang
+sistem HILS. Dari kedua alternatif, dipilih alternatif penulisan ulang program
 HILS. Alasannya adalah karena pada solusi pertama memiliki kompleksitas yang
 lebih tinggi karena ada lebih banyak komponen pada sistem. Selain itu, layanan
 web pada solusi pertama tidak terintegrasi langsung pada program utama, baik di
@@ -131,13 +129,13 @@ penambahan latensi.
 \section{Rancangan Solusi}
 
 Karena program utama di sisi komputer SILS dan AGX/RKB sudah ada atau sedang
-dikerjakan, maka dipililh solusi dalam bentuk pustaka agar pemuatan bisa
-dilakukan secara modular dan independen dari kedua program utama. Menciptakan
-\textit{coupling} yang rendah antara pustaka dengan kedua program utama. Selain
-itu, keuntungan pustaka adalah program GRS jadi dapat memilih untuk memuat
-pustaka yang akan dibuat atau tidak pada proses kompilasi sehingga dapat sedikit
-menghemat \textit{resource} terutama memori. Pustaka yang dibuat akan disebut
-``hils-connector''.
+dikerjakan, dipilih solusi dalam bentuk pustaka agar pemuatan fungsionalitas
+HILS bisa dilakukan secara modular dan independen dari kedua program utama.
+Hal ini menciptakan \textit{coupling} yang rendah antara pustaka dengan kedua
+program utama. Selain itu, keuntungan pustaka adalah program GRS jadi dapat
+memilih untuk memuat pustaka yang akan dibuat atau tidak pada proses kompilasi
+sehingga dapat sedikit menghemat \textit{resource} terutama memori. Pustaka yang
+dibuat akan disebut ``hils-connector''.
 
 Pustaka yang akan dibuat ada dua, yaitu pustaka C++11 untuk program GRS di
 komputer AGX/RKB dan pustaka Python 3 untuk \textit{agent} program
