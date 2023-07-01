@@ -1,19 +1,22 @@
 \chapter{Studi Literatur}\label{chapter-2}
 
-Pada bab ini, Penulis akan menguraikan hasil studi literatur dalam penyusunan
-tugas akhir ini. Subbab pertama membahas trem, yaitu kendaraan yang akan
-disimulasikan menjadi otonom pada tugas akhir ini. Selanjutnya, akan dibahas
-simulator CARLA, yaitu perangkat lunak yang digunakan sebagai alat simulasi.
-Subbab ketiga menjelaskan NVIDIA Pegasus yang akan digunakan sebagai mesin untuk
-menjalankan algoritma \textit{decision making} di lingkungan simulasi dan
-\textit{production}. Lalu, subbab keempat akan membahas NVIDIA DriveWorks
-sebagai SDK (\textit{software development kit}) pengembangan perangkat lunak
-pada NVIDIA Pegasus. Lalu, pada subbab kelima akan dibahas kondisi metode
-komunikasi jalur komunikasi serta ZeroMQ dan ROS2 sebagai alternatif ke kondisi
-yang ada. Terakhir, subbab keenam akan membahas penelitian-penelitian terkait
-simulasi \textit{autonomous vehicle} menggunakan CARLA.
+Pada Bab \ref{chapter-2}, Penulis akan menguraikan hasil studi literatur dalam
+penyusunan tugas akhir ini. Subbab \ref{chapter-2-section-trem} membahas trem,
+yaitu kendaraan yang akan disimulasikan menjadi otonom pada tugas akhir ini.
+Selanjutnya, pada Subbab \ref{chapter-2-section-carla} akan dibahas simulator
+CARLA, yaitu perangkat lunak yang digunakan sebagai alat simulasi.  Subbab
+\ref{chapter-2-section-pegasus} menjelaskan NVIDIA Pegasus yang akan digunakan
+sebagai mesin untuk menjalankan algoritma \textit{decision making} di lingkungan
+simulasi dan \textit{production}. Lalu, Subbab
+\ref{chapter-2-section-driveworks} akan membahas NVIDIA DriveWorks sebagai SDK
+(\textit{software development kit}) pengembangan perangkat lunak pada NVIDIA
+Pegasus. Lalu, pada subbab \ref{chapter-2-section-comms} akan dibahas kondisi
+metode komunikasi jalur komunikasi serta ZeroMQ dan ROS2 sebagai alternatif ke
+kondisi yang ada. Terakhir, subbab \ref{chapter-2-section-related-works} akan
+membahas sebuah penelitian terkait simulasi \textit{autonomous vehicle}
+menggunakan CARLA dengan HILS.
 
-\section{Trem}
+\section{Trem}\label{chapter-2-section-trem}
 
 Trem adalah transportasi umum berupa kereta ringan yang memiliki rel/jalur
 sendiri di jalan raya. Trem dapat menjadi solusi terhadap masalah yang semakin
@@ -26,23 +29,15 @@ Di Indonesia sendiri, trem sudah ada sejak jaman penjajahan. Trem banyak
 digunakan di Ibu Kota Negara, Jakarta, sampai 15 April 1954. Untungnya, trem
 masih banyak digunakan di daerah Madiun dan Solo.
 
-Tugas akhir ini adalah bagian dari proyek pengembangan trem otonom. Trem otonom
-yang dikembangkan menggunakan basis trem di Kota Solo dan Kota Madiun. Trem
-otonom, secara teori, tidak membutuhkan masinis untuk mengoperasikannya.
-Pengereman dan percepatan trem dikendalikan program kecerdasan buatan. Tugas
-akhir ini akan menggunakan trem otonom virtual yang dijalankan pada dunia
-simulasi. Dengan simulasi, algoritma kendali dapat diuji tanpa adanya risiko
-kecelakaan serta tanpa harus menyewa trem.
-
-\section{Simulator CARLA}
+\section{Simulator CARLA}\label{chapter-2-section-carla}
 
 CARLA (\textit{Car Learning to Act}) adalah perangkat lunak sumber terbuka
 (\textit{open source}) yang memiliki tujuan utama menyimulasikan kendaraan
-autonomous. CARLA dibangun dari nol untuk mampu melakukan pelatihan, pembuatan
-prototipe, dan validasi model kemudi otonom, termasuk persepsi dan kontrol dari
-model tersebut \parencite{dos_carla}.
+\textit{autonomous}. CARLA dibangun dari nol untuk mampu melakukan pelatihan,
+pembuatan prototipe, dan validasi model kemudi otonom, termasuk persepsi dan
+kontrol dari model tersebut \parencite{dos_carla}.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.5\textwidth]{resources/chapter-2/CARLA-cropped.png}
 	\caption{Antarmuka simulator CARLA}
@@ -98,7 +93,7 @@ berkomunikasi dengan sebuah \textit{agent} dengan sebuah API Python sehingga
 \textit{agent} dapat mendapatkan data dari CARLA dan mengirimkannya ke komputer
 RKB/AGX.
 
-\section{NVIDIA Pegasus}
+\section{NVIDIA Pegasus}\label{chapter-2-section-pegasus}
 
 NVIDIA Pegasus adalah salah satu produk cetusan NVIDIA Corporation di bawah lini
 produk NVIDIA Drive PX. Nama pasar dari NVIDIA Pegasus adalah NVIDIA Drive
@@ -130,7 +125,7 @@ Pada trem otonom, NVIDIA Pegasus akan digunakan untuk menjalankan program GRS
 (kendali). Sehingga komputer ini juga akan digunakan untuk pengujian sebelum
 digunakan pada produk akhir.
 
-\section{NVIDIA DriveWorks}
+\section{NVIDIA DriveWorks}\label{chapter-2-section-driveworks}
 
 NVIDIA DriveWorks adalah SDK (\textit{software development kit}) untuk
 mengembangkan perangkat lunak yang digunakan pada kendaraan otonom dengan
@@ -164,14 +159,8 @@ itu, beberapa fitur utama dari NVIDIA DriveWorks adalah
 	      TensorRT yang sudah di-\textit{train}.
 \end{enumerate}
 
-Pada tugas akhr ini, NVIDIA DriveWorks digunakan untuk membaca dan
-memroses data-data sensor. Selain itu, sensor virtual pada NVIDIA DriveWorks
-juga akan dimanfaatkan sebagai media untuk menyimpan data sensor yang dikirim
-dari komputer SILS. Data dari komputer SILS akan dimuat secara langsung ke
-memori perangkat sehingga oleh NVIDIA DriveWorks dianggap data dari
-\textit{file} rekaman.
-
-\section{Metode Komunikasi antara Simulator CARLA dan NVIDIA Pegasus}
+\section{Metode Komunikasi antara Simulator CARLA dan NVIDIA
+  Pegasus}\label{chapter-2-section-comms}
 
 Pada keadaan yang ada, komunikasi antara komputer SILS dengan komputer RKB/AGX
 menggunakan perantara \textit{web service} yang berbasis HTTP (dapat dilihat
@@ -200,7 +189,7 @@ simulasi. Alternatif-alternatif tersebut adalah ZeroMQ dan ROS. Kedua alternatif
 dipilih karena CARLA mengirimkan sensor secara asinkron dan keduanya dinilai
 lebih baik dalam menangani komunikasi asinkron daripada HTTP.
 
-\subsection{ZeroMQ}
+\subsection{ZeroMQ}\label{chapter-2-section-zeromq}
 
 ZeroMQ adalah sebuah pustaka yang memberikan peningkatan di atas
 \textit{socket} tradisional. ZeroMQ memberikan fungsionalitas tambahan terhadap
@@ -234,7 +223,7 @@ karena ZeroMQ menawarkan metode komunikasi yang sederhana, cepat, dan murah
 (dari segi \textit{resource}). Selain itu, salah satu tujuan utama dari ZeroMQ
 adalah membuat metode komunikasi yang meminimalkan latensi.
 
-\subsection{ROS 2}
+\subsection{ROS 2}\label{chapter-2-section-ros2}
 
 ROS 2 adalah peningkatan dari ROS. ROS adalah kependekan dari \textit{robot
 	operating system} dan merupakan sekumpulan pustaka dan kakas perangkat lunak
@@ -272,13 +261,8 @@ pola tersebut. Lalu, untuk pola \textit{service}, digunakan perpanjangan dari
 DDS, yaitu DDS-RPC. DDS sendiri sebenarnya hanya standar dengan implementasi
 yang berbeda-beda. Secara bawaan, ROS 2 menggunakan Fast DDS dari eProsima.
 
-\section{Penelitian Terkait}
-
-Terdapat sebuah penelitian yang memiliki lingkup serta lingkungan sama dengan
-tugas akhir ini. Penelitian tersebut juga menggunakan CARLA untuk HILS.
-
-\subsection{\textit{Hardware-in-the-Loop Autonomous Driving Simulation Without
-		Real-Time Constraints}}
+\section{Penelitian Terkait -- \textit{Hardware-in-the-Loop Autonomous Driving Simulation Without
+	  Real-Time Constraints}}\label{chapter-2-section-related-works}
 
 Pada penelitian ini \parencite{brogle_CarlaHILS}, dilakukan HILS menggunakan
 NVIDIA Jetson TX1 sebagai perangkat keras untuk komputasi dan simulasi
