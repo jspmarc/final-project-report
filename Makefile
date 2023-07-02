@@ -14,7 +14,13 @@ build: $(main_file_path)
 
 clean:
 	rm -rf $(build_dir)/*
-	rm -f **/*.bak*
+	rm -rf $(src_dir)/**/bak*
+	rm -rf $(src_dir)/thesis.aux $(src_dir)/thesis.bbl $(src_dir)/thesis.blg \
+		$(src_dir)/thesis.fls $(src_dir)/thesis.lof $(src_dir)/thesis.log \
+		$(src_dir)/thesis.out $(src_dir)/thesis.pdf $(src_dir)/thesis.synctex.gz \
+		$(src_dir)/thesis.toc $(src_dir)/thesis.atoc $(src_dir)/thesis.bcf \
+		$(src_dir)/thesis.fdb_latexmk $(src_dir)/thesis.fdb_latexmk $(src_dir)/thesis.run.xml \
+		$(src_dir)/thesis.wrt
 
 format: $(main_file_path)
 	latexindent -w **/*.tex **/*.bib **/*.sty 1> /dev/null
