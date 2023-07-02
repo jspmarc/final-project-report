@@ -1,21 +1,25 @@
 \chapter{Implementasi dan Pengujian Sistem HILS}\label{chapter-4}
 
-\section{Implementasi Pustaka untuk Sistem HILS}
+\section{Implementasi Sistem HILS}
 
-Berdasarkan analisis dan rancangan solusi pada bab 3, dapat dimulai implementasi
-sistem HILS baru. Implementasi sistem HILS dimulai dengan eksplorasi ROS2 dan
-ZeroMQ. Kemudian dilanjutkan dengan pembuatan program \textit{proof of concept}
-menggunakan salah satu mekanisme komunikasi. Setelah \textit{proof of concept}
-diterima, dilanjutkan penulisan pustaka \textit{consumer} dan terakihir
-implementasi pustaka \textit{producer}.
+Berdasarkan analisis dan rancangan solusi pada Bab \ref{chapter-3}, dapat
+dimulai implementasi sistem HILS baru. Implementasi sistem HILS dimulai dengan
+eksplorasi ROS2 dan ZeroMQ. Kemudian dilanjutkan dengan pembuatan program
+\textit{proof of concept} (POC) menggunakan salah satu mekanisme komunikasi.
+POC dibuat untuk menunjukan bahwa mekanisme komunikasi yang digunakan dapat
+melakukan transfer data kamera sehingga CARLA berjalan dengan setidaknya 2 FPS.
+Setelah POC diterima oleh ketua tim simulasi, dilanjutkan penulisan pustaka
+\textit{consumer} dan terakihir implementasi pustaka \textit{producer}.
 
-Melalui proses eksplorasi dan penulisan \textit{proof of concept}, didapatkan
-metode komunikasi yang cocok adalah ZeroMQ. Oleh karena itu, proses implementasi
-dilanjutkan dengan fokus pada ZeroMQ.
+Dari proses eksplorasi dan implementasi POC, didapatkan metode komunikasi yang
+cocok adalah ZeroMQ. ROS 2 sendiri gagal pada tahap POC dikarenakan sistem
+operasi tidak kompatibel dengan ROS 2. Oleh karena itu, implementasi pustaka
+akan menggunakan ZeroMQ. Sedangkan, ROS 2 tidak akan digunakan lagi pada tugas
+akhir ini.
 
 Pustaka yang pertama ditulis adalah pustaka \textit{consumer} (sisi
 komputer AGX/RKB) karena program utama komputer SILS (pengguna
-\textit{producer}) belum selesai pada proses penulisan pustaka. Akibatnya,
+\textit{producer}) belum selesai pada saat proses penulisan pustaka. Akibatnya,
 pengujian pustaka \textit{consumer} lebih mudah dilakukan pada saat itu.
 
 Pustaka \textit{producer} dan \textit{consumer} akan memanfaatkan pemrograman
@@ -25,18 +29,17 @@ yang ditulis dapat digunakan untuk simulasi \textit{hardware-in-the-loop} jenis
 kendaraan otonom lainnya.
 
 Diagram kelas dari pustaka \textit{consumer} dapat dilihat pada gambar
-\ref{chapter-4-consumer-class-diagram}. Kelas (atau \textit{interface}) yang
-melakukan komunikasi adalah kelas abstrak \texttt{Endpoint}. Kelas tersebut
-dibuat abstrak dan diinstansiasi menggunakan pola pemrograman \textit{factory}.
-\texttt{Endpoint} dibuat abstrak agar apabila ingin ditambahkan metode
-komunikasi lain, hal tersebut dapat dilakukan dengan mudah. Contoh kasus
-penggunaan penambahan metode komunikasi lain adalah pengujian atau
-\textit{benchmarking} metode komunikasi. Selain itu, terdapat kelas yang akan
-menyediakan layanan untuk program GRS, yaitu \texttt{CarlaService}. Kelas ini
-mengabstraksi komunikasi dan deserialisasi ataupun serialisasi data dari
-\texttt{Endpoint}.
+\ref{chapter-4-consumer-class-diagram}. Kelas yang melakukan komunikasi adalah
+kelas abstrak \texttt{Endpoint}. Kelas tersebut dibuat abstrak dan diinstansiasi
+menggunakan pola pemrograman \textit{factory}. \texttt{Endpoint} dibuat abstrak
+agar apabila ingin ditambahkan metode komunikasi lain, hal tersebut dapat
+dilakukan dengan mudah. Contoh kasus penggunaan penambahan metode komunikasi
+lain adalah pengujian atau \textit{benchmarking} metode komunikasi. Selain itu,
+terdapat kelas yang akan menyediakan layanan untuk program GRS, yaitu
+\texttt{CarlaService}. Kelas ini mengabstraksi komunikasi dan deserialisasi
+ataupun serialisasi data dari \texttt{Endpoint}.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1.0\textwidth]{resources/chapter-4/consumer-class_diagram.png}
 	\caption{Diagram Kelas Pustaka \textit{Consumer}}
@@ -46,37 +49,45 @@ mengabstraksi komunikasi dan deserialisasi ataupun serialisasi data dari
 Setelah pustaka \textit{consumer} berhasil, implementasi dilanjutkan dengan
 pembuatan pustaka \textit{producer}. Diagram kelas pustaka \textit{producer}
 dapat dilihat pada gambar \ref{chapter-4-producer-class-diagram}. Pembuatan
-pustaka \textit{producer} juga mengikuti filosofi penulilsan pustaka
+pustaka \textit{producer} juga mengikuti filosofi penulisan pustaka
 \textit{consumer}. Pustaka dibuat seabstrak mungkin sehingga tidak
-\textit{coupled} dengan trem. Selain itu, antarmuka \texttt{Endpoint} juga
-dibuat abstrak agar dapat ditambahkan metode komunikasi yang lain. Perbedaan
-implementasi adalah pada kelas yang berinteraksi dengan program utama. Pada
-pustaka \textit{producer}, ada empat kelas yang berinteraksi dengan program
-utama, yaitu \texttt{CameraHandler}, \texttt{LidarHandler},
-\texttt{GnssHandler}, dan \texttt{ControlHandler}. Keempat kelas memiliki peran
-masing-masing dan terspesialisasi untuk menangani data atau sensor tertentu.
+\textit{coupled} dengan trem. Kelas \texttt{Endpoint} juga dibuat abstrak agar
+dapat ditambahkan metode komunikasi yang lain. Perbedaan implementasi adalah
+pada kelas yang berinteraksi dengan program utama. Pada pustaka
+\textit{producer}, ada empat kelas yang berinteraksi dengan program utama, yaitu
+\texttt{CameraHandler}, \texttt{LidarHandler}, \texttt{GnssHandler}, dan
+\texttt{ControlHandler}. Keempat kelas memiliki peran masing-masing dan
+terspesialisasi untuk menangani data dari sensor virtual CARLA tertentu.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1.0\textwidth]{resources/chapter-4/producer-class_diagram.png}
 	\caption{Diagram Kelas Pustaka \textit{Producer}}
 	\label{chapter-4-producer-class-diagram}
 \end{figure}
 
-\section{Metode Pengujian Implementasi dan Kinerja}
+Setelah kedua pustaka diimplementasi, dilakukan pengujian pustaka dengan program
+kecil. Lalu, kedua pustaka diintegrasi dengan kedua program utama. Setelah itu,
+dapat dianggap sistem implementasi HILS yang baru sudah diimplementasi dan
+pengujian HILS dapat dilakukan. Akan tetapi untuk kebutuhan tugas akhir, sebelum
+pengujian HILS dilakukan, akan dilaksanakan pengujian. Metode pengujian dan
+aspek sistem yang diuji akan dibahas pada Subbab
+\ref{chapter-4-testing-methodology}.
+
+\section{Metode Pengujian Implementasi dan
+  Kinerja}\label{chapter-4-testing-methodology}
 
 Pengujian akan menguji dua aspek, yaitu
 \begin{enumerate}
 	\item pengujian implementasi: meninjau kemampuan sistem HILS dalam mengirim,
-	      menerima, dan menggunakan data dari sensor, dan
+	      menerima, dan menggunakan data dari sensor; dan
 	\item pengujian kinerja: meninjau latensi yang dibutuhkan untuk mengirim
 	      data.
 \end{enumerate}
-Bagian ini akan membahas metode dan rencana pengujian kedua aspek tersebut.
-Pengujian yang dilakukan langsung menguji sistem dan tidak hanya menguji pustaka
-karena pada sistem HILS sudah termasuk pustaka yang dibuat dan hasil akhir
-tugas akhir ini adalah sebuah sistem HILS yang memanfaatkan suatu pustaka untuk
-komunikasinya.
+Bagian ini, Subbab \ref{chapter-4-testing-methodology}, akan membahas metode dan
+rencana pengujian kedua aspek tersebut. Pengujian dilakukan dengan menjalankan
+beberapa skenario simulasi lalu dibandingkan dengan kriteria kedua aspek. Sebuah
+aspek dinyatakan berhasil/lolos apabila semua kriterianya berhasil dicapai.
 
 \subsection{Pengujian Implementasi Sistem HILS}
 
