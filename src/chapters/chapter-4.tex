@@ -38,7 +38,6 @@ lain adalah pengujian atau \textit{benchmarking} metode komunikasi. Selain itu,
 terdapat kelas yang akan menyediakan layanan untuk program GRS, yaitu
 \texttt{CarlaService}. Kelas ini mengabstraksi komunikasi dan deserialisasi
 ataupun serialisasi data dari \texttt{Endpoint}.
-
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1.0\textwidth]{resources/chapter-4/consumer-class_diagram.png}
@@ -58,7 +57,6 @@ pada kelas yang berinteraksi dengan program utama. Pada pustaka
 \texttt{CameraHandler}, \texttt{LidarHandler}, \texttt{GnssHandler}, dan
 \texttt{ControlHandler}. Keempat kelas memiliki peran masing-masing dan
 terspesialisasi untuk menangani data dari sensor virtual CARLA tertentu.
-
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1.0\textwidth]{resources/chapter-4/producer-class_diagram.png}
@@ -93,18 +91,38 @@ aspek dinyatakan berhasil/lolos apabila semua kriterianya berhasil dicapai.
 
 Pengujian implementasi dilakukan dengan menjalankan program utama di komputer
 SILS dan komputer AGX/RKB. Kemudian, akan dilakukan observasi untuk memeriksa
-sistem HILS sudah memenuhi kriteria-kriteria berikut atau belum.
+sistem HILS sudah memenuhi kriteria-kriteria pada tabel
+\ref{chapter-4-tbl-impl-criteria} atau belum.
+\begin{table}[!htbp]
+	\begin{center}
+		\begin{tabular}{|l|l|}
+			\hline
+			\textbf{Kode} & \textbf{Deskripsi}                                     \\
+			\hline
+			IMPL-01       & Kecepatan trem di program GRS sesuai dengan bacaan
+			sensor                                                                 \\
+			              & GNSS.                                                  \\
+			\hline
+			IMPL-02       & Tampilan kamera di program GRS sesuai dengan yang
+			ada di                                                                 \\
+			              & program ScenarioRunner.                                \\
+			\hline
+			IMPL-03       & Tampilan lidar di program GRS menggambarkan
+			objek-objek                                                            \\
+			              & yang ada di sekitar trem.                              \\
+			\hline
+			IMPL-04       & Trem dapat maju atau berhenti tanpa masukan dari
+			papan ketik.                                                           \\
+			\hline
+			IMPL-05       & Trem maju ketika mendapatkan kendali maju dan berhenti \\
+			              & ketika mendapatkan kendali berhenti.                   \\
+			\hline
+		\end{tabular}
+	\end{center}
 
-\begin{enumerate}
-	\item kecepatan trem di program GRS sesuai dengan bacaan sensor GNSS,
-	\item tampilan kamera di program GRS sesuai dengan yang ada di program
-	      ScenarioRunner,
-	\item tampilan lidar di program GRS menggambarkan objek-objek yang ada di
-	      sekitar trem,
-	\item trem dapat maju atau berhenti tanpa masukan dari papan ketik, dan
-	\item trem maju ketika mendapatkan kendali maju dan berhenti ketika
-	      mendapatkan kendali berhenti.
-\end{enumerate}
+	\caption{kriteria pengujian implementasi sistem HILS}
+	\label{chapter-4-tbl-impl-criteria}
+\end{table}
 
 Kriteria ini selaras dengan tujuan tugas akhir yang kedua, yaitu
 mengimplementasikan sistem simulasi yang dapat mengirimkan, menerima, dan
@@ -112,12 +130,31 @@ memanfaatkan data dari berbagai jenis sensor.
 
 \subsection{Pengujian Kinerja Sistem HILS}
 
-Dari segi kinerja, hal yang ingin dipastikan adalah CARLA dapat berjalan dengan
-stabil dan kecepatan minimum 2 FPS (\textit{frames per second}). Hal tersebut
+Dari segi kinerja, hal yang ingin dipastikan adalah CARLA dapat berjalan stabil
+dengan kecepatan minimum 2 FPS (\textit{frames per second}). Hal tersebut
 diobservasi dengan menjalankan kedua program utama. Selain dari kecepatan
-simulator, aspek kinerja juga akan dinilai dari perbandingan dengan implementasi
-HILS sebelumnya. Latensi pengiriman data harus lebih rendah dibandingkan latensi
-implementasi HILS sebelumnya.
+simulator, aspek kinerja juga akan dinilai dari perbandingan dengan sistem HILS
+yang ada. Latensi pengiriman data harus lebih rendah dibandingkan latensi sistem
+HILS yang ada.
+
+Kedua kriteria tersebut dituangkan pada tabel \ref{chapter-4-tbl-perf-criteria}.
+\begin{table}[!htbp]
+	\begin{center}
+		\begin{tabular}{|l|l|}
+			\hline
+			\textbf{Kode} & \textbf{Deskripsi}                                       \\
+			\hline
+			PERF-01       & CARLA dapat berjalan dengan stabil dengan kecepatan      \\
+			              & minimum 2 FPS.                                           \\
+			\hline
+			PERF-02       & Latensi pengiriman data lebih rendah dibandingkan sistem \\
+			              & HILS yang ada.                                           \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\caption{kriteria pengujian kinerja sistem HILS}
+	\label{chapter-4-tbl-perf-criteria}
+\end{table}
 
 Untuk kriteria kedua, pengujian latensi implementasi HILS sebelumnya akan
 dilakukan secara teoretis. Hal ini karena implementasi HILS sebelumnya sudah
