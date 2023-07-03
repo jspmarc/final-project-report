@@ -14,7 +14,7 @@ build: $(main_file_path)
 
 clean:
 	rm -rf $(build_dir)/*
-	rm -rf $(src_dir)/**/bak*
+	rm -rf $(src_dir)/**/*.bak*
 	rm -rf $(src_dir)/thesis.aux $(src_dir)/thesis.bbl $(src_dir)/thesis.blg \
 		$(src_dir)/thesis.fls $(src_dir)/thesis.lof $(src_dir)/thesis.log \
 		$(src_dir)/thesis.out $(src_dir)/thesis.pdf $(src_dir)/thesis.synctex.gz \
