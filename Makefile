@@ -10,7 +10,7 @@ all: clean build
 
 build: $(main_file_path)
 	mkdir -p $(build_dir)
-	latexmk -pdf -bibtex -outdir=../$(build_dir) -cd $^
+	latexmk -xelatex -synctex=1 -interaction=nonstopmode -file-line-error -pdf -bibtex -outdir=../$(build_dir) -cd $^
 
 clean:
 	rm -rf $(build_dir)/*

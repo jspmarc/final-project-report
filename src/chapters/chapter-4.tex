@@ -107,20 +107,17 @@ sistem HILS sudah memenuhi kriteria-kriteria pada tabel
 			ada di                                                                 \\
 			              & program ScenarioRunner.                                \\
 			\hline
-			IMPL-03       & Tampilan lidar di program GRS menggambarkan
+			IMPL-03       & Tampilan lidar di program GRS menampikan
 			objek-objek                                                            \\
 			              & yang ada di sekitar trem.                              \\
 			\hline
-			IMPL-04       & Trem dapat maju atau berhenti tanpa masukan dari
-			papan ketik.                                                           \\
-			\hline
-			IMPL-05       & Trem maju ketika mendapatkan kendali maju dan berhenti \\
+			IMPL-04       & Trem maju ketika mendapatkan kendali maju dan berhenti \\
 			              & ketika mendapatkan kendali berhenti.                   \\
 			\hline
 		\end{tabular}
 	\end{center}
 
-	\caption{kriteria pengujian implementasi sistem HILS}
+	\caption{Kriteria pengujian implementasi sistem HILS}
 	\label{chapter-4-tbl-impl-criteria}
 \end{table}
 
@@ -151,7 +148,7 @@ HILS yang ada. Kedua kriteria tersebut dituangkan pada tabel
 			\hline
 		\end{tabular}
 	\end{center}
-	\caption{kriteria pengujian kinerja sistem HILS}
+	\caption{Kriteria pengujian kinerja sistem HILS}
 	\label{chapter-4-tbl-perf-criteria}
 \end{table}
 
@@ -198,32 +195,92 @@ mendeserialisasi (menerima) data sensor (tujuan kedua).
 
 \section{Hasil Pengujian}
 
-Penjabaran hasil pengujian aspek implementasi dan kinerja juga akan dipisah.
-Penjabaran dipisah karena hal yang diujikan dan dipastikan dari kedua aspek
-berbeda.
+Penjabaran hasil pengujian aspek implementasi dan kinerja akan dipisah.
+Penjabaran dipisah karena hal yang diujikan serta kriteria pengujian dari kedua
+aspek berbeda.
 
 \subsection{Hasil Pengujian Implementasi Sistem HILS}
 
 Dari pengujian yang dilakukan, ditemukan bahwa sistem HILS dapat memenuhi
-seluruh kriteria yang untuk pengujian implementasi sistem. Program GRS berhasil
-mengonsumsi data-data sensor GNSS, kamera, dan lidar. Kemudian, data ketiga
-sensor tersebut dapat ditampilkan dengan tepat pada program GRS.
+seluruh kriteria yang untuk pengujian implementasi sistem. Penjabaran
+ketercapaian kriteria pengujian implementasi sistem HILS dapat dilihat pada
+\ref{chapter-4-tbl-impl-criteria-result}. Selain itu, tampilan sistem HILS dan
+hasil implementasi dapat dilihat pada gambar \ref{chapter-4-fig-hils-running}.
+
+Pada gambar \ref{chapter-4-fig-hils-running}, dapat dilihat sistem simulasi
+sudah dijalankan di komputer AGX dan komputer SILS. Komputer SILS ditampilkan di
+komputer sebelah kiri menggunakan bantuan program AnyDesk. Seperti yang
+terlihat, sistem simulasi sudah berjalan dengan baik. Tampilan kamera di program
+ScenarioRunner (SILS) dan program GRS (AGX) sudah sama.
+
+\begin{table}[!htbp]
+	\begin{center}
+		\begin{tabular}{|l|l|l|}
+			\hline
+			\textbf{Kode} & \textbf{Deskripsi}                         & \textbf{Tercapai} \\
+			\hline
+			              & Kecepatan yang ditampilkan GUI pada        &                   \\
+			IMPL-01       & program ScenarioRunner dan pada program    & \checkmark        \\
+			              & GRS sudah sama.                            &                   \\
+			\hline
+			IMPL-02       & Frame kamera yang tampil pada GUI program  & \checkmark        \\
+			              & ScenarioRunner dan program GRS sudah sama. &                   \\
+			\hline
+			IMPL-03       & Data dari lidar sudah menampilkan objek    & \checkmark        \\
+			              & sekitar trem di GUI program GRS.           &                   \\
+			\hline
+			              & Trem di CARLA sudah dapat bergerak tanpa   &                   \\
+			IMPL-04       & butuh masukan di program ScenarioRunner    & \checkmark        \\
+			              & dan sesuai dengan luaran kendali dari      &                   \\
+			              & program GRS.                               &                   \\
+			\hline
+		\end{tabular}
+	\end{center}
+
+	\caption{Tercapainya pengujian implementasi atau tidak.}
+	\label{chapter-4-tbl-impl-criteria-result}
+\end{table}
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth,trim={10cm 10cm 0 10cm},clip]{resources/chapter-4/HILS-system-running.png}
+	\caption{Tampilan sistem HILS ketika dijalankan. Tampilan komputer SILS di
+		sebelah kiri, tampilan komputer AGX di sebelah kanan.}
+	\label{chapter-4-fig-hils-running}
+\end{figure}
 
 \subsection{Hasil Pengujian Kinerja Sistem HILS}
 
-Dari pengujian kinerja, ditemukan sistem gagal memiliki kinerja yang buruk
-apabila sensor lidar digunakan. Kecepatan simulator bahkan tidak mencapai 1 FPS.
+Hasil pengujian kinerja sistem HILS dapat dilihat pada tabel \ref{chapter-4-tbl-perf-criteria-result}.
 
-Akan tetapi ketika diujicobakan lagi tanpa sensor lidar, sistem memiliki kinerja
-yang sangat baik. Untungnya, ada versi dari program GRS yang tidak memanfaatkan
-sensor lidar sehingga program GRS versi tersebut digunakan untuk pengujian
-kinerja selanjutnya.
+\begin{table}[!htbp]
+	\begin{center}
+		\begin{tabular}{|l|l|l|}
+			\hline
+			\textbf{Kode} & \textbf{Deskripsi}                                  & \textbf{Tercapai} \\
+			\hline
+			              & Sistem HILS gagal memiliki kinerja yang baik ketika &                   \\
+			PERF-01       & sensor lidar digunakan, CARLA gagal mencapai        & X$^*$             \\
+			              & 2 FPS. Akan tetapi, tanpa sensor lidar bisa         &                   \\
+			              & mencapai lebih dari 10 FPS.                         &                   \\
+			\hline
+			              & Sistem HILS baru berhasil memiliki kinerja yang     &                   \\
+			PERF-02       & lebih baik daripada sistem HILS sebelumnya. Namun,  & \checkmark$^*$    \\
+			              & pelaksanaan pengujian PERF-02 dilakukan tanpa       &                   \\
+			              & sensor lidar, hanya sensor kamera dan GNSS.         &                   \\
+			\hline
+		\end{tabular}
+	\end{center}
 
-Ketika diujikan dengan program GRS tanpa lidar, latensi pengiriman data sensor
-GNSS dan kamera tidak terasa ketika simulasi dijalankan. Proses pengiriman data
-sensor kamera dan GNSS terasa instan ketika simulasi dijalankan.
+	\caption{Tercapainya pengujian implementasi atau tidak.}
+	\label{chapter-4-tbl-perf-criteria-result}
+\end{table}
 
-Lalu, ketika dibandingkan dengan sistem sebelumnya berikut adalah data-datanya.
+Kriteria PERF-01 gagal dipenuhi seluruhnya dikarenakan ketika menggunakan sensor
+lidar kinerja sistem buruk. Akan tetapi, ketika sensor lidar ``dihilangkan'',
+kinerja menjadi sangat baik bahkan CARLA dapat melebihi 10 FPS. Sedangkan
+kriteria PERF-02 hanya bisa dianggap berhasil dipenuhi dengan catatan pengujian
+PERF-02 tanpa sensor lidar.
 
 \section{Pembahasan}
 \blindtext
