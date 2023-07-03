@@ -135,9 +135,8 @@ dengan kecepatan minimum 2 FPS (\textit{frames per second}). Hal tersebut
 diobservasi dengan menjalankan kedua program utama. Selain dari kecepatan
 simulator, aspek kinerja juga akan dinilai dari perbandingan dengan sistem HILS
 yang ada. Latensi pengiriman data harus lebih rendah dibandingkan latensi sistem
-HILS yang ada.
-
-Kedua kriteria tersebut dituangkan pada tabel \ref{chapter-4-tbl-perf-criteria}.
+HILS yang ada. Kedua kriteria tersebut dituangkan pada tabel
+\ref{chapter-4-tbl-perf-criteria}.
 \begin{table}[!htbp]
 	\begin{center}
 		\begin{tabular}{|l|l|}
@@ -156,7 +155,31 @@ Kedua kriteria tersebut dituangkan pada tabel \ref{chapter-4-tbl-perf-criteria}.
 	\label{chapter-4-tbl-perf-criteria}
 \end{table}
 
-Untuk kriteria kedua, pengujian latensi implementasi HILS sebelumnya akan
+Pengujian kriteria PERF-02 akan menggunakan \textit{round-trip time} (RTT) yang
+dibagi dua untuk perkiraan latensi sistem. Rumus perhitungan RTT dapat dilihat
+pada persamaan \ref{chapter-4-eq-rtt}.
+\begin{equation}
+	\label{chapter-4-eq-rtt}
+	\text{RTT} = T_{e} - T_{s} - t_p
+\end{equation}
+
+Dengan keterangan persamaan sebagai berikut.
+\begin{table}[!h]
+	\begin{tabular}{l l}
+		RTT     & :     \textit{round-trip time} (dalam ms)             \\
+		$T_{e}$ & : \textit{timestamp} didapatkan kendali (dalam ms)    \\
+		$T_{s}$ & : \textit{timestamp} dikirimkan segmen pertama kamera
+		(dalam ms)                                                      \\
+		$t_p$   & :   waktu pemrosesan (dalam ms)
+	\end{tabular}
+\end{table}
+
+Untuk perhitungan RTT digunakan sensor kamera karena sensor kamera memiliki
+ukuran terbesar sehingga diharapkan dapat menjadi kasus terburuk untuk mekanisme
+komunikasi. Selain itu, dilakukan dari segmen pertama agar latensi yang dihitung
+adalah latensi keseluruhan pengiriman data kamera, tidak hanya sebuah segmen.
+
+Selain itu, pengujian kriteria PERF-02 untuk implementasi HILS sebelumnya akan
 dilakukan secara teoretis. Hal ini karena implementasi HILS sebelumnya sudah
 sulit untuk dijalankan. Selain itu, jenis data yang dikirim pada implementasi
 HILS sebelumnya juga berbeda. Pengujian secara teoretis ini dilakukan dengan
