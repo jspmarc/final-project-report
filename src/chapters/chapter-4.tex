@@ -78,9 +78,10 @@ aspek sistem yang diuji akan dibahas pada Subbab
 Pengujian akan menguji dua aspek, yaitu
 \begin{enumerate}
 	\item pengujian implementasi: meninjau kemampuan sistem HILS dalam mengirim,
-	      menerima, dan menggunakan data dari sensor; dan
+	      menerima, dan menggunakan data dari sensor virtual untuk
+	      mengendalikan trem; dan
 	\item pengujian kinerja: meninjau latensi yang dibutuhkan untuk mengirim
-	      data.
+	      data dan meninjau kecepatan simulator saat simulasi.
 \end{enumerate}
 Bagian ini, Subbab \ref{chapter-4-testing-methodology}, akan membahas metode dan
 rencana pengujian kedua aspek tersebut. Pengujian dilakukan dengan menjalankan
@@ -140,8 +141,9 @@ HILS yang ada. Kedua kriteria tersebut dituangkan pada tabel
 			\hline
 			\textbf{Kode} & \textbf{Deskripsi}                                       \\
 			\hline
-			PERF-01       & CARLA dapat berjalan dengan stabil dengan kecepatan      \\
-			              & minimum 2 FPS.                                           \\
+			              & CARLA dapat berjalan dengan stabil dengan kecepatan      \\
+			PERF-01       & minimum 2 FPS ketika simulasi menggunakan sensor         \\
+			              & kamera dan GNSS.                                         \\
 			\hline
 			PERF-02       & Latensi pengiriman data lebih rendah dibandingkan sistem \\
 			              & HILS yang ada.                                           \\
@@ -173,25 +175,33 @@ Dengan keterangan persamaan sebagai berikut.
 
 Untuk perhitungan RTT digunakan sensor kamera karena sensor kamera memiliki
 ukuran terbesar sehingga diharapkan dapat menjadi kasus terburuk untuk mekanisme
-komunikasi. Selain itu, dilakukan dari segmen pertama agar latensi yang dihitung
-adalah latensi keseluruhan pengiriman data kamera, tidak hanya sebuah segmen.
+komunikasi. Lalu, karena data kamera ukurannya besar, maka pengiriman data
+kamera harus dibagi menjadi beberapa segmen. Karena ada beberapa segmen,
+perhitungan RTT dilakukan dari segmen pertama agar latensi yang dihitung adalah
+latensi keseluruhan pengiriman data kamera, tidak hanya sebuah segmen.
 
-Selain itu, pengujian kriteria PERF-02 untuk implementasi HILS sebelumnya akan
-dilakukan secara teoretis. Hal ini karena implementasi HILS sebelumnya sudah
-sulit untuk dijalankan. Selain itu, jenis data yang dikirim pada implementasi
-HILS sebelumnya juga berbeda. Pengujian secara teoretis ini dilakukan dengan
-menulis ulang sebagian dari mekanisme komunikasi implementasi HILS sebelumnya.
-Bagian yang akan ditulis ulang adalah operasi pembacaan data dari \textit{file},
-penulisan dan pembacaan ke basis data, serta penulisan data sensor yang dibaca
-dari basis data ke \textit{file}. Dengan demikian, ada 4 operasi I/O dari
-implementasi HILS sebelumnya yang ditulis ulang untuk pengujian latensi secara
-teoretis.
+Selain itu, pada pengujian pengujian kriteria PERF-02 untuk implementasi HILS
+sebelumnya akan dilakukan secara teoretis. Hal ini karena implementasi HILS
+sebelumnya sudah sulit untuk dijalankan. Selain itu, jenis data yang dikirim
+pada implementasi HILS sebelumnya juga berbeda. Pengujian secara teoretis ini
+dilakukan dengan menulis ulang sebagian dari mekanisme komunikasi implementasi
+HILS sebelumnya. Bagian yang akan ditulis ulang adalah operasi pembacaan data
+dari \textit{file}, penulisan dan pembacaan ke basis data, serta penulisan data
+sensor yang dibaca dari basis data ke \textit{file}. Dengan demikian, ada 4
+operasi I/O dari implementasi HILS sebelumnya yang ditulis ulang untuk pengujian
+latensi secara teoretis.
 
 Apabila sistem HILS berhasil memenuhi kedua kriteria tersebut, sistem dapat
-dianggap sudah berhasil memenuhi kedua tujuan tugas akhir. Hal tersebut karena
-kinerja sistem akan dipengaruhi mekanisme komunikasi yang digunakan (tujuan
-pertama) dan juga cara pustaka di sistem HILS menserialisasi (mengirim) dan
-mendeserialisasi (menerima) data sensor (tujuan kedua).
+dianggap sudah berhasil memenuhi tujuan pertama tugas akhir. Tujuan yang
+dipenuhi adalah tujuan pertama tugas akhir, yaitu membuat sistem simulasi
+\textit{hardware-in-the-loop} yang cukup cepat.
+
+Pengujian kinerja sistem HILS baru akan menggunakan komputer RKB dan komputer
+SILS. Komputer RKB akan menjalankan program GRS dan komputer SILS akan
+menjalankan simulator CARLA serta program ScenarioRunner. Lalu, pengujian sistem
+HILS lama akan menggunakan komputer SILS saja. Artinya, pada implementasi ulang
+sistem HILS lama, tidak akan ada komunikasi antar-komputer dan semua proses
+terjadi secara lokal.
 
 \section{Hasil Pengujian}
 
@@ -251,23 +261,21 @@ ScenarioRunner (SILS) dan program GRS (AGX) sudah sama.
 
 \subsection{Hasil Pengujian Kinerja Sistem HILS}
 
-Hasil pengujian kinerja sistem HILS dapat dilihat pada tabel \ref{chapter-4-tbl-perf-criteria-result}.
-
+Hasil pengujian kinerja sistem HILS dapat dilihat pada Tabel \ref{chapter-4-tbl-perf-criteria-result}.
 \begin{table}[!htbp]
 	\begin{center}
 		\begin{tabular}{|l|l|l|}
 			\hline
-			\textbf{Kode} & \textbf{Deskripsi}                                  & \textbf{Tercapai} \\
+			\textbf{Kode} & \textbf{Deskripsi}                                 & \textbf{Tercapai} \\
 			\hline
-			              & Sistem HILS gagal memiliki kinerja yang baik ketika &                   \\
-			PERF-01       & sensor lidar digunakan, CARLA gagal mencapai        & X$^*$             \\
-			              & 2 FPS. Akan tetapi, tanpa sensor lidar bisa         &                   \\
-			              & mencapai lebih dari 10 FPS.                         &                   \\
+			              & Sistem HILS berhasil memiliki kinerja yang baik    &                   \\
+			              & ketika hanya sensor kamera dan GNSS yang           &                   \\
+			PERF-01       & digunakan. CARLA berhasil mendapatkan lebih        & \checkmark$^*$    \\
+			              & dari 10 FPS. Akan tetapi, apabila ada sensor lidar &                   \\
+			              & lidar CARLA gagal mencapai 2 FPS.                  &                   \\
 			\hline
-			              & Sistem HILS baru berhasil memiliki kinerja yang     &                   \\
-			PERF-02       & lebih baik daripada sistem HILS sebelumnya. Namun,  & \checkmark$^*$    \\
-			              & pelaksanaan pengujian PERF-02 dilakukan tanpa       &                   \\
-			              & sensor lidar, hanya sensor kamera dan GNSS.         &                   \\
+			PERF-02       & Sistem HILS baru berhasil memiliki kinerja yang    & \checkmark        \\
+			              & lebih baik daripada sistem HILS sebelumnya.        &                   \\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -276,13 +284,78 @@ Hasil pengujian kinerja sistem HILS dapat dilihat pada tabel \ref{chapter-4-tbl-
 	\label{chapter-4-tbl-perf-criteria-result}
 \end{table}
 
-Kriteria PERF-01 gagal dipenuhi seluruhnya dikarenakan ketika menggunakan sensor
-lidar kinerja sistem buruk. Akan tetapi, ketika sensor lidar ``dihilangkan,''
-kinerja menjadi sangat baik bahkan CARLA dapat melebihi 10 FPS. Sedangkan
-kriteria PERF-02 bisa dianggap berhasil dipenuhi dengan catatan pengujian
-PERF-02 tanpa sensor lidar.
+Kriteria PERF-01 berhasil dipenuhi karena ketika menggunakan sensor kamera dan
+GNSS kinerja sistem sangat baik. Akan tetapi, jika duji dengan sensor lidar
+sistem HILS tidak memiliki kinerja yang baik. Simulator CARLA gagal mendapatkan
+2 FPS. Kendati demikian, PERF-01 dapat dianggap berhasil karena pengujian cukup
+dengan sensor kamera dan  sensor GNSS.
 
-Data pengujian kinerja dapat dilihat pada Lampiran
+Kriteria PERF-02 juga berhasil dilewati. Dapat dilihat pada Tabel
+\ref{chapter-4-tbl-perf-result-statistics}, implementasi HILS baru memiliki
+latensi setidaknya 2,5 kali lebih cepat dari implementasi teoretis HILS
+sebelumnya. Selain itu, persebaran data latensi kedua implementasi sistem HILS
+dapat dilihat pada Gambar \ref{chapter-4-fig-perf-result-old-hils} dan Gambar
+\ref{chapter-4-fig-perf-result-new-hils}.
+\begin{table}[!htbp]
+	\begin{center}
+		\begin{tabular}{|l|l|l|}
+			\hline
+			                   & Jumlah data    & 1.000     \\
+			\cline{2-3}
+			                   & Rata-rata (ms) & 28,4245   \\
+			\cline{2-3}
+			                   & Std (ms)       & 4,68      \\
+			\cline{2-3}
+			\textbf{HILS lama} & Min (ms)       & 16        \\
+			\cline{2-3}
+			(teoretis)         & $Q_1$ (ms)     & 25        \\
+			\cline{2-3}
+			                   & $Q_2$ (ms)     & 28        \\
+			\cline{2-3}
+			                   & $Q_3$ (ms)     & 31        \\
+			\cline{2-3}
+			                   & Max (ms)       & 45,5      \\
+			\cline{2-3}
+			\hline
+
+			\hline
+			                   & Jumlah data    & 16.891    \\
+			\cline{2-3}
+			                   & Rata-rata (ms) & 10,989965 \\
+			\cline{2-3}
+			                   & Std (ms)       & 2,248782  \\
+			\cline{2-3}
+			\textbf{HILS baru} & Min (ms)       & 4,5       \\
+			\cline{2-3}
+			                   & $Q_1$ (ms)     & 10        \\
+			\cline{2-3}
+			                   & $Q_2$ (ms)     & 11        \\
+			\cline{2-3}
+			                   & $Q_3$ (ms)     & 12,5      \\
+			\cline{2-3}
+			                   & Max (ms)       & 19,5      \\
+			\cline{2-3}
+			\hline
+		\end{tabular}
+	\end{center}
+
+	\caption{Statistik data hasil pengujian kinerja}
+	\label{chapter-4-tbl-perf-result-statistics}
+\end{table}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth]{resources/chapter-4/old-hils-data.png}
+	\caption{Persebaran data latensi untuk implementasi teoretis HILS lama}
+	\label{chapter-4-fig-perf-result-old-hils}
+\end{figure}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth]{resources/chapter-4/new-hils-data.png}
+	\caption{Persebaran data latensi untuk implementasi HILS baru}
+	\label{chapter-4-fig-perf-result-new-hils}
+\end{figure}
+
+Data lengkap hasil pengujian kinerja dapat dilihat pada Lampiran
 \ref{appendix-performance-data}. Selain itu, program Jupyter Notebook yang
 digunakan untuk pemrosesan data kinerja dapat dilihat pada lampiran
 \ref{appendix-algoritma-monitoring}.

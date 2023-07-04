@@ -106,10 +106,10 @@ memberikan fungsionalitas bantuan mengemudi pada kendaraan bermotor.
 	\caption{NVIDIA Pegasus \parencite{trilaksono_laporanRispro}}
 \end{figure}
 
-Mengutip dari \parencite{oh_2017}, NVIDIA Pegasus adalah komputer yang mendukung
-pengemudian \textit{autonomous} secara penuh. Artinya, NVIDIA Pegasus dapat
-digunakan untuk membuat sebuah kendaraan bermotor menjadi \textit{autonomous
-	vehicle} jika sensor dan algoritma yang digunakan tepat.
+NVIDIA Pegasus adalah komputer yang mendukung pengemudian \textit{autonomous}
+secara penuh \parencite{oh_2017}. Artinya, NVIDIA Pegasus dapat digunakan untuk
+membuat sebuah kendaraan bermotor menjadi \textit{autonomous vehicle} jika
+sensor dan algoritma yang digunakan tepat.
 
 NVIDIA Pegasus menggunakan 2 GPU dengan arsitektur post-Volta dan 2 SoC NVIDIA
 Xavier. Kombinasi CPU dan GPU ini dapat menghasilkan 320 TOPS (\textit{trillion
@@ -288,10 +288,3 @@ CARLA tidak berbeda jauh dengan keadaan dunia nyata. Selain itu, didapatkan juga
 waktu respons pada sistem simulasi lebih cepat dari dunia nyata. Sehingga, dapat
 disimpulkan bahwa simulasi HILS dapat dilakukan dan implementasi dengan
 menggunakan ROS sudah memberikan hasil yang baik.
-
-Sayangnya, terdapat kendala teknis sehingga pada tugas akhir ini tidak dapat
-menggunakan ROS. Kendala teknis itu adalah perbedaan versi sistem operasi yang
-menyebabkan versi ROS di komputer AGX/RKB dan komputer SILS tidak saling
-kompatibel. Pada komputer AGX/RKB, sistem operasinya adalah Ubuntu 18.04 yang
-menggunakan ROS 1 sedangkan komputer SILS menggunakan Ubuntu 20.04 yang
-menggunakan ROS 2.
