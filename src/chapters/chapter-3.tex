@@ -67,7 +67,7 @@ sinkronis, yaitu
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=1.0\textwidth]{resources/chapter-3/sequence-diagram-old-hils-process.png}
+	\includegraphics[width=0.9\textwidth]{resources/chapter-3/sequence-diagram-old-hils-process.png}
 	\caption{Proses pengiriman data CARLA \textit{measurement} kondisi saat ini}
 	\label{chapter-3-sequence-diagram-old-hils}
 \end{figure}
@@ -110,21 +110,120 @@ memiliki \textit{coupling} yang rendah dengan kedua program utama, kohesinya
 juga rendah. Karena kedua alasan itulah dinilai alternatif kedua akan lebih
 mudah untuk dilaksanakan.
 
-Selanjutnya adalah pemilihan mekanisme komunikasi. Berdasarkan studi literatur,
-terdapat dua alternatif untuk mekanisme komunikasi, yaitu ROS dan ZeroMQ. ROS
-sendiri adalah salah satu kerangka kerja dan mekanisme komunikasi yang sering
-digunakan untuk kebutuhan simulasi robot. Akan tetapi, karena kendala teknis ROS
-tidak dapat dipilih. Oleh karena itu, dari pilihan antara ROS dan ZeroMQ,
-dipilih ZeroMQ.
+Sistem HILS yang akan ditulis ulang memiliki kebutuhan-kebutuhan fungsional dan
+non-fungsional. Kebutuhan fungsional dapat dilihat pada Tabel
+\ref{chapter-3-tbl-functional-requirement}. Selain itu, kebutuhan non-fungsional
+dapat dilihat pada Tabel \ref{chapter-3-tbl-non-functional-requirement}.
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Kode} & \textbf{Deskripsi}                                            \\
+		\hline
+		RF-01         & Program GRS dapat menggunakan data dari sensor kamera virtual \\
+		              & CARLA.                                                        \\
+		\hline
+		RF-02         & Program GRS dapat menggunakan data dari sensor lidar virtual  \\
+		              & CARLA.                                                        \\
+		\hline
+		RF-03         & Program GRS dapat menggunakan data dari sensor GNSS virtual   \\
+		              & CARLA.                                                        \\
+		\hline
+		RF-04         & Program ScenarioRunner dapat menggunakan kendali dari program \\
+		              & GRS untuk mengendalikan trem di CARLA.                        \\
+		\hline
+	\end{tabular}
+	\label{chapter-3-tbl-functional-requirement}
+	\caption{Kebutuhan fungsional sistem simulasi HILS.}
+\end{table}
 
-Kendala teknis yang menyebabkan ROS tidak dapat digunakan adalah ketidakcocokan
-antara versi ROS di komputer SILS dengan komputer AGX/RKB. Komputer SILS
-menggunakan sistem operasi Ubuntu 20.04 yang menggunakan ROS 2, sedangkan
-komputer AGX/RKB menggunakan sistem operasi Ubuntu 18.04 yang menggunakan ROS 1.
-ROS 2 dan ROS 1 memiliki arsitektur komunikasi yang berbeda, hal ini menyebabkan
-ketidakcocokan antara ROS 2 dengan ROS 1. Meskipun ada program untuk
-menjembatani ROS 2 dan ROS 1, hal tersebut dihindari karena adanya kemungkinan
-penambahan latensi.
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{|l|l|}
+		\hline
+		\textbf{Kode} & \textbf{Deskripsi}                                            \\
+		\hline
+		RN-01         & Sistem simulasi dapat menjalankan simulasi sehingga kecepatan \\
+		              & CARLA minimal 2 FPS.                                          \\
+		\hline
+	\end{tabular}
+	\label{chapter-3-tbl-non-functional-requirement}
+	\caption{Kebutuhan non-fungsional sistem simulasi HILS.}
+\end{table}
+
+Lalu karena dilakukan penulisan ulang sistem HILS, mekanisme komunikasi yang
+digunakan juga sekalian diubah. Perubahan ini bertujuan untuk menghilangkan
+\textit{overhead} yang muncul dari deserialisasi pesan HTTP. Pesan HTTP
+mengandung \textit{header} pada pesan \textit{request} dan respon serta kode
+status pada pesan respon. Kedua hal ini tidak digunakan pada komunikasi sistem
+HILS yang akan ditulis ulang. Oleh karena itu, proses deserialisasi kedua hal
+tersebut mubazir dan menggunakan \textit{resource} komputer secara kurang
+efektif.
+
+Pemilihan mekanisme komunikasi sendiri didasarkan pada studi literatur.
+Terdapat dua alternatif untuk mekanisme komunikasi, yaitu ROS 2 dan ZeroMQ.
+ROS 2 sendiri adalah sebuah kerangka kerja yang sering digunakan untuk kebutuhan
+simulasi robotik. ROS 2 sendiri tidak hanya mengandung ``alat'' komunikasi,
+namun memiliki beberapa kakas lain. Sedangkan untuk komunikasinya, ROS 2
+fleksibel karena bisa menggunakan pesan ataupun dengan RPC (\textit{remote
+	procedure call}). Sedangkan ZeroMQ adalah sebuah pustaka yang dibuat untuk
+memberikan peningkatan (\textit{upgrade}) di atas \textit{socket}
+tradisional. Komunikasi dengan \textit{socket} dipermudah oleh ZeroMQ karena
+abstraksi yang diberikan oleh ZeroMQ. Tidak seperti ROS 2, ZeroMQ menggunakan
+pesan untuk komunikasinya. Namun, ada banyak skema komunikasi, misalnya
+\textit{publish-subscribe} dan \textit{push-pull}. Beberapa keunggulan dan
+kekurangan ROS 2 serta ZeroMQ sendiri dapat dilihat pada Tabel
+\ref{chapter-3-tbl-ros2-vs-zmq}.
+
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{| r | l | l |}
+		\hline
+		                    & \textbf{ROS 2}                     & \textbf{ZeroMQ}                                    \\
+		\hline
+		\textbf{Kelebihan}  & \textit{Tried and tested}          & Sederhana karena hanya                             \\
+		                    & untuk kebutuhan aplikasi           & pustaka yang                                       \\
+		                    & robotik.                           & mengabstraksikan \textit{socket}.                  \\
+		\cline{2-3}
+		                    & Adanya dukungan secara             & Dapat menggunakan TCP                              \\
+		                    & bawaan untuk format                & secara langsung sebagai                            \\
+		                    & data beberapa sensor               & lapisan transpor sehingga         \textit{socket}. \\
+		                    & seperti kamera dan                 & mengurangi \textit{overhead}                       \\
+		                    & lidar.                             & abstraksi.                                         \\
+		\cline{2-3}
+		                    & Adanya dukungan untuk              & Memberikan fleksibilitas                           \\
+		                    & QoS pesan.                         & dalam menentukan skema                             \\
+		                    &                                    & pertukaran pesan.                                  \\
+		\hline
+		\textbf{Kekurangan} & Adanya \textit{overhead} abstraksi & Pesan dan cara                                     \\
+		                    & karena menggunakan DDS             & serialisasi maupun                                 \\
+		                    & untuk lapisan transpor.            & deserialisasi pesan harus                          \\
+		                    &                                    & didefinisikan dan                                  \\
+		                    &                                    & diimplementasikan manual                           \\
+		                    &                                    & oleh pengguna ZeroMQ.                              \\
+		\cline{2-3}
+		                    & Tidak mendukung sistem             & -                                                  \\
+		                    & operasi Ubuntu 18.04.              &                                                    \\
+		\hline
+	\end{tabular}
+	\label{chapter-3-tbl-ros2-vs-zmq}
+	\caption{Perbandingan keunggulan dan kelemahan ROS 2 dan ZeroMQ.}
+\end{table}
+
+Salah satu kekurangan ROS 2 adalah ROS 2 tidak dapat digunakan pada Ubuntu Linux
+18.04. Ubuntu 18.04 hanya dapat menggunakan ROS 1. Sayangnya, komputer AGX
+menggunakan sistem operasi Ubuntu 18.04 yang dimodifikasi dan RKB juga
+menggunakan Ubuntu 18.04. Akibatnya, ROS 2 tidak dapat digunakan pada lingkungan
+sistem HILS. Sebenarnya ada jembatan antara ROS 2 dan ROS 1, akan tetapi hal
+ini akan menambahkan \textit{overhead} karena perlu adanya komunikasi dengan
+jembatan serta perlu konversi pesan antara ROS 2 dan ROS 1.
+
+Oleh karena itu, ZeroMQ dipilih untuk menjadi mekanisme komunikasi sistem HILS
+yang baru. Keputusan ini dibuat tidak hanya dengan menimbang kekurangan
+inkompatibilitas ROS 2 dengan Ubuntu 18.04, akan tetapi keunggulan ZeroMQ yang
+memiliki \textit{overhead} abstraksi lebih kecil juga menjadi poin penting dalam
+pemilihan ZeroMQ. Hal ini karena agar kinerja sistem HILS sebaik mungkin,
+dampak buruk terhadap kinerja pada sisi komunikasi harus seminimal mungkin.
 
 \section{Rancangan Solusi}
 
@@ -153,7 +252,7 @@ mendukung berbagai jenis sensor, pustaka juga akan memiliki fitur
 \textit{parsing}, serialisasi, dan deserialisasi untuk sensor GNSS, kamera, dan
 lidar.
 
-API yang disediakan oleh pustaka ``producer'' akan langsung mengkonsumsi data
+API yang disediakan oleh pustaka ``producer'' akan langsung mengonsumsi data
 sensor dari CARLA sehingga pengguna pustaka tidak perlu melakukan modifikasi
 apapun pada data sensor CARLA. Begitu juga pada pustaka ``consumer''. Balikan
 API akan disesuikan sehingga pengguna pustaka dapat langsung menggunakan data

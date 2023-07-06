@@ -259,12 +259,13 @@ satu sama lain membentuk sebuah jaringan \textit{peer-to-peer}. Sebuah
 hanya pada satu hal. Dalam kasus ini, ROS mirip dengan \textit{service}/layanan
 pada arsitektur \textit{microservice}.
 
-ROS2 didasarkan pada DDS untuk komunikasinya. DDS secara bawaan mendukung
-komunikasi dengan pola \textit{publisher}-\textit{subscriber} dengan QoS
-(\textit{quality of service}). Komunikasi dengan \textit{topic} memanfaatkan
-pola tersebut. Lalu, untuk pola \textit{service}, digunakan perpanjangan dari
-DDS, yaitu DDS-RPC. DDS sendiri sebenarnya hanya standar dengan implementasi
-yang berbeda-beda. Secara bawaan, ROS 2 menggunakan Fast DDS dari eProsima.
+Mekanisme ROS2 berjalan di atas DDS (\textit{data distribution service}) untuk
+komunikasinya. DDS secara bawaan mendukung komunikasi dengan pola
+\textit{publisher}-\textit{subscriber} dengan QoS (\textit{quality of service}).
+Komunikasi dengan \textit{topic} memanfaatkan pola tersebut. Lalu, untuk pola
+\textit{service}, digunakan perpanjangan dari DDS, yaitu DDS-RPC. DDS sendiri
+sebenarnya hanya standar dengan implementasi yang berbeda-beda. Secara bawaan,
+ROS 2 menggunakan Fast DDS dari eProsima.
 
 \section{Penelitian Terkait -- \textit{Hardware-in-the-Loop Autonomous Driving Simulation Without
 	  Real-Time Constraints}}\label{chapter-2-section-related-works}
