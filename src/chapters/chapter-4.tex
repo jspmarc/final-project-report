@@ -83,10 +83,65 @@ Pengujian akan menguji dua aspek, yaitu
 	\item pengujian kinerja: meninjau latensi yang dibutuhkan untuk mengirim
 	      data dan meninjau kecepatan simulator saat simulasi.
 \end{enumerate}
-Bagian ini, Subbab \ref{chapter-4-testing-methodology}, akan membahas metode dan
-rencana pengujian kedua aspek tersebut. Pengujian dilakukan dengan menjalankan
-beberapa skenario simulasi lalu dibandingkan dengan kriteria kedua aspek. Sebuah
-aspek dinyatakan berhasil/lolos apabila semua kriterianya berhasil dicapai.
+Subbab \ref{chapter-4-testing-methodology}, akan membahas metode dan rencana
+pengujian kedua aspek tersebut. Selain itu, akan dibahas juga lingkungan
+pengujian. Pengujian dilakukan dengan menjalankan beberapa skenario simulasi
+lalu dibandingkan dengan kriteria kedua aspek. Sebuah aspek dinyatakan berhasil
+apabila semua kriterianya berhasil dicapai.
+
+\subsection{Lingkungan Pengujian}
+
+Pengujian sistem HILS dilakukan pada laboratorium sistem kendali di Lab
+Teknologi VIII ITB. Komputer yang akan digunakan pada lab tersebut ada tiga,
+yaitu komputer AGX, komputer RKB, dan komputer SILS. Komputer AGX adalah NVIDIA
+Drive PX Pegasus. Spesifikasi komputer AGX dapat dilihat pada Subbab
+\ref{chapter-2-section-pegasus}. Sedangkan spesifikasi komputer SILS dan RKB
+adalah sebagai berikut (Tabel \ref{chapter-4-tbl-environment-specs}).
+
+\begin{table}[!htbp]
+	\centering
+	\begin{tabular}{|r|l|l|}
+		\hline
+		              & CPU & i9-10920X 12C/24T 3.50GHz  \\
+		\cline{2-3}
+		\textbf{SILS} & RAM & 128GB                      \\
+		\cline{2-3}
+		              & GPU & 2x NVIDIA GeForce RTX 3090 \\
+		\cline{2-3}
+		              & OS  & Ubuntu Linux 20.04         \\
+		\hline
+		              & CPU & i7-8700 6C/12T 3.20GHz     \\
+		\cline{2-3}
+		\textbf{RKB}  & RAM & 16GB                       \\
+		\cline{2-3}
+		              & GPU & NVIDIA GeForce RTX 2070    \\
+		\cline{2-3}
+		              & OS  & Ubuntu Linux 18.04         \\
+		\hline
+	\end{tabular}
+	\label{chapter-4-tbl-environment-specs}
+	\caption{Spesifikasi komputer SILS dan komputer RKB.}
+\end{table}
+
+Untuk pengujian implementasi, akan dilakukan pada komputer AGX dan komputer
+SILS. Komputer AGX akan menjalankan program GRS dan komputer SILS akan
+menjalankan program ScenarioRunner. Sedangkan pada pengujian kinerja komputer
+yang akan digunakan adalah komputer RKB. Komputer RKB akan menggantikan fungsi
+komputer AGX.
+
+Pada pengujian kinerja, kedua komputer (komputer RKB dan komputer SILS)
+terhubung pada sebuah jaringan lokal (LAN). Topologi jaringan dapat dilihat di
+Gambar \ref{chapter-4-fig-topology}. Komputer SILS dan komputer RKB terhubung
+melalu sebuah \textit{switch} HPE JH019A. Komputer SILS terhubung ke
+\textit{switch} menggunakan sebuah cabel Cat5. Sedangkan komputer RKB terhubung
+ke \textit{switch} menggunakan sebuah cabel Cat6 bermerk Commscope 1071E.
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth]{resources/chapter-4/test-environment-network-topology.png}
+	\caption{Topologi lingkungan pengujian}
+	\label{chapter-4-fig-topology}
+\end{figure}
 
 \subsection{Pengujian Implementasi Sistem HILS}
 
@@ -94,6 +149,7 @@ Pengujian implementasi dilakukan dengan menjalankan program utama di komputer
 SILS dan komputer AGX/RKB. Kemudian, akan dilakukan observasi untuk memeriksa
 sistem HILS sudah memenuhi kriteria-kriteria pada tabel
 \ref{chapter-4-tbl-impl-criteria} atau belum.
+
 \begin{table}[!htbp]
 	\begin{center}
 		\begin{tabular}{|l|l|}
@@ -266,16 +322,16 @@ Hasil pengujian kinerja sistem HILS dapat dilihat pada Tabel \ref{chapter-4-tbl-
 	\begin{center}
 		\begin{tabular}{|l|l|l|}
 			\hline
-			\textbf{Kode} & \textbf{Deskripsi}                                 & \textbf{Tercapai} \\
+			\textbf{Kode} & \textbf{Deskripsi}                              & \textbf{Tercapai} \\
 			\hline
-			              & Sistem HILS berhasil memiliki kinerja yang baik    &                   \\
-			              & ketika hanya sensor kamera dan GNSS yang           &                   \\
-			PERF-01       & digunakan. CARLA berhasil mendapatkan lebih        & \checkmark$^*$    \\
-			              & dari 10 FPS. Akan tetapi, apabila ada sensor lidar &                   \\
-			              & lidar CARLA gagal mencapai 2 FPS.                  &                   \\
+			              & Sistem HILS berhasil memiliki kinerja yang baik &                   \\
+			              & ketika hanya sensor kamera dan GNSS yang        &                   \\
+			PERF-01       & digunakan. CARLA berhasil mendapatkan lebih     & \checkmark$^*$    \\
+			              & dari 10 FPS. Akan tetapi, apabila ada sensor    &                   \\
+			              & lidar CARLA gagal mencapai 2 FPS.               &                   \\
 			\hline
-			PERF-02       & Sistem HILS baru berhasil memiliki kinerja yang    & \checkmark        \\
-			              & lebih baik daripada sistem HILS sebelumnya.        &                   \\
+			PERF-02       & Sistem HILS baru berhasil memiliki kinerja yang & \checkmark        \\
+			              & lebih baik daripada sistem HILS sebelumnya.     &                   \\
 			\hline
 		\end{tabular}
 	\end{center}
