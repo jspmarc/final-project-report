@@ -69,12 +69,24 @@ ataupun pejalan kaki. NPC bergerak berdasarkan suatu aturan yang sudah
 ditentukan, misalnya mengikuti suatu pemilihan keputusan ketika di lampu lalu
 lintas.
 
-Selain model, CARLA juga menyediakan berbagai sensor untuk menyimulasikan
-pengambilan data. Sensor-sensor tersebut dapat ``ditempelkan'' ke kendaraan
-simulasi. Contoh sensor yang tersedia adalah kamera dan LIDAR (\textit{Light
-	Detection and Ranging}), dan lain-lain. Selain data dari sensor, bisa didapatkan
-juga data seperti kecepatan dan percepatan (mirip dengan data dari GPS) dari
-kendaraan.
+Pada CARLA, model-model tersebut dapat diinstansiasi menjadi objek dan agen.
+Agen adalah objek yang dapat bergerak, baik itu secara otomatis maupun
+dikendalikan pengguna CARLA. Agen yang dapat dikendalikan pengguna CARLA
+sering disebut \textit{ego vehicle}. Selain itu, agen dapat dikendalikan
+dengan memberikan kendali seperti gas, rem, dan belokan setir.
+
+CARLA juga menyediakan berbagai sensor virtual untuk menyimulasikan pengambilan
+data. Sensor-sensor tersebut dapat ``ditempelkan'' ke \textit{ego vehicle}.
+Contoh sensor yang tersedia adalah kamera dan lidar (\textit{Light Detection and
+	Ranging}). Selain data dari sensor, keadaan kendaraan juga bisa didapatkan
+dari CARLA \textit{measurement}. Data CARLA \textit{measurement} ini mengandung
+data posisi x dan y agen, kecepatan, dan jarak relatif agen ke agen/objek lain.
+
+Proses \textit{spawning} model menjadi agen/objek, pembacaan data sensor virtual,
+pembacaan data CARLA \textit{measurement} dilakukan menggunakan sebuah API. API
+ini berbentuk \textit{library} dan menyediakan beberapa fungsi agar
+\textit{programmer} dapat memanipulasi agen serta dunia CARLA. Misalnya untuk
+mengubah kendali dari agen ataupun
 
 CARLA bekerja dengan arsitektur server-klien. Arsitektur ini memungkinkan dunia
 yang dinamis dan antarmuka yang sederhana antara dunia dan agen yang
@@ -85,13 +97,6 @@ dapat dikirimkan klien digunakan untuk mengendalikan kendaraan yang
 disimulasikan. Sedangkan ``perintah meta'' digunakan untuk mengatur lingkungan
 simulasi, misalnya cuaca, sensor yang digunakan, dan jumlah kendaraan/pejalan
 kaki NPC.
-
-Pada sistem simulasi tugas akhir, komponen klien dan server CARLA akan
-dijalankan pada server SILS. Data yang didapatkan dari CARLA akan dikirim ke
-server AGX/RKB untuk dikonsumi oleh program GRS (kendali). Klien CARLA akan
-berkomunikasi dengan sebuah \textit{agent} dengan sebuah API Python sehingga
-\textit{agent} dapat mendapatkan data dari CARLA dan mengirimkannya ke komputer
-RKB/AGX.
 
 \section{NVIDIA Pegasus}\label{chapter-2-section-pegasus}
 
