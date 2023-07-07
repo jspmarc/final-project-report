@@ -78,7 +78,7 @@
 	{\bfseries}
 	{Lampiran \thecontentslabel.\quad}
 	{}
-	{\hfill\contentspage}
+	{\textmd{\dotfill}\contentspage}
 
 	\titleformat{\chapter}[block]
 	{\bfseries}
@@ -93,10 +93,16 @@
 \definecolor{eclipseStrings}{RGB}{42,0.0,255}
 \definecolor{eclipseKeywords}{RGB}{127,0,85}
 
-% Hilangkan titik pada toc
+% Setting titik pada TOC
+\contentsmargin{0pt}
+\renewcommand\contentspage{\thecontentspage}
+
 \makeatletter
-\renewcommand{\@dotsep}{10000}
+\renewcommand*{\@dotsep}{1.5}
 \makeatother
+
+\dottedcontents{section}[2.3em]{}{2.3em}{5pt}
+\dottedcontents{subsection}[5.5em]{}{3.2em}{5pt}
 
 % Setel title pada chapter-chapter di toc, lof, lot
 \titlecontents{chapter}
@@ -104,19 +110,21 @@
 {\bfseries}
 {\MakeUppercase{Bab} \thecontentslabel\quad\uppercase}
 {}
-{\hfill\contentspage}
+{\textmd{\dotfill}\contentspage}
+
 \titlecontents{figure}
 [0pt]
 {}
 {Gambar \thecontentslabel.\quad}
 {}
-{\hfill\contentspage}
+{\dotfill\contentspage}
+
 \titlecontents{table}
 [0pt]
 {}
 {Tabel \thecontentslabel.\quad}
 {}
-{\hfill\contentspage}
+{\dotfill\contentspage}
 
 % Masukin Daftar Pustaka ke toc
 \let\originalprintbibliography\printbibliography
@@ -196,7 +204,7 @@
 		{9}{{{\color{numb}9}}}{1}
 }
 
-% Setting daftar kode (?) TODO: konfirmasi boleh ada snippet kode atau ngga
+% Setting daftar kode
 \renewcommand{\lstlistingname}{Kode}
 \renewcommand{\lstlistlistingname}{\uppercase{Daftar Kode}}
 
