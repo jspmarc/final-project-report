@@ -35,12 +35,14 @@ CARLA (\textit{Car Learning to Act}) adalah perangkat lunak sumber terbuka
 (\textit{open source}) yang memiliki tujuan utama menyimulasikan kendaraan
 \textit{autonomous}. CARLA dibangun dari nol untuk mampu melakukan pelatihan,
 pembuatan prototipe, dan validasi model kemudi otonom, termasuk persepsi dan
-kontrol dari model tersebut \parencite{dos_carla}.
+kontrol dari model tersebut \parencite{dos_carla}. Antarmuka CARLA dapat dilihat
+pada Gambar \ref{chapter-2-fig-carla-ui}.
 
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.5\textwidth]{resources/chapter-2/CARLA-cropped.png}
 	\caption{Antarmuka simulator CARLA}
+	\label{chapter-2-fig-carla-ui}
 \end{figure}
 
 CARLA sendiri dibangun di atas mesin gim (\textit{game engine}) Unreal Engine 4
@@ -105,11 +107,12 @@ produk NVIDIA Drive PX. Nama pasar dari NVIDIA Pegasus adalah NVIDIA Drive
 PX Pegasus. Lini produk NVIDIA Drive sendiri merupakan platform komputer untuk
 memberikan fungsionalitas bantuan mengemudi pada kendaraan bermotor.
 
-\begin{figure}[!htbp]
-	\centering
-	\includegraphics[width=\textwidth,trim={2cm 0cm 0cm 6cm},clip]{resources/chapter-2/pegasus.png}
-	\caption{NVIDIA Pegasus \parencite{trilaksono_laporanRispro}}
-\end{figure}
+% \begin{figure}[!htbp]
+% 	\centering
+% 	\includegraphics[width=\textwidth,trim={2cm 0cm 0cm 6cm},clip]{resources/chapter-2/pegasus.png}
+% 	\caption{NVIDIA Pegasus \parencite{trilaksono_laporanRispro}}
+% 	\label{chapter-2-fig-pegasus}
+% \end{figure}
 
 NVIDIA Pegasus adalah komputer yang mendukung pengemudian \textit{autonomous}
 secara penuh \parencite{oh_2017}. Artinya, NVIDIA Pegasus dapat digunakan untuk
@@ -176,7 +179,7 @@ kali dilakukan pengiriman data. Dilakukan delapan operasi I/O yang berjalan
 secara sinkronis untuk mengirimkan data. Operasi-operasi tersebut berbentuk
 baca/tulis ke \textit{file} dan basis data serta permintaan HTTP.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1.0\textwidth]{resources/chapter-2/komunikasi
 		data pada simulasi.png}
@@ -282,7 +285,7 @@ dipublikasikan ke topik yang didengarkan oleh pemroses data LiDAR dan vidio.
 \textit{Node} yang terhubung dengan CARLA akan dikirimkan data terkait kendali
 kendaraan oleh \textit{node} yang disebut \textit{path planning node}.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1.0\textwidth]{resources/chapter-2/carla-jetson-arch.png}
 	\caption{Arsitektur sistem simulasi \parencite{brogle_CarlaHILS}}

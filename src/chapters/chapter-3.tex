@@ -65,7 +65,7 @@ sinkronis, yaitu
 	\item pembacaan CARLA \textit{measurement} dari \textit{file} pada AGX/RKB.
 \end{enumerate}
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.9\textwidth]{resources/chapter-3/sequence-diagram-old-hils-process.png}
 	\caption{Proses pengiriman data CARLA \textit{measurement} kondisi saat ini}
@@ -133,8 +133,8 @@ dapat dilihat pada Tabel \ref{chapter-3-tbl-non-functional-requirement}.
 		              & GRS untuk mengendalikan trem di CARLA.                        \\
 		\hline
 	\end{tabular}
-	\label{chapter-3-tbl-functional-requirement}
 	\caption{Kebutuhan fungsional sistem simulasi HILS.}
+	\label{chapter-3-tbl-functional-requirement}
 \end{table}
 
 \begin{table}[!htbp]
@@ -147,8 +147,8 @@ dapat dilihat pada Tabel \ref{chapter-3-tbl-non-functional-requirement}.
 		              & CARLA minimal 2 FPS.                                          \\
 		\hline
 	\end{tabular}
-	\label{chapter-3-tbl-non-functional-requirement}
 	\caption{Kebutuhan non-fungsional sistem simulasi HILS.}
+	\label{chapter-3-tbl-non-functional-requirement}
 \end{table}
 
 Lalu karena dilakukan penulisan ulang sistem HILS, mekanisme komunikasi yang
@@ -206,8 +206,8 @@ kekurangan ROS 2 serta ZeroMQ dapat dilihat pada Tabel
 		                    & operasi Ubuntu 18.04.              &                                                    \\
 		\hline
 	\end{tabular}
-	\label{chapter-3-tbl-ros2-vs-zmq}
 	\caption{Perbandingan keunggulan dan kelemahan ROS 2 dan ZeroMQ.}
+	\label{chapter-3-tbl-ros2-vs-zmq}
 \end{table}
 
 Salah satu kekurangan ROS 2 adalah ROS 2 tidak dapat digunakan pada Ubuntu Linux
@@ -273,18 +273,18 @@ Dari solusi pustaka yang ditawarkan, dapat dibentuk sebuah arsitektur sistem
 HILS. Arsitektur ini dapat dilihat pada diagram \textit{deployment} di Gambar
 \ref{chapter-3-new-architecture}. Lalu, gambaran kasar proses pada sistem
 simulasi untuk satu \textit{step} simulasi dapat dilihat pada diagram
-\textit{sequence} di Gambar \ref{chapter-3-new-sequence}. Perlu dicatat bahwa
-HILS \textit{agent} adalah \textit{agent} yang digunakan pada program
+sekuens di Gambar \ref{chapter-3-new-sequence}. Perlu dicatat bahwa HILS
+\textit{agent} adalah \textit{agent} yang digunakan pada program
 ScenarioRunner.
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1.0\textwidth]{resources/chapter-3/deployment-diagram-new-hils.png}
 	\caption{Arsitektur Sistem HILS Baru}
 	\label{chapter-3-new-architecture}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1.0\textwidth]{resources/chapter-3/sequence-diagram-new-hils-kasar.png}
 	\caption{Gambaran kasar proses satu \textit{step} simulasi}

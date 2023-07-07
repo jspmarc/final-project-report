@@ -102,25 +102,25 @@ adalah sebagai berikut (Tabel \ref{chapter-4-tbl-environment-specs}).
 	\centering
 	\begin{tabular}{|r|l|l|}
 		\hline
-		              & CPU & i9-10920X 12C/24T 3.50GHz  \\
+		                  & CPU & i9-10920X 12C/24T 3.50GHz  \\
 		\cline{2-3}
-		\textbf{SILS} & RAM & 128GB                      \\
+		\textbf{Komputer} & RAM & 128GB                      \\
 		\cline{2-3}
-		              & GPU & 2x NVIDIA GeForce RTX 3090 \\
+		\textbf{SILS}     & GPU & 2x NVIDIA GeForce RTX 3090 \\
 		\cline{2-3}
-		              & OS  & Ubuntu Linux 20.04         \\
+		                  & OS  & Ubuntu Linux 20.04         \\
 		\hline
-		              & CPU & i7-8700 6C/12T 3.20GHz     \\
+		                  & CPU & i7-8700 6C/12T 3.20GHz     \\
 		\cline{2-3}
-		\textbf{RKB}  & RAM & 16GB                       \\
+		\textbf{Komputer} & RAM & 16GB                       \\
 		\cline{2-3}
-		              & GPU & NVIDIA GeForce RTX 2070    \\
+		\textbf{RKB}      & GPU & NVIDIA GeForce RTX 2070    \\
 		\cline{2-3}
-		              & OS  & Ubuntu Linux 18.04         \\
+		                  & OS  & Ubuntu Linux 18.04         \\
 		\hline
 	\end{tabular}
-	\label{chapter-4-tbl-environment-specs}
 	\caption{Spesifikasi komputer SILS dan komputer RKB.}
+	\label{chapter-4-tbl-environment-specs}
 \end{table}
 
 Untuk pengujian implementasi, akan dilakukan pada komputer AGX dan komputer
@@ -135,6 +135,7 @@ Gambar \ref{chapter-4-fig-topology}. Komputer SILS dan komputer RKB terhubung
 melalu sebuah \textit{switch} HPE JH019A. Komputer SILS terhubung ke
 \textit{switch} menggunakan sebuah cabel Cat5. Sedangkan komputer RKB terhubung
 ke \textit{switch} menggunakan sebuah cabel Cat6 bermerk Commscope 1071E.
+Kecepatan \textit{link} pada kedua komputer adalah 1 Gbps.
 
 \begin{figure}[!htbp]
 	\centering
@@ -279,9 +280,9 @@ Dari pengujian yang dilakukan, ditemukan bahwa sistem HILS dapat memenuhi
 seluruh kriteria yang untuk pengujian implementasi sistem. Penjabaran
 ketercapaian kriteria pengujian implementasi sistem HILS dapat dilihat pada
 \ref{chapter-4-tbl-impl-criteria-result}. Selain itu, tampilan sistem HILS dan
-hasil implementasi dapat dilihat pada gambar \ref{chapter-4-fig-hils-running}.
+hasil implementasi dapat dilihat pada Gambar \ref{chapter-4-fig-hils-running}.
 
-Pada gambar \ref{chapter-4-fig-hils-running}, dapat dilihat sistem simulasi
+Pada Gambar \ref{chapter-4-fig-hils-running}, dapat dilihat sistem simulasi
 sudah dijalankan di komputer AGX dan komputer SILS. Komputer SILS ditampilkan di
 komputer sebelah kiri menggunakan bantuan program AnyDesk. Seperti yang
 terlihat, sistem simulasi sudah berjalan dengan baik. Tampilan kamera di program
