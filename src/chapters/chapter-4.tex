@@ -236,6 +236,14 @@ kamera harus dibagi menjadi beberapa segmen. Karena ada beberapa segmen,
 perhitungan RTT dilakukan dari segmen pertama agar latensi yang dihitung adalah
 latensi keseluruhan pengiriman data kamera, tidak hanya sebuah segmen.
 
+Pada implementasi tugas akhir ini, perhitungan RTT ($T_s$) sendiri dimulai
+sebelum pemanggilan fungsi ZeroMQ untuk melakukan pengiriman segmen pertama.
+Sedangkan $T_e$ dihitung dari waktu pertama kali data kendali diterima. Karena
+perhitungan dimulai sebelum data kamera dikirim dan setelah data kendali
+diterima, artinya RTT dihitung pada sisi program ScenarioRunner (komputer SILS).
+Sedangkan $t_p$ adalah total waktu yang dibutuhkan sejak data pertama kamera diterima
+sampai kendali siap dikirimkan (sebelum pemanggilan fungsi ZeroMQ).
+
 Selain itu, pada pengujian pengujian kriteria PERF-02 untuk implementasi HILS
 sebelumnya akan dilakukan secara teoretis. Hal ini karena implementasi HILS
 sebelumnya sudah sulit untuk dijalankan. Selain itu, jenis data yang dikirim
@@ -411,9 +419,46 @@ dapat dilihat pada Gambar \ref{chapter-4-fig-perf-result-old-hils} dan Gambar
 	\label{chapter-4-fig-perf-result-new-hils}
 \end{figure}
 
-Data lengkap hasil pengujian kinerja dapat dilihat pada Lampiran
-\ref{appendix-performance-data}. Selain itu, program Jupyter Notebook yang
-digunakan untuk pemrosesan data kinerja dapat dilihat pada lampiran
+Keberhasilan PERF-02 dikonfirmasi dari penggunaan \textit{resource} komputer
+pada kedua komputer. Ketika menjalankan sistem HILS baru, penggunaan
+\textit{resource}-nya dapat dilihat pada Gambar
+\ref{chapter-4-fig-perf-result-resource-usage-sils} (komputer SILS) dan Gambar
+\ref{chapter-4-fig-perf-result-resource-usage-rkb} (komputer RKB). Dapat dilihat
+pada implementasi baru HILS, penggunaan CPU-nya belum mencapai 50\% dan
+penggunaan RAM juga belum mencapai 10\%. Rata-rata penggunaan CPU berkisar dari
+30\%--40\%. Akan tetapi, dapat dilihat juga pada Gambar
+\ref{chapter-4-fig-perf-result-resource-usage-sils-startup} (komputer SILS) dan
+Gambar \ref{chapter-4-fig-perf-result-resource-usage-rkb-startup} (komputer RKB)
+bahwa ada anomali yang menyebabkan penggunaan CPU melebihi 70\%.  Hal ini
+terjadi ketika kedua program baru pertama kali dijalankan.
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth]{resources/chapter-4/resource-usage-new-hils-sils-startup.png}
+	\caption{Penggunaan \textit{resource} komputer SILS ketika menjalankan sistem baru.}
+	\label{chapter-4-fig-perf-result-resource-usage-sils}
+\end{figure}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth]{resources/chapter-4/resource-usage-new-hils-rkb.png}
+	\caption{Penggunaan \textit{resource} komputer SILS ketika memulai sistem baru.}
+	\label{chapter-4-fig-perf-result-resource-usage-sils-startup}
+\end{figure}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth]{resources/chapter-4/resource-usage-new-hils-rkb-startup.png}
+	\caption{Penggunaan \textit{resource} komputer RKB ketika menjalankan sistem baru.}
+	\label{chapter-4-fig-perf-result-resource-usage-rkb}
+\end{figure}
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth]{resources/chapter-4/resource-usage-new-hils-rkb.png}
+	\caption{Penggunaan \textit{resource} komputer RKB ketika memulai sistem baru.}
+	\label{chapter-4-fig-perf-result-resource-usage-rkb-startup}
+\end{figure}
+
+Data lengkap untuk menghitung RTT di pengujian kinerja dapat dilihat pada
+Lampiran \ref{appendix-performance-data}. Selain itu, program Jupyter Notebook
+yang digunakan untuk pemrosesan data tersebut dapat dilihat pada lampiran
 \ref{appendix-algoritma-monitoring}.
 
 \section{Pembahasan}
