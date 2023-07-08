@@ -237,13 +237,16 @@ kamera harus dibagi menjadi beberapa segmen. Karena ada beberapa segmen,
 perhitungan RTT dilakukan dari segmen pertama agar latensi yang dihitung adalah
 latensi keseluruhan pengiriman data kamera, tidak hanya sebuah segmen.
 
-Pada implementasi tugas akhir ini, perhitungan RTT ($T_s$) sendiri dimulai
-sebelum pemanggilan fungsi ZeroMQ untuk melakukan pengiriman segmen pertama.
-Sedangkan $T_e$ dihitung dari waktu pertama kali data kendali diterima. Karena
-perhitungan dimulai sebelum data kamera dikirim dan setelah data kendali
-diterima, artinya RTT dihitung pada sisi program ScenarioRunner (komputer SILS).
-Sedangkan $t_p$ adalah total waktu yang dibutuhkan sejak data pertama kamera diterima
-sampai kendali siap dikirimkan (sebelum pemanggilan fungsi ZeroMQ).
+Pada implementasi tugas akhir ini, $T_s$ dimulai sebelum pemanggilan fungsi
+ZeroMQ untuk melakukan pengiriman segmen pertama. Sedangkan $T_e$ dihitung dari
+waktu pertama kali data kendali diterima. Karena perhitungan dimulai sebelum
+data kamera dikirim dan setelah data kendali diterima, artinya RTT dihitung pada
+sisi program ScenarioRunner (komputer SILS).Sedangkan $t_p$ adalah
+total waktu yang dibutuhkan sejak data pertama kamera diterima sampai kendali
+siap dikirimkan (sebelum pemanggilan fungsi ZeroMQ). Karena $T_s$ dan $t_p$
+dicatat sebelum fungsi pustaka ZeroMQ dpanggil, nilai $T_s$ dan $t_p$
+dipengaruhi \textit{overhead} yang muncul karena pemanggilan fungsi ZeroMQ serta
+proses yang terjadi di fungsi-fungsi tersebut.
 
 Selain itu, pada pengujian pengujian kriteria PERF-02 untuk implementasi HILS
 sebelumnya akan dilakukan secara teoretis. Hal ini karena implementasi HILS
