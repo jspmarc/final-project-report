@@ -270,8 +270,8 @@ terjadi secara lokal.
 
 \section{Hasil Pengujian}
 
-Penjabaran hasil pengujian aspek implementasi dan kinerja akan dipisah.
-Penjabaran dipisah karena hal yang diujikan serta kriteria pengujian dari kedua
+Penguraian hasil pengujian aspek implementasi dan kinerja akan dipisah.
+Penguruaian dipisah karena hal yang diujikan serta kriteria pengujian dari kedua
 aspek berbeda.
 
 \subsection{Hasil Pengujian Implementasi Sistem HILS}
@@ -285,8 +285,9 @@ hasil implementasi dapat dilihat pada Gambar \ref{chapter-4-fig-hils-running}.
 Pada Gambar \ref{chapter-4-fig-hils-running}, dapat dilihat sistem simulasi
 sudah dijalankan di komputer AGX dan komputer SILS. Komputer SILS ditampilkan di
 komputer sebelah kiri menggunakan bantuan program AnyDesk. Seperti yang
-terlihat, sistem simulasi sudah berjalan dengan baik. Tampilan kamera di program
-ScenarioRunner (SILS) dan program GRS (AGX) sudah sama.
+terlihat, sistem simulasi sudah berjalan dengan baik. Pada Gambar tersebut,
+tampilan kamera di program ScenarioRunner (SILS) dan program GRS (AGX) sudah
+sama.
 
 \begin{table}[!htbp]
 	\begin{center}
@@ -345,21 +346,20 @@ Hasil pengujian kinerja sistem HILS dapat dilihat pada Tabel \ref{chapter-4-tbl-
 		\end{tabular}
 	\end{center}
 
-	\caption{Tercapainya pengujian implementasi atau tidak.}
+	\caption{Tercapainya pengujian kinerja atau tidak.}
 	\label{chapter-4-tbl-perf-criteria-result}
 \end{table}
 
 Kriteria PERF-01 berhasil dipenuhi karena ketika menggunakan sensor kamera dan
 GNSS kinerja sistem sangat baik. Akan tetapi, jika duji dengan sensor lidar
-sistem HILS tidak memiliki kinerja yang baik. Simulator CARLA gagal mendapatkan
+sistem HILS memiliki kinerja yang kurang baik. Simulator CARLA gagal mendapatkan
 2 FPS. Kendati demikian, PERF-01 dapat dianggap berhasil karena pengujian cukup
 dengan sensor kamera dan  sensor GNSS.
 
-Kriteria PERF-02 juga berhasil dilewati. Dapat dilihat pada Tabel
-\ref{chapter-4-tbl-perf-result-statistics}, implementasi HILS baru memiliki
-latensi setidaknya 2,5 kali lebih cepat dari implementasi teoretis HILS
-sebelumnya. Selain itu, persebaran data latensi kedua implementasi sistem HILS
-dapat dilihat pada Gambar \ref{chapter-4-fig-perf-result-old-hils} dan Gambar
+Kriteria PERF-02 juga berhasil dilewati. Statistik data dari pengujian dapat
+dilihat pada Tabel \ref{chapter-4-tbl-perf-result-statistics}. Selain itu,
+persebaran data latensi kedua implementasi sistem HILS dapat dilihat pada Gambar
+\ref{chapter-4-fig-perf-result-old-hils} dan Gambar
 \ref{chapter-4-fig-perf-result-new-hils}.
 \begin{table}[!htbp]
 	\begin{center}
@@ -420,18 +420,13 @@ dapat dilihat pada Gambar \ref{chapter-4-fig-perf-result-old-hils} dan Gambar
 	\label{chapter-4-fig-perf-result-new-hils}
 \end{figure}
 
-Keberhasilan PERF-02 dikonfirmasi dari penggunaan \textit{resource} komputer
-pada kedua komputer. Ketika menjalankan sistem HILS baru, penggunaan
-\textit{resource}-nya dapat dilihat pada Gambar
+Ketika menjalankan sistem HILS baru, penggunaan \textit{resource}-nya dapat
+dilihat pada Gambar
 \ref{chapter-4-fig-perf-result-resource-usage-sils} (komputer SILS) dan Gambar
-\ref{chapter-4-fig-perf-result-resource-usage-rkb} (komputer RKB). Dapat dilihat
-pada implementasi baru HILS, penggunaan CPU-nya belum mencapai 50\% dan
-penggunaan RAM juga belum mencapai 10\%. Rata-rata penggunaan CPU berkisar dari
-30\%--40\%. Akan tetapi, dapat dilihat juga pada Gambar
-\ref{chapter-4-fig-perf-result-resource-usage-sils-startup} (komputer SILS) dan
-Gambar \ref{chapter-4-fig-perf-result-resource-usage-rkb-startup} (komputer RKB)
-bahwa ada anomali yang menyebabkan penggunaan CPU melebihi 70\%.  Hal ini
-terjadi ketika kedua program baru pertama kali dijalankan.
+\ref{chapter-4-fig-perf-result-resource-usage-rkb} (komputer RKB). Selain itu,
+Gambar \ref{chapter-4-fig-perf-result-resource-usage-sils-startup} dan
+\ref{chapter-4-fig-perf-result-resource-usage-rkb-startup} adalah penggunaan
+\textit{Resource} beberapa waktu setelah program dijalankan.
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1.0\textwidth]{resources/chapter-4/resource-usage-new-hils-sils-startup.png}
@@ -462,5 +457,41 @@ Lampiran \ref{appendix-performance-data}. Selain itu, program Jupyter Notebook
 yang digunakan untuk pemrosesan data tersebut dapat dilihat pada lampiran
 \ref{appendix-algoritma-monitoring}.
 
-\section{Pembahasan}
-\blindtext
+\section{Pembahasan Hasil Pengujian}
+
+Dari hasil pengujian dapat dilihat bahwa tujuan pertama dan tujuan kedua tugas
+akhir berhasil dicapai. Sistem simulasi yang baru dapat menggunakan data sensor
+virtual dari CARLA dan \textit{ego vehicle} pada CARLA dapat dikendalikan
+menggunakan kendali dari program GRS. Lalu, pertukaran data sensor dan data
+kendali memiliki latensi yang sangat baik. Seperti yang dapat dilihat pada tabel
+\ref{chapter-4-tbl-perf-result-statistics}, latensi rata-rata sistem HILS baru
+setidaknya 2,5 kali lebih cepat dari sistem HILS sebelumnya. Selain itu,
+simulator CARLA juga berhasil berjalan dengan setidaknya 2 FPS.
+
+Meskipun kedua tujuan tugas akhir berhasil dicapai, perlu dicatat bahwa ketika
+sensor lidar digunakan kinerja smulator menjadi sangat buruk. Hal ini disebabkan
+sensor lidar yang butuh beberapa \textit{step} untuk menghasilkan 1
+\textit{frame}. Sensor lidar bekerja dengan berputar sebanyak sepersekian
+lingkaran setiap 1 \textit{step}. Sedangkan data dari sensor GNSS dan kamera
+hanya butuh 1 \textit{step} untuk menghasilkan 1 \textit{frame} data. Akibatnya
+implementasi lidar harus diubah karena ketika pengembangan untuk sensor lidar
+diasumsikan sensornya akan seperti sensor kamera, yaitu butuh 1 \textit{frame}.
+
+Selain itu, didapatkan juga bahwa peningkatan kinerja ini dikarenakan perbaikan
+pada perangkat lunak, bukan karena perangkat keras. Terlihat penggunaan
+\textit{resource} komputer SILS pada gambar
+\ref{chapter-4-fig-perf-result-resource-usage-sils} dan komputer RKB pada gambar
+\ref{chapter-4-fig-perf-result-resource-usage-rkb} bahwa penggunaan CPU tidak
+mencapai 50\% dan penggunaan RAM di sekitar 10\%. Rata-rata penggunaan CPU
+berkisar dari 30\%--40\%.
+
+Akan tetapi, dapat dilihat juga pada Gambar
+\ref{chapter-4-fig-perf-result-resource-usage-sils-startup} (komputer SILS) dan
+Gambar \ref{chapter-4-fig-perf-result-resource-usage-rkb-startup} (komputer RKB)
+bahwa ada anomali yang menyebabkan penggunaan CPU melebihi 70\%. Hal ini terjadi
+ketika kedua program baru pertama kali dijalankan. Anomali ini mungkin terjadi
+karena pada saat \textit{startup}, ada banyak proses yang dilakukan di kedua
+program, seperti menyiapkan \textit{window} di GRS dan men-\textit{spawn}
+kendaraan serta sensor di ScenarioRunner. Hipotesis itu datang dari fakta bahwa
+anomali tersebut hilang setelah terjadi simulasi berjalan dan terjadi pertukaran
+data antara kedua komputer/program utama.
