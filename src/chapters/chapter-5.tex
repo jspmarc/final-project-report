@@ -9,21 +9,32 @@ Dari tugas akhir ini ada beberapa kesimpulan yang dapat dibuat, yaitu
 \begin{enumerate}
 	\item berhasil dilakukan penulisan ulang sistem HILS,
 	\item sistem HILS yang baru sudah dapat memanfaatkan data sensor virtual
-	dari CARLA,
+	      dari CARLA,
 	\item trem di CARLA berhasil dikendalikan oleh program GRS menggunakan
-	komputer AGX (NVIDIA Pegasus) pada sistem HILS baru, dan
+	      komputer AGX (NVIDIA Pegasus) pada sistem HILS baru, dan
 	\item latensi dan kinerja pada sistem HILS baru setidaknya secara rata-rata
-	2,5 kali lebih cepat jika dibandingkan dengan sistem HILS sebelumnya.
+	      2,5 kali lebih cepat jika dibandingkan dengan sistem HILS sebelumnya.
 \end{enumerate}
 
 \section{Saran}
 
 Saran untuk pengembangan sistem HILS adalah sebagai berikut.
 \begin{enumerate}
-	\item a
+	\item perbaikan kode pustaka agar dapat menggunakan sensor lidar virtual,
+	\item pengujian dengan multi-kamera untuk menguji sistem dapat menggunakan
+	      agar lebih sesuai dengan dunia nyata,
+	\item pengujian dengan berbagai mekanisme/protokol komunikasi lain untuk
+	      mencoba mengurangi \textit{overhead} kinerja akibat jaringan, dan
+	\item mengurangi jumlah kelas yang berinteraksi langsung dengan program
+	      ScenarioRunner dari empat menjadi satu kelas.
+	      % \item membuat penerimaan data di sisi program GRS terjadi secara paralel.
 \end{enumerate}
 
-Berikut adalah saran untuk proyek \textit{capstone} \capstoneTitle.
+Berikut adalah saran untuk proyek \textit{capstone} pengembangan trem.
 \begin{enumerate}
-	\item a
+	\item memperbaiki kode program GRS karena sangat sulit untuk dibaca dan
+	      dimodifikasi, dan
+	\item menambahkan \textit{code review}, \textit{static code analysis}, dan
+	      Git \textit{flow} untuk program GRS untuk menjaga kualitas dan keamanan
+	      kode.
 \end{enumerate}
