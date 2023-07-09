@@ -155,10 +155,13 @@ Lalu karena dilakukan penulisan ulang sistem HILS, mekanisme komunikasi yang
 digunakan juga sekalian diubah. Perubahan ini bertujuan untuk menghilangkan
 \textit{overhead} yang muncul dari deserialisasi pesan HTTP. Pesan HTTP
 mengandung \textit{header} pada pesan \textit{request} dan respon serta kode
-status pada pesan respon. Kedua hal ini tidak digunakan pada komunikasi sistem
-HILS yang akan ditulis ulang. Oleh karena itu, proses deserialisasi kedua hal
-tersebut mubazir dan menggunakan \textit{resource} komputer secara kurang
-efektif.
+status pada pesan respon. Pada HTTP, setiap pesan \textit{request} yang diterima
+server harus di-\textit{parse} terlebih dahulu, lalu pada klien setiap pesan
+respon harus dibaca dahulu kode statusnya untuk menentukan \textit{request}-nya
+berhasil atau tidak. \parencite{rfc9110}. Kedua hal ini tidak digunakan pada
+komunikasi sistem HILS yang akan ditulis ulang. Oleh karena itu, proses
+deserialisasi kedua hal tersebut mubazir dan menggunakan \textit{resource}
+komputer secara kurang efektif.
 
 Pemilihan mekanisme komunikasi sendiri didasarkan pada studi literatur.
 Terdapat dua alternatif untuk mekanisme komunikasi, yaitu ROS 2 dan ZeroMQ.
