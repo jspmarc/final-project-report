@@ -141,40 +141,40 @@ Xavier. Kombinasi CPU dan GPU ini dapat menghasilkan 320 TOPS (\textit{trillion
 NVIDIA Pegasus mendukung sampai dengan 16 sensor dan 6 di antaranya adalah
 kamera \parencite{oh_2017}.
 
-\section{NVIDIA DriveWorks}\label{chapter-2-section-driveworks}
+% \section{NVIDIA DriveWorks}\label{chapter-2-section-driveworks}
 
-NVIDIA DriveWorks adalah SDK (\textit{software development kit}) untuk
-mengembangkan perangkat lunak yang digunakan pada kendaraan otonom dengan
-perangkat keras dari NVIDIA AGX. NVIDIA DriveWorks menyediakan berbagai kakas yang
-dapat  digunakan untuk mempercepat pengembangan algoritma dan perangkat lunak
-untuk kendaraan otonom. Kemampuan dari NVIDIA DriveWorks juga dapat dikembangkan
-lagi oleh pemrogram karena sifatnya yang modular, terbuka, dan
-\textit{customizable} \parencite{nvidia_driveworksMainSite}.
+% NVIDIA DriveWorks adalah SDK (\textit{software development kit}) untuk
+% mengembangkan perangkat lunak yang digunakan pada kendaraan otonom dengan
+% perangkat keras dari NVIDIA AGX. NVIDIA DriveWorks menyediakan berbagai kakas yang
+% dapat  digunakan untuk mempercepat pengembangan algoritma dan perangkat lunak
+% untuk kendaraan otonom. Kemampuan dari NVIDIA DriveWorks juga dapat dikembangkan
+% lagi oleh pemrogram karena sifatnya yang modular, terbuka, dan
+% \textit{customizable} \parencite{nvidia_driveworksMainSite}.
 
-NVIDIA DriveWorks sendiri sudah mencapai versi 5. Akan tetapi, pada tugas
-akhir ini akan digunakan NVIDIA DriveWorks 4. NVIDIA DriveWorks 4 dapat
-dijalankan pada perangkat keras  NVIDIA Pegasus dan juga pada GPU
-\textit{desktop} NVIDIA dengan \textit{chip} Turing atau Volta, misalnya NVIDIA
-RTX 20-\textit{series} \parencite{nvidia_driveworksSdkGettingStarted}.
+% NVIDIA DriveWorks sendiri sudah mencapai versi 5. Akan tetapi, pada tugas
+% akhir ini akan digunakan NVIDIA DriveWorks 4. NVIDIA DriveWorks 4 dapat
+% dijalankan pada perangkat keras  NVIDIA Pegasus dan juga pada GPU
+% \textit{desktop} NVIDIA dengan \textit{chip} Turing atau Volta, misalnya NVIDIA
+% RTX 20-\textit{series} \parencite{nvidia_driveworksSdkGettingStarted}.
 
-Beberapa pustaka dan kakas yang disediakan NVIDIA DriveWorks adalah visualisasi
-(GUI), pengoptimal TensorRT, lapisan abstraksi kendaraan, perekam data, dan
-\textit{logging} dan diagnosis sistem. Selain itu, beberapa fitur utama dari
-NVIDIA DriveWorks adalah
-\begin{enumerate}
-	\item lapisan abstraksi sensor: memberikan antarmuka yang sama untuk
-	      memanipulasi semua sensor yang didukung, kemampuan untuk membuat sensor
-	      virtual menggunakan data yang direkam, dan lain-lain;
-	\item pemroses gambar dan \textit{point cloud} (data lidar): terdapat
-	      berbagai pemroses gambar seperti \textit{detection} dan
-	      \textit{tracking} dan pemroses \textit{point cloud} seperti segmentasi
-	      planar dengan abstraksi perangkat keras sehingga beberapa fitur
-	      pemrosesan dapat dipercepat pada NVIDIA Drive tertentu; dan
-	\item kerangka kerja DNN (\textit{deep neural network}): kerangka kerja yang
-	      dapat digunakan untuk mamuat dan memprediksi menggunakan model ML
-	      TensorRT yang sudah di-\textit{train}
-	      \parencite{nvidia_driveworksSdkGettingStarted}.
-\end{enumerate}
+% Beberapa pustaka dan kakas yang disediakan NVIDIA DriveWorks adalah visualisasi
+% (GUI), pengoptimal TensorRT, lapisan abstraksi kendaraan, perekam data, dan
+% \textit{logging} dan diagnosis sistem. Selain itu, beberapa fitur utama dari
+% NVIDIA DriveWorks adalah
+% \begin{enumerate}
+% 	\item lapisan abstraksi sensor: memberikan antarmuka yang sama untuk
+% 	      memanipulasi semua sensor yang didukung, kemampuan untuk membuat sensor
+% 	      virtual menggunakan data yang direkam, dan lain-lain;
+% 	\item pemroses gambar dan \textit{point cloud} (data lidar): terdapat
+% 	      berbagai pemroses gambar seperti \textit{detection} dan
+% 	      \textit{tracking} dan pemroses \textit{point cloud} seperti segmentasi
+% 	      planar dengan abstraksi perangkat keras sehingga beberapa fitur
+% 	      pemrosesan dapat dipercepat pada NVIDIA Drive tertentu; dan
+% 	\item kerangka kerja DNN (\textit{deep neural network}): kerangka kerja yang
+% 	      dapat digunakan untuk mamuat dan memprediksi menggunakan model ML
+% 	      TensorRT yang sudah di-\textit{train}
+% 	      \parencite{nvidia_driveworksSdkGettingStarted}.
+% \end{enumerate}
 
 \section{Metode Komunikasi antara Simulator CARLA dan NVIDIA
   Pegasus}\label{chapter-2-section-comms}
