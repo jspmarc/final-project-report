@@ -31,22 +31,25 @@
 \usepackage{sectsty}
 \usepackage{chngcntr}
 \usepackage{etoolbox}
-\usepackage{titlesec}                 % Package Format judul
-\usepackage{titletoc}                 % Package Format judul di toc
-\usepackage{tocbibind}                % Package untuk masukkan toc, lot, lof ke Daftar Isi
-\usepackage{scrwfile}                 % Package untuk membuat Daftar Lampiran dari toc
+\usepackage{titlesec}                        % Package Format judul
+\usepackage{titletoc}                        % Package Format judul di toc
+\usepackage{tocbibind}                       % Package untuk masukkan toc, lot, lof ke Daftar Isi
+\usepackage{scrwfile}                        % Package untuk membuat Daftar Lampiran dari toc
 \usepackage{parskip}
 \usepackage{afterpage}
 \usepackage{relsize}
-\usepackage{listings}                 % Package lstlistings and stuff
-\usepackage{xcolor}
-\usepackage{amsmath}                  % Untuk persamaan
-\usepackage{amssymb}                  % Untuk checkmark
-\usepackage{pdfpages}                 % include PDF
-\usepackage[labelsep=period]{caption} % caption dengan . instead of :
-\usepackage{hyperref}                 % HARUS DI-LOAD TERAKHIR. Package untuk link di daftar isi. Ubah jadi \usepackage[hidelinks]{hyperref} apabila ingin menghilangkan kotak merah disekitar link.
+\usepackage{listings}                        % Package lstlistings and stuff
+\usepackage[table, svgnames, xcdraw]{xcolor} % Package untuk table color
+\usepackage{amsmath}                         % Untuk persamaan
+\usepackage{amssymb}                         % Untuk checkmark
+\usepackage{pdfpages}                        % include PDF
+\usepackage[labelsep=period]{caption}        % caption dengan . instead of :
+\usepackage{setspace}                        % untuk set baseline ditengah2
+\usepackage[hidelinks]{hyperref}                        % HARUS DI-LOAD TERAKHIR. Package untuk link di daftar isi. Ubah jadi \usepackage[hidelinks]{hyperref} apabila ingin menghilangkan kotak merah disekitar link.
 
 \graphicspath{{resources/}}   % letak direktori penyimpanan gambar
+
+\captionsetup{font=normalsize,justification=centering,margin=1cm}
 
 % Setting daftar lampiran
 \newcommand*{\lopname}{DAFTAR LAMPIRAN}
@@ -98,8 +101,9 @@
 \contentsmargin{0pt}
 \renewcommand\contentspage{\thecontentspage}
 
+% ukuran titik di ToC
 \makeatletter
-\renewcommand*{\@dotsep}{1.5}
+\renewcommand*{\@dotsep}{1}
 \makeatother
 
 \dottedcontents{section}[2.3em]{}{2.3em}{5pt}
