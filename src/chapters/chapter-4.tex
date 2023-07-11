@@ -340,8 +340,9 @@ Hasil pengujian kinerja sistem HILS dapat dilihat pada Tabel \ref{chapter-4-tbl-
 			              & Sistem HILS berhasil memiliki kinerja yang baik &                   \\
 			              & ketika hanya sensor kamera dan GNSS yang        &                   \\
 			PERF-01       & digunakan. CARLA berhasil mendapatkan lebih     & \checkmark$^*$    \\
-			              & dari 10 FPS. Akan tetapi, apabila ada sensor    &                   \\
-			              & lidar CARLA gagal mencapai 2 FPS.               &                   \\
+			              & 5--13 FPS. Akan tetapi apabila ada sensor       &                   \\
+			              & lidar, CARLA menjadi sangat lambat hingga       &                   \\
+			              & hanya mendapatkan kurang dari 2 FPS.            &                   \\
 			\hline
 			PERF-02       & Sistem HILS baru berhasil memiliki kinerja yang & \checkmark        \\
 			              & lebih baik daripada sistem HILS sebelumnya.     &                   \\
@@ -357,7 +358,19 @@ Kriteria PERF-01 berhasil dipenuhi karena ketika menggunakan sensor kamera dan
 GNSS kinerja sistem sangat baik. Akan tetapi, jika duji dengan sensor lidar
 sistem HILS memiliki kinerja yang kurang baik. Simulator CARLA gagal mendapatkan
 2 FPS. Kendati demikian, PERF-01 dapat dianggap berhasil karena pengujian cukup
-dengan sensor kamera dan  sensor GNSS.
+dengan sensor kamera dan  sensor GNSS. Bukti CARLA berhasil mendapatkan 5--13
+FPS dapat dilihat pada Gambar \ref{chapter-4-fig-carla-5-fps} dan Gambar
+\ref{chapter-4-fig-carla-13-fps}.
+\begin{figure}[!htbp]
+	\includegraphics[width=1.0\textwidth,trim={22.5cm 10.5cm 22.5cm 12cm},clip]{resources/chapter-4/CARLA-5FPS.JPG}
+	\caption{Bukti CARLA mendapatkan 5 FPS.}
+	\label{chapter-4-fig-carla-5-fps}
+\end{figure}
+\begin{figure}[!htbp]
+	\includegraphics[width=1.0\textwidth,trim={22.5cm 10.5cm 22.5cm 12cm},clip]{resources/chapter-4/CARLA-13FPS.JPG}
+	\caption{Bukti CARLA mendapatkan 13 FPS.}
+	\label{chapter-4-fig-carla-13-fps}
+\end{figure}
 
 Kriteria PERF-02 juga berhasil dilewati. Statistik data dari pengujian dapat
 dilihat pada Tabel \ref{chapter-4-tbl-perf-result-statistics}. Selain itu,

@@ -19,15 +19,25 @@ menggunakan CARLA dengan HILS.
 \section{Trem}\label{chapter-2-section-trem}
 
 Trem adalah transportasi umum berupa kereta ringan yang memiliki rel/jalur
-sendiri di jalan raya. Trem dapat menjadi solusi terhadap masalah yang semakin
-besar di kota-kota besar, yaitu kemacetan dan polusi. Hal ini karena trem dapat
-memuat lebih banyak penumpang daripada mobil biasa. Lalu, kebanyakan trem
-menggunakan listrik sehingga tidak ada emisi karbon dioksida di kota dan tidak
-banyak mengeluarkan suara.
+sendiri di jalan raya. Artinya trem harus berbagi dengan pengguna jalan raya
+lain, seperti mobil, sepeda motor, dan pejalan kaki. Meskipun demikian, trem
+dapat menjadi solusi terhadap masalah yang semakin besar di kota-kota besar,
+yaitu kemacetan dan masalah lingkungan \parencite{trilaksono_laporanRispro}.
+
+Trem dapat mengatasi kemacetan karena trem dapat memuat hingga 125--250
+penumpang.  Akan tetapi, trem harus berjalan lebih lambat untuk menghindari
+kecelakaan dengan pengguna jalan raya lain \parencite{trilaksono_laporanRispro}.
+Lalu, kebanyakan trem menggunakan listrik sehingga tidak ada emisi karbon
+dioksida di kota dan tidak banyak mengeluarkan suara.
 
 Di Indonesia sendiri, trem sudah ada sejak jaman penjajahan. Trem banyak
-digunakan di Ibu Kota Negara, Jakarta, sampai 15 April 1954. Untungnya, trem
-masih banyak digunakan di daerah Madiun dan Solo.
+digunakan di Ibu Kota Negara, Jakarta. Akan tetapi, trem di Jakarta ditutup pada
+tahun 1960-an \parencite{adryamarthanino_sejarahTremDiJakarta}. Untungnya,
+dengan berkembangnya kecemasan untuk masalah lalu lintas, polusi, dan
+pertumbuhan kota yang pesat, mulai banyak kota yang ingin mengadopsi trem
+kembali. Pemerintah Kota Bogor, Provinsi Bali, dan Kota Surabaya sudah tertarik
+lagi untuk menggunakan trem sebagai transportasi perkotaan
+\parencite{trilaksono_laporanRispro}.
 
 \section{Simulator CARLA}\label{chapter-2-section-carla}
 
@@ -48,20 +58,20 @@ pada Gambar \ref{chapter-2-fig-carla-ui}.
 CARLA sendiri dibangun di atas mesin gim (\textit{game engine}) Unreal Engine 4
 (UE4). UE4 dipilih karena memiliki simulasi fisika dan kualitas grafis terbaik,
 setidaknya pada saat CARLA dibuat. Selain itu, UE4 juga memiliki ekosistem untuk
-pengaya (\textit{plugin}) dan sistem untuk menambahkan logika dasar untuk
+pengaya (\textit{plugin}) dan sistem untuk menambahkan logika dasar untuk NPC
 (\textit{non-playable character}\footnote{Istilah untuk karakter yang tidak
 	dapat dimainkan pada gim.}). UE4 dan sifat sumber terbuka CARLA memungkinkan
-komunitas untuk menambahkan berbagai hal sesuai dengan kebutuhan mereka atau
-bahkan memperbaiki CARLA.
+komunitas untuk menambahkan berbagai hal sesuai dengan kebutuhan mereka
+\parencite{dos_carla} atau bahkan memperbaiki CARLA.
 
 Agar simulasi yang dilakukan CARLA serealistis mungkin, CARLA menyediakan
 berbagai macam model 3D: kendaraan, pejalan kaki, gedung, dan rambu lalu lintas.
 Model-model 3D yang disediakan dibuat dengan menggunakan teknik yang
 menghasilkan bentuk dan tekstur senyata mungkin, akan tetapi tetap cepat untuk
-di-\textit{render}. Model kendaraan dan pejalan kaki yang dibuat bisa memiliki
-banyak variasi, misalnya kendaraan Yamaha YZF dengan warna yang berbeda atau
-pejalan kaki dengan aksesoris dan pakaian yang berbeda. Model-model 3D
-digunakan untuk membangun lingkungan simulasi yang realistis.
+di-\textit{render} \parencite{dos_carla}. Model kendaraan dan pejalan kaki yang
+dibuat bisa memiliki banyak variasi, misalnya kendaraan Yamaha YZF dengan warna
+yang berbeda atau pejalan kaki dengan aksesoris dan pakaian yang berbeda.
+Model-model 3D digunakan untuk membangun lingkungan simulasi yang realistis.
 
 Selain dari model 3D, lingkungan simulasi yang realistis didapatkan juga dari
 cuaca dan waktu hari. Cuaca dan waktu hari pada CARLA dapat dikustomisasi
@@ -69,26 +79,30 @@ sedemikian rupa untuk memungkinkan berbagai macam skenario simulasi.
 Selain itu, NPC yang ada di CARLA akan menggunakan sebuah model dari kendaraan
 ataupun pejalan kaki. NPC bergerak berdasarkan suatu aturan yang sudah
 ditentukan, misalnya mengikuti suatu pemilihan keputusan ketika di lampu lalu
-lintas.
+lintas \parencite{dos_carla}.
 
-Pada CARLA, model-model tersebut dapat diinstansiasi menjadi objek dan agen.
-Agen adalah objek yang dapat bergerak, baik itu secara otomatis maupun
-dikendalikan pengguna CARLA. Agen yang dapat dikendalikan pengguna CARLA
-sering disebut \textit{ego vehicle}. Selain itu, agen dapat dikendalikan
-dengan memberikan kendali seperti gas, rem, dan belokan setir.
+Pada CARLA, model-model tersebut di-\textit{package} ke dalam CARLA dalam bentuk
+\textit{blueprint}. \textit{Blueprint} adalah model yang sudah dibuat dengan
+animasi dan beberapa atribut. \textit{Blueprint} dapat di-\textit{spawn} menjadi
+aktor CARLA. Aktor dan \textit{blueprint} pada CARLA tidak terbatas hanya pada
+model kendaraan, NPC, dll., tetapi juga dapat berupa sensor dan rambu jalan.
+Aktor kendaraan dapat juga dapat digunakan untuk membuat agen pada CARLA. Agen
+adalah \textit{script} yang dapat digunakan untuk mengendalikan kendaraan. Cara
+kerja agen dapat diubah dengan mengubah \textit{behavior} agen
+\parencite{x_carlaDocs}.
 
-CARLA juga menyediakan berbagai sensor virtual untuk menyimulasikan pengambilan
-data. Sensor-sensor tersebut dapat ``ditempelkan'' ke \textit{ego vehicle}.
-Contoh sensor yang tersedia adalah kamera dan lidar (\textit{Light Detection and
-	Ranging}). Selain data dari sensor, keadaan kendaraan juga bisa didapatkan
-dari CARLA \textit{measurement}. Data CARLA \textit{measurement} ini mengandung
-data posisi x dan y agen, kecepatan, dan jarak relatif agen ke agen/objek lain.
+Selain agen dan \textit{blueprint}, di CARLA juga terdapat istilah \textit{ego
+	vehicle}. \textit{Ego vehicle} adalah agen yang digunakan untuk mengambil
+data dunia CARLA dan dikendalikan pengguna CARLA. Sensor dapat dipasangkan
+ke \textit{ego vehicle}. Karena \textit{ego vehicle} adalah agen, \textit{ego
+	vehicle} di-\textit{spawn} dengan menggunakan \textit{blueprint} kendaraan
+\parencite{x_carlaDocs}. \textit{Ego vehicle} dapat dikendalikan dengan
+memberikan kendali seperti gas, rem, dan belokan setir.
 
-Proses \textit{spawning} model menjadi agen/objek, pembacaan data sensor virtual,
-pembacaan data CARLA \textit{measurement} dilakukan menggunakan sebuah API. API
-ini berbentuk \textit{library} dan menyediakan beberapa fungsi agar
-\textit{programmer} dapat memanipulasi agen serta dunia CARLA. Misalnya untuk
-mengubah kendali dari agen ataupun
+Selain data dari sensor, data keadaan kendaraan juga bisa didapatkan dari CARLA
+\textit{measurement}.  Data CARLA \textit{measurement} ini mengandung data id
+agen, posisi x dan y agen, kecepatan, dan orientasi agen
+\parencite{trilaksono_laporanRispro}.
 
 CARLA bekerja dengan arsitektur server-klien. Arsitektur ini memungkinkan dunia
 yang dinamis dan antarmuka yang sederhana antara dunia dan agen yang
@@ -98,14 +112,16 @@ perintah dan ``perintah meta'' ke server dan menerima data sensor. Perintah yang
 dapat dikirimkan klien digunakan untuk mengendalikan kendaraan yang
 disimulasikan. Sedangkan ``perintah meta'' digunakan untuk mengatur lingkungan
 simulasi, misalnya cuaca, sensor yang digunakan, dan jumlah kendaraan/pejalan
-kaki NPC.
+kaki NPC. Klien CARLA berbentuk API yang ditulis dalam bahasa Python
+\parencite{dos_carla}.
 
 \section{NVIDIA Pegasus}\label{chapter-2-section-pegasus}
 
 NVIDIA Pegasus adalah salah satu produk cetusan NVIDIA Corporation di bawah lini
 produk NVIDIA Drive PX. Nama pasar dari NVIDIA Pegasus adalah NVIDIA Drive
 PX Pegasus. Lini produk NVIDIA Drive sendiri merupakan platform komputer untuk
-memberikan fungsionalitas bantuan mengemudi pada kendaraan bermotor.
+memberikan fungsionalitas bantuan mengemudi pada kendaraan bermotor
+\parencite{oh_2017}.
 
 % \begin{figure}[!htbp]
 % 	\centering
@@ -122,16 +138,8 @@ sensor dan algoritma yang digunakan tepat.
 NVIDIA Pegasus menggunakan 2 GPU dengan arsitektur post-Volta dan 2 SoC NVIDIA
 Xavier. Kombinasi CPU dan GPU ini dapat menghasilkan 320 TOPS (\textit{trillion
 	operations/second}) untuk komputasi intelegensi buatan. Untuk koneksi I/O,
-NVIDIA Pegasus mendukung sampai dengan 16 kamera (6 di antaranya adalah lidar).
-
-Karena NVIDIA Pegasus dapat dihubungkan langsung ke sensor, di produk akhir
-sensor akan langsung dihubungkan pada NVIDIA Pegasus. Metode komunikasi yang
-dibuat tidak akan digunakan pada produk akhir dan hanya digunakan untuk
-kepentingan simulasi, terutama simulasi \textit{hardware-in-the-loop}.
-
-Pada trem otonom, NVIDIA Pegasus akan digunakan untuk menjalankan program GRS
-(kendali). Sehingga komputer ini juga akan digunakan untuk pengujian sebelum
-digunakan pada produk akhir.
+NVIDIA Pegasus mendukung sampai dengan 16 sensor dan 6 di antaranya adalah
+kamera \parencite{oh_2017}.
 
 \section{NVIDIA DriveWorks}\label{chapter-2-section-driveworks}
 
@@ -150,9 +158,9 @@ dijalankan pada perangkat keras  NVIDIA Pegasus dan juga pada GPU
 RTX 20-\textit{series} \parencite{nvidia_driveworksSdkGettingStarted}.
 
 Beberapa pustaka dan kakas yang disediakan NVIDIA DriveWorks adalah visualisasi
-(GUI), pengoptimal TensorRT, lapisan abstraksi kendaraan, perkiraan
-``egomotion'', perekam data, dan \textit{logging} dan diagnosis sistem. Selain
-itu, beberapa fitur utama dari NVIDIA DriveWorks adalah
+(GUI), pengoptimal TensorRT, lapisan abstraksi kendaraan, perekam data, dan
+\textit{logging} dan diagnosis sistem. Selain itu, beberapa fitur utama dari
+NVIDIA DriveWorks adalah
 \begin{enumerate}
 	\item lapisan abstraksi sensor: memberikan antarmuka yang sama untuk
 	      memanipulasi semua sensor yang didukung, kemampuan untuk membuat sensor
@@ -164,7 +172,8 @@ itu, beberapa fitur utama dari NVIDIA DriveWorks adalah
 	      pemrosesan dapat dipercepat pada NVIDIA Drive tertentu; dan
 	\item kerangka kerja DNN (\textit{deep neural network}): kerangka kerja yang
 	      dapat digunakan untuk mamuat dan memprediksi menggunakan model ML
-	      TensorRT yang sudah di-\textit{train}.
+	      TensorRT yang sudah di-\textit{train}
+	      \parencite{nvidia_driveworksSdkGettingStarted}.
 \end{enumerate}
 
 \section{Metode Komunikasi antara Simulator CARLA dan NVIDIA
@@ -201,35 +210,41 @@ lebih baik dalam menangani komunikasi asinkron daripada HTTP.
 
 ZeroMQ adalah sebuah pustaka yang memberikan peningkatan di atas
 \textit{socket} tradisional. ZeroMQ memberikan fungsionalitas tambahan terhadap
-\textit{socket} dan mengabstraksi pembuatan koneksi TCP dengan harapan
-memudahkan pengembangan aplikasi terdistribusi. Fungsionalitas yang ditambahkan
-oleh ZeroMQ didasarkan pada pola-pola komunikasi yang sering terjadi ketika
-menggunakan protokol TCP.
+\textit{socket}. ZeroMQ berbeda dengan TCP, tetapi mirip dengan UDP. ZeroMQ
+menggunakan pesan untuk berkomunikasi, seperti UDP, dan bukan aliran
+\textit{byte} seperti pada TCP \parencite{zmq_chapter2}.
 
 ZeroMQ memungkinkan komunikasi \textit{one-to-one} (seperti \textit{socket}
 biasa), \textit{many-to-one} (\textit{socket} mendengarkan ke beberapa
 \textit{port}), dan \textit{one-to-many}. Pola komunikasi yang didukung oleh
 ZeroMQ adalah \textit{request-reply}, \textit{publish-subscribe}, dan
-\textit{pipeline} (\textit{push}-\textit{pull}). ZeroMQ juga memiliki sebuah
-antrian pesan (\textit{message queue}) sehingga pesan yang dikirimkan ke
-konsumen akan disimpan sampai konsumen siap menerima pesan. Meskipun terhadap
-antrian pesan, ZeroMQ tidak memiliki \textit{message
-	broker}\footnote{\textit{zero} pada ZeroMQ artinya nol \textit{broker}, nol
-	latensi, nol biaya, dan nol administrasi.}.
+\textit{pipeline} (\textit{push}-\textit{pull}) \parencite{zmq_chapter2}. ZeroMQ
+juga memiliki sebuah antrian pesan (\textit{message queue}) sehingga pesan yang
+dikirimkan ke konsumen akan disimpan sampai konsumen siap menerima pesan.
+Meskipun terdapat antrian pesan, ZeroMQ tidak harus memiliki \textit{message
+	broker} \parencite{zmq_getStartedDocs}\footnote{\textit{zero} pada ZeroMQ
+	artinya nol \textit{broker}, nol latensi, nol biaya, dan nol administrasi
+	\parencite{zmq_getStartedDocs}.}.
 
-ZeroMQ berjalan di atas lapisan transpor ZMTP (ZeroMQ \textit{message transport
-	protocol}). ZMTP sendiri berjalan di atas TCP. Semantik ZMTP memastikan
-pesan tidak akan diterima lebih dari 1 kali oleh konsumen dan semua pesan
-akan diterima oleh konsumen dengan urutan yang benar. Selain itu,
-\textit{frame} pesan yang diterima konsumen akan di-\textit{queue} di memori
-penerima sampai semua \textit{frame} diterima. Semantik ZMTP juga memastikan
-\textit{socket} dapat membuat dan menerima koneksi serta \textit{socket}
-akan menyambungkan kembali jika koneksi terputus.
+Protokol komunikasi yang digunakan ZeroMQ adalah ZMTP (ZeroMQ \textit{message
+	transport protocol}). ZMTP dapat menggunakan berbagai lapisan transpor,
+seperti TCP. Semantic sebuah \textit{socket} ZMTP adalah sebagai
+berikut \parencite{hurton_zmtp}.
 
-ZeroMQ dipilih menjadi salah satu alternatif solusi untuk metode komunikasi
-karena ZeroMQ menawarkan metode komunikasi yang sederhana, cepat, dan murah
-(dari segi \textit{resource}). Selain itu, salah satu tujuan utama dari ZeroMQ
-adalah membuat metode komunikasi yang meminimalkan latensi.
+\begin{enumerate}
+	\item Semua \textit{socket} akan menerima koneksi dan membuat koneksi.
+	\item Semua \textit{socket} akan terhubung ke sebuah \textit{endpoint}
+	      secara asinkron dan, jika koneksi terputus, \textit{socket} dapat
+	      menghubungkan kembali setelah beberapa saat.
+	\item Sebuah pesan harus diterima dan dikirim secara \textit{atomically}:
+	      semua \textit{frame} pesan harus dikirim atau tidak sama sekali. Penerima
+	      harus mengantrikan semua \textit{frame} pesan yang diterima pada memori
+	      sampai semua \textit{frame} diterima.
+	\item Sebuah pesan tidak boleh dikirim lebih dari satu kali ke sebuah
+	      penerima.
+	\item Semua pesan dari beberapa \textit{peer} ZeroMQ di jaringan harus
+	      dikirim secara berutuan.
+\end{enumerate}
 
 \subsection{ROS 2}\label{chapter-2-section-ros2}
 
@@ -253,22 +268,25 @@ Setiap perangkat lunak pada ROS diorganisir menjadi \textit{packages}. Setiap
 \textit{package} dapat mengandung proses (\textit{node}), himpunan data,
 pustaka, dan lain-lain. \textit{Package} adalah struktur terkecil dari sebuah
 artifak pada ROS. Sebuah \textit{package} yang mengandung proses dapat
-di-\textit{run} untuk menjalankan sebuah proses komputasi.
+di-\textit{run} untuk menjalankan sebuah proses komputasi
+\parencite{x_rosConcepts}.
 
 Proses-proses yang melakukan komputasi pada ROS disebut \textit{node} di level
 graf komputasi. Disebut graf karena setiap \textit{node} di ROS saling terhubung
 satu sama lain membentuk sebuah jaringan \textit{peer-to-peer}. Sebuah
 \textit{node} dibuat agar skalanya \textit{fine-grained} dan bertanggung jawab
 hanya pada satu hal. Dalam kasus ini, ROS mirip dengan \textit{service}/layanan
-pada arsitektur \textit{microservice}.
+pada arsitektur \textit{microservice} \parencite{x_rosConcepts}.
 
 Mekanisme ROS2 berjalan di atas DDS (\textit{data distribution service}) untuk
 komunikasinya. DDS secara bawaan mendukung komunikasi dengan pola
 \textit{publisher}-\textit{subscriber} dengan QoS (\textit{quality of service}).
 Komunikasi dengan \textit{topic} memanfaatkan pola tersebut. Lalu, untuk pola
 \textit{service}, digunakan perpanjangan dari DDS, yaitu DDS-RPC. DDS sendiri
-sebenarnya hanya standar dengan implementasi yang berbeda-beda. Secara bawaan,
-ROS 2 menggunakan Fast DDS dari eProsima.
+sebenarnya hanya standar dari OMG (\textit{object management group}) dengan
+implementasi yang berbeda-beda \parencite{doi:10.1126/scirobotics.abm6074_ros}.
+Secara bawaan, ROS 2 menggunakan Fast DDS dari eProsima
+\parencite{x_rosRollingDifferentMiddlewareVendors}.
 
 \section{Penelitian Terkait -- \textit{Hardware-in-the-Loop Autonomous Driving Simulation Without
 	  Real-Time Constraints}}\label{chapter-2-section-related-works}

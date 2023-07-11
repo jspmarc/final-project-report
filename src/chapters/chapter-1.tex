@@ -7,7 +7,9 @@ murah, mudah diakses, dan berkelanjutan (\textit{sustainable}). Salah satu moda
 transportasi umum yang dapat memenuhi keempat hal tersebut adalah trem listrik.
 Untuk mengurangi biaya operasional, trem listrik akan memanfaatkan inteligensi
 buatan dan algoritma kendali sehingga trem tidak membutuhkan masinis dan bisa
-beroperasi secara otonom.
+beroperasi secara otonom. Hal tersebut mengimplikasikan trem dapat memiliki
+waktu pelayanan yang lebih tinggi, mengurangi kecalakaan, dan meningkatkan
+keselamatan \parencite{trilaksono_laporanRispro}.
 
 Pengembangan teknologi kecerdasan buatan dan algoritma kendali otonom yang
 digunakan memerlukan banyak pengujian dan data. Proses pengumpulan data dan
@@ -71,13 +73,13 @@ menggunakan API dengan bahasa Python.
 Hasil akhir dari tugas akhir ini adalah sebuah sistem HILS yang memanfaatkan
 suatu pustaka. Pustaka tersebut terdiri dari pustaka C++ yang digunakan pada
 program kendali (disebut ``GRS'') untuk menerima data dan sebuah pustaka Python
-yang digunakan pada program utama di komputer SILS. Program utama di komputer
-SILS adalah program yang memanfaatkan sebuah program dari tim CARLA dengan nama
-\textit{custom scenario runner}. \textit{Custom scenario runner} memanfaatkan
-\textit{agents} untuk menjalankan skenario. Pada program utama komputer SILS,
-pustaka akan digunakan pada sebuah \textit{custom agent} yang dijalankan oleh
-\textit{custom scenario runner}. Kedua pustaka ini akan disebut sebagai
-``hils-connector.''
+yang digunakan pada program utama di komputer SILS (disebut ``ScenarioRunner'').
+Program utama di komputer SILS adalah program yang memanfaatkan sebuah program
+dari tim CARLA dengan nama \textit{custom scenario runner}. \textit{Custom
+	scenario runner} memanfaatkan \textit{agents} untuk menjalankan skenario. Pada
+program utama komputer SILS, pustaka akan digunakan pada sebuah \textit{custom
+	agent} yang dijalankan oleh \textit{custom scenario runner}. Kedua pustaka ini
+akan disebut sebagai ``hils-connector.''
 
 \section{Rumusan Masalah}
 
@@ -122,6 +124,9 @@ Tugas akhir ini memiliki 2 tujuan utama, yaitu
 Batasan pada pengerjaan tugas akhir ini adalah
 
 \begin{enumerate}
+	\item pustaka yang dibuat akan menggunakan C++11 dan Python 3.8, mengikuti
+	      versi bahasa pemrograman yang digunakan pada kedua program utama;
+	\item versi CARLA yang digunakan adalah CARLA 0.9.12;
 	\item pengujian kinerja akan dilakukan pada komputer RKB dan SILS yang
 	      terdapat di gedung Lab Teknologi VIII ITB;
 	\item pengujian hanya akan menggunakan sebuah sensor kamera virtual dan

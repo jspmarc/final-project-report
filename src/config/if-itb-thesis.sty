@@ -128,11 +128,29 @@
 
 % Masukin Daftar Pustaka ke toc
 \let\originalprintbibliography\printbibliography
-\renewcommand\printbibliography{%
+\renewcommand\printbibliography{
 	\phantomsection
 	\cleardoublepage
 	\originalprintbibliography
 	\addcontentsline{toc}{chapter}{\bibname}
+}
+
+% Format urldate
+\renewbibmacro*{urldate}{
+	\iffieldundef{urlyear}{
+	}{
+		\space
+		diakses pada\space
+		\thefield{urlday}\space
+		\mkbibmonth{\thefield{urlmonth}}\space
+		\thefield{urlyear}
+	}
+}
+
+% Order url dan urldate
+\renewbibmacro*{url+urldate}{
+	\usebibmacro{url}
+	\usebibmacro{urldate}
 }
 
 % Line satu setengah spasi
@@ -216,8 +234,8 @@
 \newcommand{\pembimbingTtd}{
 	\centering
 	\normalsize \normalfont
-	Telah disetujui dan disahkan sebagai \textit{draft} Laporan Tugas \\
-	di Bandung pada tanggal 23 Juni 2023,
+	Telah disetujui dan disahkan sebagai Laporan Tugas \\
+	di Bandung pada tanggal 12 Juli 2023,
 
 	\vspace{0.5cm}
 	\setlength{\tabcolsep}{12pt}
