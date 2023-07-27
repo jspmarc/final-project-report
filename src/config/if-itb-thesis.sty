@@ -44,12 +44,12 @@
 \usepackage{amssymb}                         % Untuk checkmark
 \usepackage{pdfpages}                        % include PDF
 \usepackage[labelsep=period]{caption}        % caption dengan . instead of :
-% \usepackage{setspace}                        % untuk set baseline ditengah2
+\usepackage{setspace}                        % untuk set baseline ditengah2
 \usepackage[hidelinks]{hyperref}             % HARUS DI-LOAD TERAKHIR. Package untuk link di daftar isi. Ubah jadi \usepackage[hidelinks]{hyperref} apabila ingin menghilangkan kotak merah disekitar link.
 
 \graphicspath{{resources/}}   % letak direktori penyimpanan gambar
 
-\captionsetup{font=normalsize,justification=centering,margin=1cm}
+\captionsetup{font={normalsize,stretch=1.5},margin=1cm}
 
 % Setting daftar lampiran
 \newcommand*{\lopname}{DAFTAR LAMPIRAN}
@@ -160,6 +160,7 @@
 
 % Line satu setengah spasi
 \renewcommand{\baselinestretch}{1.5}
+\renewcommand{\arraystretch}{1.5}
 
 % Setting judul
 \chapterfont{\centering \Large}
@@ -177,6 +178,12 @@
 
 % Define blank page
 \newcommand*{\blankpage}{\afterpage{\null\newpage}}
+
+% Jarak tabel dan gambar dengan teks lainnya minimal 3 spasi
+\setlength{\intextsep}{2\baselineskip}
+\setlength{\textfloatsep}{2\baselineskip}
+\setlength{\floatsep}{2\baselineskip}
+\setlength{\belowcaptionskip}{\baselineskip}
 
 % Set code snippet settings
 \lstset{
@@ -239,14 +246,13 @@
 \newcommand{\pembimbingTtd}{
 	\centering
 	\normalsize \normalfont
-	Telah disetujui dan disahkan sebagai Laporan Tugas \\
-	di Bandung pada tanggal 12 Juli 2023,
+	Telah disetujui dan disahkan sebagai Laporan Tugas Akhir \\
+	di Bandung pada tanggal 24 Juli 2023,
 
 	\vspace{0.5cm}
 	\setlength{\tabcolsep}{12pt}
 	\begin{tabular}{c@{\hskip 0.5cm}c}
 		Pembimbing I,               & Pembimbing II,             \\
-		                            &                            \\
 		                            &                            \\
 		                            &                            \\
 		                            &                            \\
