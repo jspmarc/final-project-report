@@ -90,14 +90,15 @@ ke \textit{file} dan basis data SQL pada proses komunikasi. Adanya operasi
 \textit{file} dan basis data pada layanan web menyebabkan \textit{I/O overhead}
 yang besar dan berdampak pada \textit{overhead} yang besar ketika melakukan
 pertukuran data antarserver. Karena adanya \textit{overhead} besar ini, sistem
-simulasi menjadi tidak reliabel. Selain masalah latensi, sistem menjadi lebih
-kompleks.
+simulasi menjadi tidak reliabel. Sistem butuh atensi yang besar karena
+arsitektur sistem yang lebih rumit dari sebelumnya.
 
 Selain itu, layanan web ini belum mendukung pembacaan sensor CARLA dan juga
-belum mendukung pengiriman data \textit{binary}. Pada layanan web, data yang
-dikirimkan masih data CARLA \textit{measurement} (seperti posisi x dan y,
-kecepatan, dan jarak relatif) yang didapatkan langsung dari API Python CARLA,
-dan bukan dari sensor.
+belum mendukung pengiriman data \textit{binary}. Oleh karena itu, sistem HILS
+tidak dapat melakukan simulasi dengan maksimal. Simulasi dilakukan menggunakan
+data posisi kendaraan aktor, data posisi kendaraan lain, kecepatan dari
+CARLA, dll. yang diambil langsung dari CARLA, bukan data dari sensor virtual
+CARLA.
 
 Berdasarkan latar belakang serta keadaan saat ini, definisi rumusan masalah
 untuk tugas akhir ini adalah sebagai berikut.
