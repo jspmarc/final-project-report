@@ -33,6 +33,16 @@ serta rancangan solusi untuk memperbaiki sistem HILS yang ada.
 
 \section{Analisis Masalah Sistem HILS Saat ini}\label{chapter-3-problems}
 
+Pada sistem simulasi saat ini, digunakan tiga komputer:
+\begin{enumerate}
+	\item komputer SILS: komputer yang menjalankan simulator CARLA dan
+	      program-program pembantunya;
+	\item komputer AGX: komputer yang akan digunakan trem \textit{production},
+	      menjalankan program utama trem otonom yang disebut GRS; dan
+	\item komputer RKB: komputer \textit{testbed} untuk komputer  AGX, program
+	      yang akan dimuat ke komputer AGX diuji pada komputer ini.
+\end{enumerate}
+
 Sistem simulasi yang ada sudah dapat menghubungkan komputer SILS dengan server
 komputer RKB/AGX sehingga sistem HILS sudah dapat digunakan. Akan tetapi masih
 ada keluhan terkait kinerja sistem HILS, yaitu proses simulasi yang sangat
@@ -99,21 +109,29 @@ dapat digunakan secara bersamaan.
 
 Dari kebutuhan-kebutuhan tersebut, ada dua buah alternatif solusi: melakukan
 modifikasi mekanisme komunikasi sistem HILS yang sudah ada atau menulis ulang
-sistem HILS. Dari kedua alternatif, dipilih alternatif penulisan ulang program
-HILS. Alasannya adalah karena pada solusi pertama memiliki kompleksitas yang
-lebih tinggi karena ada lebih banyak komponen pada sistem. Selain itu, layanan
-web pada solusi pertama tidak terintegrasi langsung pada program utama, baik di
-komputer SILS maupun komputer AGX/RKB. Layanan web membutuhkan program bantuan
-yang berkomunikasi dengan program utama menggunakan \textit{file}. Hal ini ingin
-dihindari karena adanya \textit{overhead} I/O. Selain itu, meskipun layanan web
-memiliki \textit{coupling} yang rendah dengan kedua program utama, kohesinya
-juga rendah. Karena kedua alasan itulah dinilai alternatif kedua akan lebih
-mudah untuk dilaksanakan.
+mekanisme komunikasi sistem HILS. Dari kedua alternatif, dipilih alternatif
+penulisan ulang program HILS. Alasannya adalah karena pada solusi pertama
+memiliki kompleksitas yang lebih tinggi karena ada lebih banyak komponen pada
+sistem. Selain itu, layanan web pada solusi pertama tidak terintegrasi langsung
+pada program utama, baik di komputer SILS maupun komputer AGX/RKB. Layanan web
+membutuhkan program bantuan yang berkomunikasi dengan program utama menggunakan
+\textit{file}. Hal ini ingin dihindari karena adanya \textit{overhead} I/O.
+Selain itu, meskipun layanan web memiliki \textit{coupling} yang rendah dengan
+kedua program utama, kohesinya juga rendah. Karena kedua alasan itulah dinilai
+alternatif kedua akan lebih mudah untuk dilaksanakan.
 
-Sistem HILS yang akan ditulis ulang memiliki kebutuhan-kebutuhan fungsional dan
-non-fungsional. Kebutuhan fungsional dapat dilihat pada Tabel
-\ref{chapter-3-tbl-functional-requirement}. Selain itu, kebutuhan non-fungsional
-dapat dilihat pada Tabel \ref{chapter-3-tbl-non-functional-requirement}.
+Pada proses pembuatan solusi, harus diingat bahwa ada sebuah program utama baru
+yang sebelumnya tidak ada, yaitu program yang disebut ScenarioRunner. Program
+tersebut merupakan program yang merupakan salah satu tujuan lain dari proyek
+\textit{capstone} ini sehingga masih dalam proses pembuatan. Program tersebut
+digunakan untuk menjalankan berbagai skenario simulasi dan mengendalikan trem di
+CARLA.
+
+Sistem HILS dengan mekanisme komunikasi yang akan ditulis ulang memiliki
+kebutuhan-kebutuhan fungsional dan non-fungsional. Kebutuhan fungsional dapat
+dilihat pada Tabel \ref{chapter-3-tbl-functional-requirement}. Selain itu,
+kebutuhan non-fungsional dapat dilihat pada Tabel
+\ref{chapter-3-tbl-non-functional-requirement}.
 \begin{table}[!htbp]
 	\centering
 	\begin{tabular}{|l|l|}
@@ -151,17 +169,17 @@ dapat dilihat pada Tabel \ref{chapter-3-tbl-non-functional-requirement}.
 	\label{chapter-3-tbl-non-functional-requirement}
 \end{table}
 
-Lalu karena dilakukan penulisan ulang sistem HILS, mekanisme komunikasi yang
-digunakan juga sekalian diubah. Perubahan ini bertujuan untuk menghilangkan
-\textit{overhead} yang muncul dari deserialisasi pesan HTTP. Pesan HTTP
-mengandung \textit{header} pada pesan \textit{request} dan respon serta kode
-status pada pesan respon. Pada HTTP, setiap pesan \textit{request} yang diterima
-server harus di-\textit{parse} terlebih dahulu, lalu pada klien setiap pesan
-respon harus dibaca dahulu kode statusnya untuk menentukan \textit{request}-nya
-berhasil atau tidak \parencite{rfc9110}. Kedua hal ini tidak digunakan pada
-komunikasi sistem HILS yang akan ditulis ulang. Oleh karena itu, proses
-deserialisasi kedua hal tersebut mubazir dan menggunakan \textit{resource}
-komputer secara kurang efektif.
+Lalu karena dilakukan penulisan ulang mekanisme komunikasi sistem HILS,
+protokol/metode komunikasi yang digunakan juga sekalian diubah. Perubahan ini
+bertujuan untuk menghilangkan \textit{overhead} yang muncul dari deserialisasi
+pesan HTTP. Pesan HTTP mengandung \textit{header} pada pesan \textit{request}
+dan respon serta kode status pada pesan respon. Pada HTTP, setiap pesan
+\textit{request} yang diterima server harus di-\textit{parse} terlebih dahulu,
+lalu pada klien setiap pesan respon harus dibaca dahulu kode statusnya untuk
+menentukan \textit{request}-nya berhasil atau tidak \parencite{rfc9110}. Kedua
+hal ini tidak digunakan pada sistem HILS. Oleh karena itu, proses deserialisasi
+kedua hal tersebut mubazir dan menggunakan \textit{resource} komputer secara
+kurang efektif.
 
 Pemilihan mekanisme komunikasi sendiri didasarkan pada studi literatur.
 Terdapat dua alternatif untuk mekanisme komunikasi, yaitu ROS 2 dan ZeroMQ.
@@ -241,9 +259,9 @@ dibuat akan disebut ``hils-connector.''
 
 Pustaka yang akan dibuat ada dua, yaitu pustaka C++11 untuk program GRS di
 komputer AGX/RKB dan pustaka Python 3 untuk \textit{agent} program
-\textit{scenario runner}. Pustaka Python akan disebut ``\textit{producer}''
-karena memproduksi data sensor. Pustaka C++ akan disebut ``\textit{consumer}''
-karena mengonsumsi data sensor. Selain data sensor, juga akan ada data berupa
+ScenarioRunner. Pustaka Python akan disebut ``\textit{producer}'' karena
+memproduksi data sensor. Pustaka C++ akan disebut ``\textit{consumer}'' karena
+mengonsumsi data sensor. Selain data sensor, juga akan ada data berupa
 kontrol/perintah dengan format sebuah \texttt{int} yang dikirim dari
 \textit{consumer} ke \textit{producer} setelah data sensor berhasil diproses.
 

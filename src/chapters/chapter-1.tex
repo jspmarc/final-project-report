@@ -17,7 +17,7 @@ pengujian ini akan mahal dan membutuhkan waktu yang lama apabila dilakukan
 secara langsung. Selain itu, akan berbahaya apabila algoritma belum matang. Oleh
 karena itu, pengujian algoritma kendali akan menggunakan simulasi.
 
-Pembuatan sistem simulasi ini bertujuan untuk mempermudah dan mempercepat
+Sistem simulasi yang dibuat bertujuan untuk mempermudah dan mempercepat
 pengerjaan proyek \textit{autonomous tram}. Pembuatan simulasi dikerjakan oleh
 tim simulasi. Tugas akhir dan proyek \textit{capstone} ini adalah bagian dari
 pengerjaan pekerjaan pada tim simulasi. Selain tim simulasi, terdapat tiga tim
@@ -35,51 +35,12 @@ lain, yaitu
 Simulasi dijalankan pada sebuah sistem simulasi dengan skema simulasi
 \textit{hardware-in-the-loop} (HILS). Artinya, perangkat keras yang akan
 digunakan pada produk akhir nanti akan digunakan juga pada simulasi. Simulasi
-HILS membutuhkan dua komputer:
-\begin{enumerate}
-	\item komputer untuk menjalankan program simulator dan menghasilkan data
-	      sensor virtual (disebut komputer SILS), dan
-	\item komputer yang akan digunakan pada trem; mengandung algoritma
-	      kendali serta pembelajaran mesin dan menghasilkan kendali untuk trem
-	      (dapat dilakukan pada dua komputer yang disebut AGX dan RKB).
-\end{enumerate}
-
-Perangkat keras yang akan digunakan pada produk akhir adalah NVIDIA Pegasus,
-pada proyek ini disebut AGX. RKB sendiri adalah komputer cadangan untuk AGX.
-Komputer RKB digunakan untuk pengujian program sebelum dikompilasi dan disalin
-ke AGX. Selain itu, apabila AGX sedang digunakan untuk pengujian di lapangan,
-RKB digunakan sebagai substitusi sementara.
-
-Komputer SILS dan AGX/RKB akan terhubung melalui sebuah jaringan lokal (LAN).
-Oleh karena itu, lingkungan simulasi akan memiliki jaringan yang cukup ideal
-karena latensi seharusnya tidak terlalu besar dan tidak banyak gangguan pada
-jaringan. Kendati demikian, mekanisme komunikasi yang dikembangkan harus tetap
-dapat mengirimkan data \textit{binary} yang besar dengan cukup cepat (agar tidak
-menghambat jalannya kinerja program simulator) dan tanpa gangguan. Hal ini
-karena data sensor virtual, seperti sensor kamera dan lidar, yang disimulasikan
-akan dikirim ke program kendali dalam format \textit{binary}. Selain
-\textit{binary}, protokol juga harus dapat mengirimkan data dalam format
-\textit{integer}. Kendali dari algoritma kendali adalah data dengan tipe data
-\textit{integer}.
-
-Untuk mendukung simulasi, program simulator yang akan digunakan adalah CARLA
-(\textit{car learning to act}). Pada CARLA, penggunanya dapat men-\textit{spawn}
-kendaraan sepeda, mobil, dan sepeda motor. Selain itu, penggunanya juga dapat
-men-\textit{spawn} pejalan kaki. Untuk menyimulasikan sensor, CARLA menyediakan
-beberapa sensor virtual yang dapat dihubungkan ke kendaraan yang
-di-\textit{spawn}. Data dari sensor virtual ini dapat dibaca secara asinkron
-menggunakan API dengan bahasa Python.
-
-Hasil akhir dari tugas akhir ini adalah sebuah sistem HILS yang memanfaatkan
-suatu pustaka. Pustaka tersebut terdiri dari pustaka C++ yang digunakan pada
-program kendali (disebut ``GRS'') untuk menerima data dan sebuah pustaka Python
-yang digunakan pada program utama di komputer SILS (disebut ``ScenarioRunner'').
-Program utama di komputer SILS adalah program yang memanfaatkan sebuah program
-dari tim CARLA dengan nama \textit{custom scenario runner}. \textit{Custom
-	scenario runner} memanfaatkan \textit{agents} untuk menjalankan skenario. Pada
-program utama komputer SILS, pustaka akan digunakan pada sebuah \textit{custom
-	agent} yang dijalankan oleh \textit{custom scenario runner}. Kedua pustaka ini
-akan disebut sebagai ``hils-connector.''
+HILS membutuhkan dua komputer yang saling terhubung melalui sebuah LAN
+(jaringan lokal). Sebuah komputer, disebut komputer AGX/RKB, akan menjalankan
+program utama kendaraan otonom (``GRS''). Komputer lain, disebut komputer SILS,
+akan menjalankan CARLA serta program utama penjalan skenario simulasi
+(``ScenarioRunner''). Hasil akhir dari tugas akhir ini adalah sebuah pustaka
+yang menghubungkan kedua program utama.
 
 \section{Rumusan Masalah}
 
@@ -93,12 +54,11 @@ pertukuran data antarserver. Karena adanya \textit{overhead} besar ini, sistem
 simulasi menjadi tidak reliabel. Sistem butuh atensi yang besar karena
 arsitektur sistem yang lebih rumit dari sebelumnya.
 
-Selain itu, layanan web ini belum mendukung pembacaan sensor CARLA dan juga
-belum mendukung pengiriman data \textit{binary}. Oleh karena itu, sistem HILS
-tidak dapat melakukan simulasi dengan maksimal. Simulasi dilakukan menggunakan
-data posisi kendaraan aktor, data posisi kendaraan lain, kecepatan dari
-CARLA, dll. yang diambil langsung dari CARLA, bukan data dari sensor virtual
-CARLA.
+Selain itu, layanan web ini belum mendukung pembacaan sensor CARLA. Oleh karena
+itu, sistem HILS tidak dapat melakukan simulasi dengan maksimal. Simulasi
+dilakukan menggunakan data posisi kendaraan aktor, data posisi kendaraan lain,
+kecepatan dari CARLA, dll. yang diambil langsung dari CARLA, bukan data dari
+sensor virtual CARLA.
 
 Berdasarkan latar belakang serta keadaan saat ini, definisi rumusan masalah
 untuk tugas akhir ini adalah sebagai berikut.
@@ -115,8 +75,8 @@ untuk tugas akhir ini adalah sebagai berikut.
 Tugas akhir ini memiliki 2 tujuan utama, yaitu
 \begin{enumerate}
 	\item mengimplementasikan mekanisme komunikasi sistem simulasi yang cukup
-		cepat untuk sistem simulasi \textit{hardware-in-the-loop} kendaraan
-		otonom, dan
+	      cepat untuk sistem simulasi \textit{hardware-in-the-loop} kendaraan
+	      otonom, dan
 	\item mengimplementasikan sistem simulasi yang dapat mengirimkan,
 	      menerima, dan memanfaatkan data dari berbagai jenis sensor.
 \end{enumerate}

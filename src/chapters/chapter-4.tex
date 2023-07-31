@@ -1,12 +1,12 @@
-\chapter{Implementasi dan Pengujian Sistem HILS}\label{chapter-4}
+\chapter{Implementasi dan Pengujian Pustaka Sistem HILS}\label{chapter-4}
 
-\section{Implementasi Sistem HILS}
+\section{Implementasi Pustaka Sistem HILS}
 
 Berdasarkan analisis dan rancangan solusi pada Bab \ref{chapter-3}, dapat
-dimulai implementasi sistem HILS baru. Implementasi sistem HILS dimulai dengan
-eksplorasi ROS2 dan ZeroMQ. Kemudian dilanjutkan dengan pembuatan program
-\textit{proof of concept} (POC) menggunakan salah satu mekanisme komunikasi.
-POC dibuat untuk menunjukan bahwa mekanisme komunikasi yang digunakan dapat
+dimulai implementasi pustaka sistem HILS baru. Implementasi pustaka dimulai
+dengan eksplorasi ROS2 dan ZeroMQ. Kemudian dilanjutkan dengan pembuatan program
+\textit{proof of concept} (POC) menggunakan salah satu mekanisme komunikasi. POC
+dibuat untuk menunjukan bahwa mekanisme komunikasi yang digunakan dapat
 melakukan transfer data kamera sehingga CARLA berjalan dengan setidaknya 2 FPS.
 Setelah POC diterima oleh ketua tim simulasi, dilanjutkan penulisan pustaka
 \textit{consumer} dan terakihir implementasi pustaka \textit{producer}.
@@ -77,7 +77,7 @@ aspek sistem yang diuji akan dibahas pada Subbab
 
 Pengujian akan menguji dua aspek, yaitu
 \begin{enumerate}
-	\item pengujian implementasi: meninjau kemampuan sistem HILS dalam mengirim,
+	\item pengujian implementasi: meninjau kemampuan pustaka dalam mengirim,
 	      menerima, dan menggunakan data dari sensor virtual untuk
 	      mengendalikan trem; dan
 	\item pengujian kinerja: meninjau latensi yang dibutuhkan untuk mengirim
@@ -91,8 +91,8 @@ apabila semua kriterianya berhasil dicapai.
 
 \subsection{Lingkungan Pengujian}
 
-Pengujian sistem HILS dilakukan pada laboratorium sistem kendali di Lab
-Teknologi VIII ITB. Komputer yang akan digunakan pada lab tersebut ada tiga,
+Pengujian pustaka dan sistem HILS dilakukan pada laboratorium sistem kendali di
+Lab Teknologi VIII ITB. Komputer yang akan digunakan pada lab tersebut ada tiga,
 yaitu komputer AGX, komputer RKB, dan komputer SILS. Komputer AGX adalah NVIDIA
 Drive PX Pegasus. Spesifikasi komputer AGX dapat dilihat pada Subbab
 \ref{chapter-2-section-pegasus}. Sedangkan spesifikasi komputer SILS dan RKB
@@ -144,11 +144,11 @@ Kecepatan \textit{link} pada kedua komputer adalah 1 Gbps.
 	\label{chapter-4-fig-topology}
 \end{figure}
 
-\subsection{Pengujian Implementasi Sistem HILS}
+\subsection{Pengujian Implementasi Pustaka}
 
 Pengujian implementasi dilakukan dengan menjalankan program utama di komputer
 SILS dan komputer AGX/RKB. Kemudian, akan dilakukan observasi untuk memeriksa
-sistem HILS sudah memenuhi kriteria-kriteria pada Tabel
+pustaka sudah memenuhi kriteria-kriteria pada Tabel
 \ref{chapter-4-tbl-impl-criteria} atau belum.
 
 \begin{table}[!htbp]
@@ -175,22 +175,23 @@ sistem HILS sudah memenuhi kriteria-kriteria pada Tabel
 		\end{tabular}
 	\end{center}
 
-	\caption{Kriteria pengujian implementasi sistem HILS}
+	\caption{Kriteria pengujian implementasi pustaka}
 	\label{chapter-4-tbl-impl-criteria}
 \end{table}
 
 Kriteria ini selaras dengan tujuan tugas akhir yang kedua, yaitu
-mengimplementasikan sistem simulasi yang dapat mengirimkan, menerima, dan
-memanfaatkan data dari berbagai jenis sensor.
+mengimplementasikan mekanisme komunikasi sistem simulasi yang dapat mengirimkan,
+menerima, dan memanfaatkan data dari berbagai jenis sensor.
 
-\subsection{Pengujian Kinerja Sistem HILS}
+\subsection{Pengujian Kinerja Mekanisme Komunikasi Pustaka}
 
 Dari segi kinerja, hal yang ingin dipastikan adalah CARLA dapat berjalan stabil
 dengan kecepatan minimum 2 FPS (\textit{frames per second}). Hal tersebut
 diobservasi dengan menjalankan kedua program utama. Selain dari kecepatan
-simulator, aspek kinerja juga akan dinilai dari perbandingan dengan sistem HILS
-yang ada. Latensi pengiriman data harus lebih rendah dibandingkan latensi sistem
-HILS yang ada. Kedua kriteria tersebut dituangkan pada Tabel
+simulator, aspek kinerja juga akan dinilai dari perbandingan dengan mekanisme
+komunikasi sistem HILS yang ada. Latensi pengiriman data harus lebih rendah
+dibandingkan latensi sistem HILS yang ada. Kedua kriteria tersebut dituangkan
+pada Tabel
 \ref{chapter-4-tbl-perf-criteria}.
 \begin{table}[!htbp]
 	\begin{center}
@@ -207,7 +208,7 @@ HILS yang ada. Kedua kriteria tersebut dituangkan pada Tabel
 			\hline
 		\end{tabular}
 	\end{center}
-	\caption{Kriteria pengujian kinerja sistem HILS}
+	\caption{Kriteria pengujian kinerja mekanisme komunikasi sistem HILS}
 	\label{chapter-4-tbl-perf-criteria}
 \end{table}
 
@@ -259,17 +260,17 @@ sensor yang dibaca dari basis data ke \textit{file}. Dengan demikian, ada 4
 operasi I/O dari implementasi HILS sebelumnya yang ditulis ulang untuk pengujian
 latensi secara teoretis.
 
-Apabila sistem HILS berhasil memenuhi kedua kriteria tersebut, sistem dapat
-dianggap sudah berhasil memenuhi tujuan pertama tugas akhir. Tujuan yang
-dipenuhi adalah tujuan pertama tugas akhir, yaitu membuat sistem simulasi
-\textit{hardware-in-the-loop} yang cukup cepat.
+Apabila pustaka sistem HILS berhasil memenuhi kedua kriteria tersebut, sistem
+dapat dianggap sudah berhasil memenuhi tujuan pertama tugas akhir. Tujuan yang
+dipenuhi adalah tujuan pertama tugas akhir, yaitu membuat mekanisme komunikasi
+sistem simulasi \textit{hardware-in-the-loop} yang cukup cepat.
 
-Pengujian kinerja sistem HILS baru akan menggunakan komputer RKB dan komputer
-SILS. Komputer RKB akan menjalankan program GRS dan komputer SILS akan
-menjalankan simulator CARLA serta program ScenarioRunner. Lalu, pengujian sistem
-HILS lama akan menggunakan komputer SILS saja. Artinya, pada implementasi ulang
-sistem HILS lama, tidak akan ada komunikasi antar-komputer dan semua proses
-terjadi secara lokal.
+Pengujian kinerja mekanisme komunikasi sistem HILS baru akan menggunakan
+komputer RKB dan komputer SILS. Komputer RKB akan menjalankan program GRS dan
+komputer SILS akan menjalankan simulator CARLA serta program ScenarioRunner.
+Lalu, pengujian sistem HILS lama akan menggunakan komputer SILS saja. Artinya,
+pada implementasi ulang mekanisme komunika sistem HILS lama, tidak akan ada
+komunikasi antar-komputer dan semua proses terjadi secara lokal.
 
 \section{Hasil Pengujian}
 
@@ -277,11 +278,11 @@ Penguraian hasil pengujian aspek implementasi dan kinerja akan dipisah.
 Penguruaian dipisah karena hal yang diujikan serta kriteria pengujian dari kedua
 aspek berbeda.
 
-\subsection{Hasil Pengujian Implementasi Sistem HILS}
+\subsection{Hasil Pengujian Implementasi Pustaka}
 
-Dari pengujian yang dilakukan, ditemukan bahwa sistem HILS dapat memenuhi
-seluruh kriteria yang untuk pengujian implementasi sistem. Penjabaran
-ketercapaian kriteria pengujian implementasi sistem HILS dapat dilihat pada
+Dari pengujian yang dilakukan, ditemukan bahwa pustaka dapat memenuhi seluruh
+kriteria yang untuk pengujian implementasi sistem. Penjabaran ketercapaian
+kriteria pengujian implementasi pustaka dapat dilihat pada
 \ref{chapter-4-tbl-impl-criteria-result}. Selain itu, tampilan sistem HILS dan
 hasil implementasi dapat dilihat pada Gambar \ref{chapter-4-fig-hils-running}.
 
@@ -323,12 +324,12 @@ sama.
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1.0\textwidth,trim={12cm 12cm 0 12cm},clip]{resources/chapter-4/HILS-system-running.png}
-	\caption{Tampilan sistem HILS ketika dijalankan. Tampilan komputer SILS di
-		sebelah kiri, tampilan komputer AGX di sebelah kanan.}
+	\caption{Tampilan sistem simulasi ketika dijalankan. Tampilan komputer SILS
+		di sebelah kiri, tampilan komputer AGX di sebelah kanan.}
 	\label{chapter-4-fig-hils-running}
 \end{figure}
 
-\subsection{Hasil Pengujian Kinerja Sistem HILS}
+\subsection{Hasil Pengujian Kinerja Mekanisme Komunikasi Sistem HILS}
 
 Hasil pengujian kinerja sistem HILS dapat dilihat pada Tabel \ref{chapter-4-tbl-perf-criteria-result}.
 \begin{table}[!htbp]
@@ -344,8 +345,9 @@ Hasil pengujian kinerja sistem HILS dapat dilihat pada Tabel \ref{chapter-4-tbl-
 			              & lidar, CARLA menjadi sangat lambat hingga       &                   \\
 			              & hanya mendapatkan kurang dari 2 FPS.            &                   \\
 			\hline
-			PERF-02       & Sistem HILS baru berhasil memiliki kinerja yang & \checkmark        \\
-			              & lebih baik daripada sistem HILS sebelumnya.     &                   \\
+			PERF-02       & Mekanisme komunikasi baru berhasil memiliki     &                   \\
+			              & kinerja yang lebih baik daripada mekanisme      & \checkmark        \\
+			              & komunikasi sebelumnya.                          &                   \\
 			\hline
 		\end{tabular}
 	\end{center}
@@ -374,8 +376,8 @@ FPS dapat dilihat pada Gambar \ref{chapter-4-fig-carla-5-fps} dan Gambar
 
 Kriteria PERF-02 juga berhasil dilewati. Statistik data dari pengujian dapat
 dilihat pada Tabel \ref{chapter-4-tbl-perf-result-statistics}. Selain itu,
-persebaran data latensi kedua implementasi sistem HILS dapat dilihat pada Gambar
-\ref{chapter-4-fig-perf-result-old-hils} dan Gambar
+persebaran data latensi kedua implementasi mekanisme komunikasi sistem HILS
+dapat dilihat pada Gambar \ref{chapter-4-fig-perf-result-old-hils} dan Gambar
 \ref{chapter-4-fig-perf-result-new-hils}.
 \begin{table}[!htbp]
 	\begin{center}
