@@ -28,7 +28,24 @@ seabstrak mungkin dan tidak \textit{coupled} pada trem saja. Sehingga pustaka
 yang ditulis dapat digunakan untuk simulasi \textit{hardware-in-the-loop} jenis
 kendaraan otonom lainnya.
 
-Diagram kelas dari pustaka \textit{consumer} dapat dilihat pada gambar
+Hubungan antara pustaka \textit{producer}, \textit{consumer}, program GRS, dan
+program ScenarioRunner dapat dilihat pada diagram \textit{package} konseptual
+pada Gambar \ref{chapter-4-conseptual-package-diagram}. Pada pustaka
+\textit{producer}, akan ada 4 kelas yang berinteraksi atau menyediakan antarmuka
+bagi program ScenarioRunner, yaitu \texttt{GnssHandler}, \texttt{CameraHandler},
+\texttt{LidarHandler}, dan \texttt{ControlHandler}. Keempat kelas tersebut
+terhubung dengan pustaka \textit{consumer} menggunakan antarmuka
+\texttt{Endpoint}. Hal yang sama juga dapat dilihat pada pustaka
+\textit{consumer} dengan perbedaan pada pustaka tersebut hanya ada 1 kelas,
+\texttt{CarlaService}, yang berinteraksi langsung dengan program GRS.
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth]{resources/chapter-4/conceptual-package-diagram.png}
+	\caption{Diagram \textit{package} konseptual untuk sistem HILS}
+	\label{chapter-4-conseptual-package-diagram}
+\end{figure}
+
+Diagram kelas lengkap dari pustaka \textit{consumer} dapat dilihat pada gambar
 \ref{chapter-4-consumer-class-diagram}. Kelas yang melakukan komunikasi adalah
 kelas abstrak \texttt{Endpoint}. Kelas tersebut dibuat abstrak dan diinstansiasi
 menggunakan pola pemrograman \textit{factory}. \texttt{Endpoint} dibuat abstrak
@@ -45,18 +62,17 @@ ataupun serialisasi data dari \texttt{Endpoint}.
 	\label{chapter-4-consumer-class-diagram}
 \end{figure}
 
-Setelah pustaka \textit{consumer} berhasil, implementasi dilanjutkan dengan
-pembuatan pustaka \textit{producer}. Diagram kelas pustaka \textit{producer}
-dapat dilihat pada gambar \ref{chapter-4-producer-class-diagram}. Pembuatan
-pustaka \textit{producer} juga mengikuti filosofi penulisan pustaka
-\textit{consumer}. Pustaka dibuat seabstrak mungkin sehingga tidak
-\textit{coupled} dengan trem. Kelas \texttt{Endpoint} juga dibuat abstrak agar
-dapat ditambahkan metode komunikasi yang lain. Perbedaan implementasi adalah
-pada kelas yang berinteraksi dengan program utama. Pada pustaka
-\textit{producer}, ada empat kelas yang berinteraksi dengan program utama, yaitu
-\texttt{CameraHandler}, \texttt{LidarHandler}, \texttt{GnssHandler}, dan
-\texttt{ControlHandler}. Keempat kelas memiliki peran masing-masing dan
-terspesialisasi untuk menangani data dari sensor virtual CARLA tertentu.
+Diagram kelas pustaka lengkap \textit{producer} dapat dilihat pada gambar
+\ref{chapter-4-producer-class-diagram}. Pembuatan pustaka \textit{producer} juga
+mengikuti filosofi penulisan pustaka \textit{consumer}. Pustaka dibuat seabstrak
+mungkin sehingga tidak \textit{coupled} dengan trem. Kelas \texttt{Endpoint}
+juga dibuat abstrak agar dapat ditambahkan metode komunikasi yang lain.
+Perbedaan implementasi adalah pada kelas yang berinteraksi dengan program utama.
+Pada pustaka \textit{producer}, ada empat kelas yang berinteraksi dengan program
+utama, yaitu \texttt{CameraHandler}, \texttt{LidarHandler},
+\texttt{GnssHandler}, dan \texttt{ControlHandler}. Keempat kelas memiliki peran
+masing-masing dan terspesialisasi untuk menangani data dari sensor virtual CARLA
+tertentu.
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1.0\textwidth]{resources/chapter-4/producer-class_diagram.png}
