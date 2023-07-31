@@ -38,6 +38,15 @@ terhubung dengan pustaka \textit{consumer} menggunakan antarmuka
 \texttt{Endpoint}. Hal yang sama juga dapat dilihat pada pustaka
 \textit{consumer} dengan perbedaan pada pustaka tersebut hanya ada 1 kelas,
 \texttt{CarlaService}, yang berinteraksi langsung dengan program GRS.
+
+Selain kelas-kelas yang sudah disebutkan, pada diagram \textit{package}
+konseptual juga terdapat beberapa antarmuka bantuan. Antarmuka-antarmuka
+tersebut adalah \texttt{SensorReader} yang menghubungkan program GRS
+dengan pustaka serta \texttt{Gnss\-Hand\-ler}, \texttt{LidarHandler},
+\texttt{CameraHandler}, dan \texttt{ControlHandler} yang menghubungkan program
+ScenarioRunner dengan pustaka. Semua antarmuka tersebut tidak benar-benar ada
+pada implementasi dan hanya berfungsi untuk mempermudah pemahaman hubungan
+antar-komponen HILS dan pustaka.
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1.0\textwidth]{resources/chapter-4/conceptual-package-diagram.png}
