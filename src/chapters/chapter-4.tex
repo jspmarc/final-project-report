@@ -502,6 +502,15 @@ kendali memiliki latensi yang sangat baik. Seperti yang dapat dilihat pada tabel
 setidaknya 2,5 kali lebih cepat dari sistem HILS sebelumnya. Selain itu,
 simulator CARLA juga berhasil berjalan dengan setidaknya 2 FPS.
 
+Peningkatan kinerja yang didapatkan pada sistem HILS baru ini terjadi karena
+perbaikan pada mekanisme komunikasi. Perbaikan yang dilakukan adalah
+menghilangkan semua operasi I/O, kecuali untuk komunikasi jaringan, pada
+mekanisme komunikasi HILS. Pada mekanisme komunikasi sebelumnya, terdapat
+beberapa pembacaan dan penulisan ke berkas serta ke basis data. Hal ini
+dihilangkan pada  mekanisme komunikasi baru dan semua data disimpan
+\textit{in memory} dan pada soket ZeroMQ. Hal ini dapat dilakukan karena data
+bersifat sekali pakai. Alasan tersebut juga alasan basis data dapat dihilangkan.
+
 Meskipun kedua tujuan tugas akhir berhasil dicapai, perlu dicatat bahwa ketika
 sensor lidar digunakan kinerja smulator menjadi sangat buruk. Hal ini disebabkan
 sensor lidar yang butuh beberapa \textit{step} untuk menghasilkan 1

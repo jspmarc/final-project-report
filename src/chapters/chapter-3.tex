@@ -271,7 +271,9 @@ dan mengurangi \textit{overhead} untuk berkomunikasi dengan perantara. Pustaka
 juga akan menyediakan API untuk mengirimkan data dan menerima data. Untuk
 mendukung berbagai jenis sensor, pustaka juga akan memiliki fitur
 \textit{parsing}, serialisasi, dan deserialisasi untuk sensor GNSS, kamera, dan
-lidar.
+lidar. Selain itu, untuk mencoba mengurangi waktu yang dibutuhkan untuk
+komunikasi pada HILS, sebanyak mungkin operasi I/O akan dihilangkan dan
+penyimpanan data hanya akan dilakukan pada memori primer.
 
 API yang disediakan oleh pustaka ``producer'' akan langsung mengonsumsi data
 sensor dari CARLA sehingga pengguna pustaka tidak perlu melakukan modifikasi
