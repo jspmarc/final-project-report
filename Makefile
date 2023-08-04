@@ -15,12 +15,14 @@ build: $(main_file_path)
 clean:
 	rm -rf $(build_dir)/*
 	rm -rf $(src_dir)/**/*.bak*
-	rm -rf $(src_dir)/thesis.aux $(src_dir)/thesis.bbl $(src_dir)/thesis.blg \
-		$(src_dir)/thesis.fls $(src_dir)/thesis.lof $(src_dir)/thesis.log \
-		$(src_dir)/thesis.out $(src_dir)/thesis.pdf $(src_dir)/thesis.synctex.gz \
-		$(src_dir)/thesis.toc $(src_dir)/thesis.atoc $(src_dir)/thesis.bcf \
-		$(src_dir)/thesis.fdb_latexmk $(src_dir)/thesis.fdb_latexmk $(src_dir)/thesis.run.xml \
-		$(src_dir)/thesis.wrt
+	rm -rf $(src_dir)/$(main_file:.tex=.aux) $(src_dir)/$(main_file:.tex=.bbl) \
+		$(src_dir)/$(main_file:.tex=.blg) $(src_dir)/$(main_file:.tex=.fls) \
+		$(src_dir)/$(main_file:.tex=.lof) $(src_dir)/$(main_file:.tex=.log) \
+		$(src_dir)/$(main_file:.tex=.out) $(src_dir)/$(main_file:.tex=.pdf) \
+		$(src_dir)/$(main_file:.tex=.synctex.gz) $(src_dir)/$(main_file:.tex=.toc) \
+		$(src_dir)/$(main_file:.tex=.atoc) $(src_dir)/$(main_file:.tex=.bcf) \
+		$(src_dir)/$(main_file:.tex=.fdb_latexmk) $(src_dir)/$(main_file:.tex=.run.xml) \
+		$(src_dir)/$(main_file:.tex=.wrt)
 
 format: $(main_file_path)
 	latexindent -w **/*.tex **/*.bib **/*.sty 1> /dev/null
