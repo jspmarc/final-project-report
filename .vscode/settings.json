@@ -20,7 +20,7 @@
         "-bibtex",
         "-outdir=../build",
         "-cd",
-        "thesis.tex"
+        "paper.tex"
       ],
       "env": {}
     }
