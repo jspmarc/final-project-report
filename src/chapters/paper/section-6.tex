@@ -1,3 +1,25 @@
-\section{Limitations and Future Work}
+\section{Results Analysis and Discussion}
 
-\blindtext
+\subsection{Implementation Testing}
+
+The implementation testing is successful as can be seen in
+Section~\ref{section-4-implementation-testing}. This means the new HILS system
+can use virtual sensor data for simulation.
+
+\subsection{Performance Testing}
+
+The improvement in performance is achieved by eliminating unneeded I/O
+operations. The previous HILS implementation needs 8 I/O operations just to send
+a single data (the ``theoretical'' version only implements 4). The computers'
+resource usage is not yet saturated when the testing is done, which further
+shown that the improvement gained comes software adjustments.
+
+Although it has to be noted that there is a technical difficulty in implementing
+lidar sensor. Even though the lidar sensor is already usable, as proven in
+implementation testing, it inhibits the performance of the simulation. Lidar
+sensor slows down the performance because to get the whole lidar image CARLA
+needs to run a few simulation steps first, unlike camera and GNSS where only one
+step is needed. CARLA needs to run a few steps simulation steps because to get
+the whole lidar image the lidar have to do a full rotation. Each simulation step
+only rotates the lidar by some degree, therefore a few simulation steps are
+needed to achieve the full lidar rotation.
