@@ -1,19 +1,12 @@
-\section{Methodology}
+\section{Related Work - Hardware-in-the-loop-simulation (HILS)}
 
-The purpose of this research is to create a hardware-in-the-loop-simulation
-(HILS) system. The HILS system is intended for testing autonomous vehicle
-hardware and software before using them in an operational environment. To
-achieve that goal, this research process is carried out as follows
+In a related research a HILS system for autonomous vehicle is achieved
+\cite{brogle_CarlaHILS}. The simulator used is also CARLA and the communication
+is done using ROS. The difference with the current research is the hardware
+used. In that research, NVIDIA Jetson TX1 is used, while this research uses
+NVIDIA Pegasus and a substitute computer called RKB.
 
-\begin{enumerate}
-	\item learn the CARLA Simulator,
-	\item analyze system requirements,
-	\item study the implementation in the current conditions,
-	\item exploration of tools and communication methods to be used,
-	\item library design,
-	\item implementation of the library,
-	\item testing the library,
-	\item integrate libraries into GRS and custom programs agent,
-	\item system testing, and
-	\item analysis of system test results.
-\end{enumerate}
+That research concludes that a HILS system using CARLA and ROS can be done. In
+the research, a single ROS node is used and it listens to many topics which
+relates to the sensor. With that configuration, it is found that the response
+time in the simulation is even faster than real world \cite{brogle_CarlaHILS}.
