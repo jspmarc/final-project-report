@@ -1,8 +1,8 @@
 \section{Testing and Results}
 
-The testing will be done in two parts: implementation and performance testing.
-The implementation testing tests the library implementation result, whether
-sensor data can be used and a hardware-in-the-loop simulation can be done. The
+The testing is done in two parts: implementation and performance testing.  The
+implementation testing tests the library implementation result, whether sensor
+data can be used and a hardware-in-the-loop simulation can be done. The
 performance testing tests, well, the HILS system performance.
 
 \subsection{Testing Environment}
@@ -35,8 +35,8 @@ and SILS computers are connected with a 1 Gbps link speed.
 \subsection{Implementation Testing}\label{section-4-implementation-testing}
 
 The implementation testing tests the functionality of the library when used in a
-running simulation. There are four criterias to be achieved in this category which are
-
+running simulation. There are four criteria to be achieved in this category
+which are
 \begin{enumerate}
 	\item the speed shown in GRS is the same one from the virtual GNSS sensor,
 	\item the camera feed shown in GRS is the same one from the virtual camera
@@ -59,23 +59,23 @@ ScenarioRunner which is taken from the virtual sensors directly (left monitor).
 
 \subsection{Performance Testing}
 
-The performance testing is done on the RKB and SILS computer. The reason for
+The performance testing is done on the RKB and SILS computers. The reason for
 using RKB instead of AGX is, during the performance testing period, the AGX
-computer was being used for field testing. There are two criterias for this
+computer was being used for field testing. There are two criteria for this
 category:
 \begin{enumerate}
-	\item CARLA can maintain at least 2 FPS when simulation is running, and
-	\item communication latency have to be faster compared to previous HILS
+	\item CARLA can maintain at least 2 FPS when a simulation is running, and
+	\item communication latency has to be faster compared to the previous HILS
 	      system.
 \end{enumerate}
-The requirement for CARLA to be running with at least 2 FPS comes from project
-owner. Furthermore, there's a caveat to testing the second criteria, because the
-previous HILS is not up to par in feature and too hard to start, the comparison
-is done to a ``theoretical'' version of the previous HILS. The ``theoretical''
-version of previous HILS is only implements some operations done in it instead
-of the whole process. Moreover, the latency testing only uses GNSS and Camera
-sensor. The lidar sensor isn't used because of technical difficulties during the
-implementation.
+The requirement for CARLA to be running with at least 2 FPS comes from the
+autonomous tram project owner. Furthermore, there's a caveat to testing the
+second criterion, because the previous HILS is not up to par in features and too
+hard to start, the comparison is done to a ``theoretical'' version of the
+previous HILS. The ``theoretical'' version of the previous HILS only implements
+some operations done in it instead of the whole process. Moreover, the latency
+testing only uses a GNSS and a camera sensor. The lidar sensor isn't used
+because of technical difficulties during the implementation.
 
 In the performance test, latency is calculated by dividing round-trip time (RTT) by two.
 It is calculated in ScenarioRunner/SILS computer side using camera sensor data
@@ -95,24 +95,24 @@ With:
 	\end{tabular}
 \end{table}
 
-$T_e$, $T_s$, and $t_p$ is taken before ZeroMQ library function is called. This
-causes a small overhead in the RTT calculation.
+$T_e$, $T_s$, and $t_p$ are taken before the ZeroMQ library function is called.
+This causes a small overhead in the RTT calculation.
 
 The camera data is used to calculate RTT because it has a significantly large
-size therefore, the camera data can show the worst case scenario.  Because the
+size therefore, the camera data can show the worst-case scenario. Because of the
 size of the camera data, it can't be transmitted as a single packet using
-ZeroMQ, instead it has to be sliced into a smaller segments. The RTT is
-calculated from the first segment transmitted so the RTT is the time to send a
+ZeroMQ, instead, it has to be sliced into smaller segments. The RTT is
+calculated from the first segment transmitted so the RTT is the time to send
 sensor data, not the time to send a single segment.
 
-As for the latency calculation in ``theoretical'' previous HILS, it is started
-from when the sensor data is sent and until the data is received on the other
-side.
+As for the latency calculation in the ``theoretical'' previous HILS, it is
+started from when the sensor data is sent and until the data is received on the
+other side.
 
-The performance testing's results can be seen in
+The performance testing results can be seen in
 Table~\ref{tbl-section-6-perf-result-statistics} and
 Fig.~\ref{fig-section-6-carla-fps}. Using the new HILS implementation, CARLA can
-run with 5--13 FPS. Addtionally, the average latency to send camera data is
+run with 5--13 FPS. Additionally, the average latency to send camera data is
 10.99 ms which is at least 2.5x faster when compared to the previous HILS.
 
 \begin{table}[!htbp]
