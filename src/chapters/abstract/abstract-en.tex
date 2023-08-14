@@ -3,6 +3,45 @@
 \addcontentsline{toc}{chapter}{\MakeUppercase{Abstract}}
 
 %put your abstract here
-\blindtext
+\begin{center}
+	\bfseries \MakeUppercase{\thetitleEn}
+
+	\normalfont\normalsize
+	By:
+
+	\theauthor
+\end{center}
+
+\begin{singlespace}
+	With the rapid growth of cities in Indonesia and the need to reduce impacts
+	of growth to traffic and the environment, a public transport that can
+	efficiently carry passengers, safe, and inexpensive.  One of these public
+	transport is autonomous tram. The autonomous tram doesn't need a driver to
+	operate it. This results in cheaper operational cost and safety can be
+	better guaranteed.
+
+	However, the development of autonomous tram is expensive and needs a lot of
+	time if the testings were done in a real-world environment. Hence, a
+	simulation system that an test the hardware and software of the autonomous
+	tram is used for testing and development. A simulation that tests the
+	hardware and software is also known as hardware-in-the-loop-simulation
+	(HILS). In the HILS system, the CARLA simulator is used to run the virtual
+	world and to get data from virtual sensors.
+
+	In the autonomous tram development project, a HILS system alrady exists.
+	However, the system is not yet ideal since its performance is bad and sensor
+	data can't be used in the simulation system. The bad performance is caused
+	by heaps of I/O operations for communication and the system's architecture
+	which is more complicated than it needs to be. Therfore, a new communication
+	mechanism is created for the HILS system to solve the bad performance and
+	inability to use sensor data.
+
+	The new communication mechanism is at least 2.5x faster when compared to the
+	old HILS system's communication mechanism. Moreover, the simulation system
+	can use sensor data  while keeping CARLA running with at least 2 FPS.
+
+	\textbf{\textit{Keywords: HILS communication, CARLA for HILS, autonomous
+			vehicle simulation}}
+\end{singlespace}
 
 \clearpage
